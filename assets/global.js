@@ -104,7 +104,10 @@
 
   // Ajout au panier depuis les cartes produit (AJAX, sans quitter la page)
   function updateCartCount(n) {
-    document.querySelectorAll('[data-cart-count]').forEach(function (el) { el.textContent = n; });
+    document.querySelectorAll('[data-cart-count]').forEach(function (el) {
+      el.textContent = n;
+      if (n > 0) { el.removeAttribute('hidden'); } else { el.setAttribute('hidden', ''); }
+    });
   }
   document.addEventListener('submit', function (e) {
     const form = e.target.closest ? e.target.closest('.card__add-form') : null;

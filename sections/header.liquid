@@ -33,7 +33,7 @@
       <a href="{{ routes.account_url }}" class="header__icon" aria-label="Compte">{% render 'icon', icon: 'user' %}</a>
       <a href="{{ routes.cart_url }}" class="header__icon" aria-label="{{ 'general.accessibility.cart' | t }}">
         {% render 'icon', icon: 'cart' %}
-        <span class="cart-count" data-cart-count>{{ cart.item_count }}</span>
+        <span class="cart-count" data-cart-count {% if cart.item_count == 0 %}hidden{% endif %}>{{ cart.item_count }}</span>
       </a>
     </div>
   </div>
