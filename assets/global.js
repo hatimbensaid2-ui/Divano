@@ -2,6 +2,45 @@
 (function () {
   'use strict';
 
+  // En-tête superposé au hero (accueil) : mesurer la hauteur + solidifier au scroll
+  const header = document.querySelector('[data-header]');
+  if (header) {
+    const setH = function () {
+      document.documentElement.style.setProperty('--header-h', header.offsetHeight + 'px');
+    };
+    setH();
+    window.addEventListener('resize', setH);
+    if (document.body.classList.contains('template-index') && document.querySelector('.hero-banner')) {
+      const onScroll = function () { header.classList.toggle('header--solid', window.scrollY > 40); };
+      onScroll();
+      window.addEventListener('scroll', onScroll, { passive: true });
+    } else {
+      header.classList.add('header--solid');
+    }
+  }
+
+  // Diaporama hero plein écran
+  document.querySelectorAll('[data-hero-slideshow]').forEach(function (root) {
+    const slides = Array.prototype.slice.call(root.querySelectorAll('[data-slide]'));
+    if (slides.length < 2) return;
+    let i = 0, timer = null;
+    const show = function (n) {
+      i = (n + slides.length) % slides.length;
+      slides.forEach(function (s, idx) { s.classList.toggle('is-active', idx === i); });
+    };
+    const next = function () { show(i + 1); };
+    const prev = function () { show(i - 1); };
+    const start = function () { stop(); timer = setInterval(next, 6000); };
+    const stop = function () { clearInterval(timer); timer = null; };
+    const p = root.querySelector('[data-hero-prev]');
+    const n = root.querySelector('[data-hero-next]');
+    if (p) p.addEventListener('click', function () { prev(); start(); });
+    if (n) n.addEventListener('click', function () { next(); start(); });
+    root.addEventListener('mouseenter', stop);
+    root.addEventListener('mouseleave', start);
+    start();
+  });
+
   // Menu mobile
   const burger = document.querySelector('[data-burger]');
   const nav = document.querySelector('[data-nav]');

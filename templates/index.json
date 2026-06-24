@@ -9,24 +9,27 @@
  */
 {
   "sections": {
-    "hero": {
-      "type": "hero",
-      "settings": {
-        "eyebrow": "Mobilier d'intérieur · Maroc",
-        "title": "Créer de beaux espaces pour la <em>vie moderne</em>",
-        "lead": "Une collection pensée pour apporter harmonie, confort et élégance à chaque pièce de votre maison. Chaque création est conçue pour sublimer votre quotidien.",
-        "button_label": "Découvrir la collection",
-        "button_link": "",
-        "image_left": "shopify://shop_images/divano6.png",
-        "image_left_fallback": "hero-main.png",
-        "chip_left_title": "Canapé Bouclé",
-        "chip_left_text": "Découvrez les tendances confort du moment.",
-        "chip_left_link": "",
-        "image_right_fallback": "hero-secondary.png",
-        "chip_right_title": "Fauteuil Velours",
-        "chip_right_text": "Détendez-vous dans un confort intemporel.",
-        "chip_right_link": ""
-      }
+    "hero_banner": {
+      "type": "hero-banner",
+      "blocks": {
+        "s1": {
+          "type": "slide",
+          "settings": {
+            "eyebrow": "Divano · Mobilier",
+            "title": "Les petits détails font <em>toute</em> la différence",
+            "button_label": "Voir les produits"
+          }
+        },
+        "s2": {
+          "type": "slide",
+          "settings": {
+            "eyebrow": "Collection Salon",
+            "title": "Donnez vie à votre <em>intérieur</em>",
+            "button_label": "Découvrir"
+          }
+        }
+      },
+      "block_order": ["s1", "s2"]
     },
     "values": {
       "type": "value-props",
@@ -116,7 +119,7 @@
     }
   },
   "order": [
-    "hero",
+    "hero_banner",
     "values",
     "eras",
     "intro"
