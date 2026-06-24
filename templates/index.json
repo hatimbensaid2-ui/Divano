@@ -92,23 +92,13 @@
           "settings": {
             "image": "shopify://shop_images/Royal_Stranger_Embrace_Armchair_Gentle_373_9-scaled.webp"
           }
-        },
-        "v5": {
-          "type": "value",
-          "settings": {
-            "icon": "shield",
-            "highlight": false,
-            "title": "Matériaux premium",
-            "text": "Fabriqués avec soin par des artisans. Chaque détail pensé pour la qualité."
-          }
         }
       },
       "block_order": [
         "v1",
         "v2",
         "v3",
-        "v4",
-        "v5"
+        "v4"
       ],
       "settings": {
         "eyebrow": "Pourquoi Divano",
