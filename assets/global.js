@@ -102,6 +102,28 @@
     });
   }
 
+  // Ajout au panier depuis les cartes produit (AJAX, sans quitter la page)
+  function updateCartCount(n) {
+    document.querySelectorAll('[data-cart-count]').forEach(function (el) { el.textContent = n; });
+  }
+  document.addEventListener('submit', function (e) {
+    const form = e.target.closest ? e.target.closest('.card__add-form') : null;
+    if (!form) return;
+    e.preventDefault();
+    const btn = form.querySelector('button[type="submit"]');
+    const label = btn ? btn.innerHTML : '';
+    if (btn) { btn.disabled = true; btn.innerHTML = '…'; }
+    fetch('/cart/add.js', { method: 'POST', headers: { 'X-Requested-With': 'XMLHttpRequest' }, body: new FormData(form) })
+      .then(function (r) { if (!r.ok) throw new Error('add'); return r.json(); })
+      .then(function () { return fetch('/cart.js', { headers: { 'X-Requested-With': 'XMLHttpRequest' } }); })
+      .then(function (r) { return r.json(); })
+      .then(function (cart) {
+        updateCartCount(cart.item_count);
+        if (btn) { btn.innerHTML = '✓ Ajouté'; setTimeout(function () { btn.innerHTML = label; btn.disabled = false; }, 1600); }
+      })
+      .catch(function () { form.submit(); });
+  });
+
   // Apparition au scroll
   const reveals = document.querySelectorAll('[data-reveal]');
   if ('IntersectionObserver' in window && reveals.length) {

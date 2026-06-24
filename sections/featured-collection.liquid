@@ -44,7 +44,6 @@
           <article class="card" data-cat="{{ block.settings.category | handle }}" {{ block.shopify_attributes }} data-reveal>
             <a class="card__media" href="{{ block.settings.link | default: '#' }}">
               {%- if block.settings.badge != blank -%}<span class="card__badge">{{ block.settings.badge }}</span>{%- endif -%}
-              <span class="card__fav" aria-hidden="true">{% render 'icon', icon: 'heart' %}</span>
               {%- if block.settings.image != blank -%}
                 <img src="{{ block.settings.image | image_url: width: 600 }}" alt="{{ block.settings.title | escape }}" width="400" height="400" loading="lazy">
               {%- elsif block.settings.image_fallback != blank -%}
