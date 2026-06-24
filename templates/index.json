@@ -105,10 +105,10 @@
             "product": "canape-compact",
             "x": 30,
             "y": 57,
-            "image_fallback": "product-side-table-gold.png",
+            "image_fallback": "",
             "vendor": "Divano",
-            "title": "Table d'Appoint",
-            "price": "1 450,00 dh",
+            "title": "",
+            "price": "",
             "link": ""
           }
         }
