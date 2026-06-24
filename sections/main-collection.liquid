@@ -30,13 +30,19 @@
 
       {%- if paginate.pages > 1 -%}
         <nav class="pagination" aria-label="{{ 'general.pagination.label' | t }}" style="display:flex;justify-content:center;gap:.5rem;margin-top:3rem;">
+          {%- if paginate.previous -%}
+            <a class="tab" href="{{ paginate.previous.url }}" rel="prev">{{ 'general.pagination.previous' | t }}</a>
+          {%- endif -%}
           {%- for part in paginate.parts -%}
             {%- if part.is_link -%}
               <a class="tab" href="{{ part.url }}">{{ part.title }}</a>
             {%- else -%}
-              <span class="tab" aria-selected="true">{{ part.title }}</span>
+              <span class="tab" aria-current="page" aria-selected="true">{{ part.title }}</span>
             {%- endif -%}
           {%- endfor -%}
+          {%- if paginate.next -%}
+            <a class="tab" href="{{ paginate.next.url }}" rel="next">{{ 'general.pagination.next' | t }}</a>
+          {%- endif -%}
         </nav>
       {%- endif -%}
     {%- endpaginate -%}
