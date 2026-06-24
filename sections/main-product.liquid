@@ -1,7 +1,19 @@
 <section class="product">
   <div class="page-width">
     <div class="product__grid" data-gallery>
-      <div class="product__gallery{% if product.media.size > 1 %} product__gallery--with-thumbs{% endif %}">
+      <div class="product__gallery">
+        <div class="product__main-img" data-gallery-stage>
+          {%- if product.featured_media -%}
+            <img data-main-img src="{{ product.featured_media | image_url: width: 1000 }}" alt="{{ product.featured_media.alt | escape }}" width="700" height="700">
+          {%- else -%}
+            {{ 'product-1' | placeholder_svg_tag: 'placeholder' }}
+          {%- endif -%}
+          {%- if product.media.size > 1 -%}
+            <button class="product__nav product__nav--prev" type="button" data-gallery-prev aria-label="Image précédente">{% render 'icon', icon: 'chevron-left' %}</button>
+            <button class="product__nav product__nav--next" type="button" data-gallery-next aria-label="Image suivante">{% render 'icon', icon: 'chevron-right' %}</button>
+          {%- endif -%}
+          <button class="product__zoom" type="button" data-gallery-zoom aria-label="Agrandir l'image">{% render 'icon', icon: 'zoom' %}</button>
+        </div>
         {%- if product.media.size > 1 -%}
           <div class="product__thumbs">
             {%- for media in product.media limit: 10 -%}
@@ -11,18 +23,6 @@
             {%- endfor -%}
           </div>
         {%- endif -%}
-        <div class="product__main-img" data-gallery-stage>
-          {%- if product.featured_media -%}
-            <img data-main-img src="{{ product.featured_media | image_url: width: 1000 }}" alt="{{ product.featured_media.alt | escape }}" width="700" height="700">
-          {%- else -%}
-            {{ 'product-1' | placeholder_svg_tag: 'placeholder' }}
-          {%- endif -%}
-          <button class="product__zoom" type="button" data-gallery-zoom aria-label="Agrandir l'image">{% render 'icon', icon: 'zoom' %}</button>
-          {%- if product.media.size > 1 -%}
-            <button class="product__nav product__nav--prev" type="button" data-gallery-prev aria-label="Image précédente">{% render 'icon', icon: 'arrow-left' %}</button>
-            <button class="product__nav product__nav--next" type="button" data-gallery-next aria-label="Image suivante">{% render 'icon', icon: 'arrow-right' %}</button>
-          {%- endif -%}
-        </div>
       </div>
 
       <div class="product__info" data-reveal>
@@ -89,11 +89,14 @@
 
     <div class="lightbox" data-lightbox hidden>
       <button class="lightbox__close" type="button" data-lightbox-close aria-label="Fermer">{% render 'icon', icon: 'close' %}</button>
-      {%- if product.media.size > 1 -%}
-        <button class="lightbox__nav lightbox__nav--prev" type="button" data-gallery-prev aria-label="Image précédente">{% render 'icon', icon: 'arrow-left' %}</button>
-        <button class="lightbox__nav lightbox__nav--next" type="button" data-gallery-next aria-label="Image suivante">{% render 'icon', icon: 'arrow-right' %}</button>
-      {%- endif -%}
       <img class="lightbox__img" data-lightbox-img src="" alt="{{ product.title | escape }}">
+      {%- if product.media.size > 1 -%}
+        <div class="lightbox__pager">
+          <button class="lightbox__chev" type="button" data-gallery-prev aria-label="Image précédente">{% render 'icon', icon: 'chevron-left' %}</button>
+          <span class="lightbox__count" data-lb-count>1 / {{ product.media.size }}</span>
+          <button class="lightbox__chev" type="button" data-gallery-next aria-label="Image suivante">{% render 'icon', icon: 'chevron-right' %}</button>
+        </div>
+      {%- endif -%}
     </div>
 
     {%- if product.description != blank -%}

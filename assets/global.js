@@ -346,6 +346,7 @@
     if (!main) return;
     const lightbox = gallery.querySelector('[data-lightbox]');
     const lbImg = gallery.querySelector('[data-lightbox-img]');
+    const lbCount = gallery.querySelector('[data-lb-count]');
     let idx = 0, lbZoomed = false;
     const resetZoom = function () {
       lbZoomed = false;
@@ -363,6 +364,7 @@
       setTimeout(done, 350);
       if (lbImg) lbImg.src = full;
       resetZoom();
+      if (lbCount) lbCount.textContent = (idx + 1) + ' / ' + thumbs.length;
       thumbs.forEach(function (x) { x.classList.toggle('is-active', x === t); });
     };
     thumbs.forEach(function (t, i) { t.addEventListener('click', function () { show(i); }); });
