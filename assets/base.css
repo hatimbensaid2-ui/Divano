@@ -598,6 +598,23 @@ body.template-index .header.header--solid {
 .product__nav--prev { left: 14px; }
 .product__nav--next { right: 14px; }
 
+/* Flèche qui suit le curseur (style markeio) */
+.product__cursor {
+  position: absolute; z-index: 4; width: 48px; height: 48px; border-radius: 50%;
+  background: rgba(255,255,255,.94); color: var(--color-text); border: 1px solid var(--color-line);
+  display: grid; place-items: center; pointer-events: none;
+  transform: translate(-50%, -50%); opacity: 0; transition: opacity .15s var(--ease);
+  box-shadow: 0 8px 20px -10px rgba(0,0,0,.4);
+}
+.product__cursor.is-visible { opacity: 1; }
+.product__cursor svg { width: 20px; height: 20px; }
+@media (hover: hover) and (pointer: fine) {
+  .product__nav { display: none; }
+  .product__main-img { cursor: none; }
+  .product__zoom { cursor: pointer; }
+}
+@media (hover: none) { .product__cursor { display: none; } }
+
 /* Icône loupe en bas à droite (style markeio) */
 .product__zoom {
   position: absolute; right: 14px; bottom: 14px; z-index: 2;

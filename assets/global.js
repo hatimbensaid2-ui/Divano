@@ -371,9 +371,11 @@
     gallery.querySelectorAll('[data-gallery-prev]').forEach(function (b) { b.addEventListener('click', function () { show(idx - 1); }); });
     gallery.querySelectorAll('[data-gallery-next]').forEach(function (b) { b.addEventListener('click', function () { show(idx + 1); }); });
 
-    // glissement tactile sur l'image principale
     const stage = gallery.querySelector('[data-gallery-stage]');
-    if (stage) {
+    const CHEV_L = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>';
+    const CHEV_R = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>';
+    if (stage && thumbs.length > 1) {
+      // glissement tactile
       let tx0 = null;
       stage.addEventListener('touchstart', function (e) { tx0 = e.touches[0].clientX; }, { passive: true });
       stage.addEventListener('touchend', function (e) {
@@ -382,14 +384,33 @@
         if (Math.abs(dx) > 40) show(dx < 0 ? idx + 1 : idx - 1);
         tx0 = null;
       }, { passive: true });
+
+      // flèche qui suit le curseur (gauche = précédent, droite = suivant)
+      const cursorNav = stage.querySelector('[data-cursor-nav]');
+      stage.addEventListener('mousemove', function (e) {
+        if (!cursorNav) return;
+        if (e.target.closest('[data-gallery-zoom]')) { cursorNav.classList.remove('is-visible'); return; }
+        const r = stage.getBoundingClientRect();
+        const x = e.clientX - r.left, y = e.clientY - r.top;
+        const isLeft = x < r.width / 2;
+        cursorNav.style.left = x + 'px';
+        cursorNav.style.top = y + 'px';
+        cursorNav.innerHTML = isLeft ? CHEV_L : CHEV_R;
+        cursorNav.classList.add('is-visible');
+      });
+      stage.addEventListener('mouseleave', function () { if (cursorNav) cursorNav.classList.remove('is-visible'); });
+      stage.addEventListener('click', function (e) {
+        if (e.target.closest('[data-gallery-zoom]')) return;
+        const r = stage.getBoundingClientRect();
+        if ((e.clientX - r.left) < r.width / 2) show(idx - 1); else show(idx + 1);
+      });
     }
 
-    // Clic sur l'image principale = image suivante. Zoom uniquement via l'icône.
+    // Zoom : l'icône loupe ouvre la grande image
     const zoomBtn = gallery.querySelector('[data-gallery-zoom]');
     const openLb = function () { if (!lightbox) return; if (lbImg) lbImg.src = main.src; resetZoom(); lightbox.hidden = false; document.body.style.overflow = 'hidden'; };
     const closeLb = function () { if (!lightbox) return; resetZoom(); lightbox.hidden = true; document.body.style.overflow = ''; };
     if (zoomBtn) zoomBtn.addEventListener('click', function (e) { e.stopPropagation(); openLb(); });
-    if (main && thumbs.length > 1) main.addEventListener('click', function () { show(idx + 1); });
 
     // Dans la visionneuse : clic = zoom/dézoom, déplacement = panoramique
     if (lbImg) {
