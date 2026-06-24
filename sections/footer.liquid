@@ -1,47 +1,64 @@
 <footer class="footer">
   <div class="page-width">
     <div class="footer__top">
-      <div class="footer__col footer__brand">
-        {%- if settings.logo_white != blank -%}
-          <img src="{{ settings.logo_white | image_url: width: 280 }}" alt="{{ shop.name | escape }}" width="140" height="36">
-        {%- else -%}
-          <img src="{{ 'divano-logo-white.png' | asset_url }}" alt="{{ shop.name | escape }}" width="140" height="36">
-        {%- endif -%}
-        <p>{{ section.settings.brand_text }}</p>
-        <form class="footer__form" action="/contact#newsletter" method="post" accept-charset="UTF-8">
-          <input type="hidden" name="form_type" value="customer">
-          <input type="hidden" name="contact[tags]" value="newsletter">
-          <input type="email" name="contact[email]" placeholder="{{ 'general.newsletter.placeholder' | t }}" required aria-label="{{ 'general.newsletter.label' | t }}">
-          <button type="submit" class="btn btn--accent btn--small">{% render 'icon', icon: 'arrow-right' %}</button>
-        </form>
-        <div class="footer__social">
-          {%- if settings.social_instagram != blank -%}<a href="{{ settings.social_instagram }}" target="_blank" rel="noopener">Instagram {% render 'icon', icon: 'arrow-up-right' %}</a>{%- endif -%}
-          {%- if settings.social_facebook != blank -%}<a href="{{ settings.social_facebook }}" target="_blank" rel="noopener">Facebook {% render 'icon', icon: 'arrow-up-right' %}</a>{%- endif -%}
-          {%- if settings.social_tiktok != blank -%}<a href="{{ settings.social_tiktok }}" target="_blank" rel="noopener">TikTok {% render 'icon', icon: 'arrow-up-right' %}</a>{%- endif -%}
-        </div>
-      </div>
-
       {%- for block in section.blocks -%}
         {%- if block.type == 'menu' -%}
           <div class="footer__col" {{ block.shopify_attributes }}>
             <h4>{{ block.settings.title }}</h4>
             <ul>
-              {%- for link in block.settings.menu.links -%}
-                <li><a href="{{ link.url }}">{{ link.title }}</a></li>
-              {%- endfor -%}
-            </ul>
-          </div>
-        {%- elsif block.type == 'contact' -%}
-          <div class="footer__col" {{ block.shopify_attributes }}>
-            <h4>{{ block.settings.title }}</h4>
-            <ul>
-              {%- if block.settings.address != blank -%}<li>{{ block.settings.address }}</li>{%- endif -%}
-              {%- if block.settings.phone != blank -%}<li><a href="tel:{{ block.settings.phone | replace: ' ', '' }}">{{ block.settings.phone }}</a></li>{%- endif -%}
-              {%- if block.settings.email != blank -%}<li><a href="mailto:{{ block.settings.email }}">{{ block.settings.email }}</a></li>{%- endif -%}
+              {%- if block.settings.menu != blank and block.settings.menu.links.size > 0 -%}
+                {%- for link in block.settings.menu.links -%}
+                  <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+                {%- endfor -%}
+              {%- else -%}
+                {%- case forloop.index -%}
+                {%- when 1 -%}
+                  <li><a href="{{ routes.all_products_collection_url }}">Boutique</a></li>
+                  <li><a href="{{ routes.all_products_collection_url }}">Nouveautés</a></li>
+                  <li><a href="{{ routes.all_products_collection_url }}">Meilleures ventes</a></li>
+                {%- when 2 -%}
+                  <li><a href="/pages/notre-histoire">Notre histoire</a></li>
+                  <li><a href="/pages/showroom">Showroom</a></li>
+                  <li><a href="{{ blog.url | default: '/blogs/journal' }}">Journal</a></li>
+                {%- else -%}
+                  <li><a href="/pages/livraison">Livraison &amp; retours</a></li>
+                  <li><a href="/pages/faq">FAQ</a></li>
+                  <li><a href="/pages/contact">Contact</a></li>
+                {%- endcase -%}
+              {%- endif -%}
             </ul>
           </div>
         {%- endif -%}
       {%- endfor -%}
+
+      <div class="footer__col footer__news">
+        <h4>{{ section.settings.newsletter_title }}</h4>
+        <form class="footer__form" action="/contact#newsletter" method="post" accept-charset="UTF-8">
+          <input type="hidden" name="form_type" value="customer">
+          <input type="hidden" name="contact[tags]" value="newsletter">
+          <input type="email" name="contact[email]" placeholder="{{ 'general.newsletter.placeholder' | t }}" required aria-label="{{ 'general.newsletter.label' | t }}">
+          <button type="submit" class="btn btn--accent btn--small">{{ 'general.newsletter.button' | t }}</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="footer__mid">
+      <div class="footer__social">
+        {%- if settings.social_facebook != blank -%}<a href="{{ settings.social_facebook }}" target="_blank" rel="noopener">Facebook {% render 'icon', icon: 'arrow-up-right' %}</a>{%- endif -%}
+        {%- if settings.social_instagram != blank -%}<a href="{{ settings.social_instagram }}" target="_blank" rel="noopener">Instagram {% render 'icon', icon: 'arrow-up-right' %}</a>{%- endif -%}
+        {%- if settings.social_tiktok != blank -%}<a href="{{ settings.social_tiktok }}" target="_blank" rel="noopener">TikTok {% render 'icon', icon: 'arrow-up-right' %}</a>{%- endif -%}
+      </div>
+      <div class="footer__info">
+        <div class="footer__info-label">Adresse</div>
+        <p>{{ section.settings.address }}</p>
+      </div>
+      <div class="footer__info">
+        <div class="footer__info-label">Contact</div>
+        <p>
+          {%- if section.settings.phone != blank -%}<a href="tel:{{ section.settings.phone | replace: ' ', '' }}">{{ section.settings.phone }}</a><br>{%- endif -%}
+          {%- if section.settings.email != blank -%}<a href="mailto:{{ section.settings.email }}">{{ section.settings.email }}</a>{%- endif -%}
+        </p>
+      </div>
     </div>
 
     <div class="footer__wordmark" aria-hidden="true">{{ section.settings.wordmark | default: 'DIVANO' }}</div>
@@ -57,7 +74,10 @@
 {
   "name": "Pied de page",
   "settings": [
-    { "type": "textarea", "id": "brand_text", "label": "Texte de marque", "default": "Du mobilier au design intemporel, pensé pour la vie moderne. Conçu pour durer, livré partout au Maroc." },
+    { "type": "text", "id": "newsletter_title", "label": "Titre newsletter", "default": "Inscrivez-vous à notre newsletter" },
+    { "type": "text", "id": "address", "label": "Adresse", "default": "123 Boulevard Anfa, Casablanca, Maroc" },
+    { "type": "text", "id": "phone", "label": "Téléphone", "default": "+212 6 00 00 00 00" },
+    { "type": "text", "id": "email", "label": "E-mail", "default": "contact@divano.ma" },
     { "type": "text", "id": "wordmark", "label": "Grand mot-symbole", "default": "DIVANO" },
     { "type": "text", "id": "rights", "label": "Mentions", "default": "Tous droits réservés." },
     { "type": "text", "id": "payment_note", "label": "Note paiement", "default": "Paiement à la livraison · Cartes bancaires" }
@@ -70,24 +90,14 @@
         { "type": "text", "id": "title", "label": "Titre", "default": "Boutique" },
         { "type": "link_list", "id": "menu", "label": "Menu" }
       ]
-    },
-    {
-      "type": "contact",
-      "name": "Coordonnées",
-      "settings": [
-        { "type": "text", "id": "title", "label": "Titre", "default": "Contact" },
-        { "type": "text", "id": "address", "label": "Adresse", "default": "Casablanca, Maroc" },
-        { "type": "text", "id": "phone", "label": "Téléphone", "default": "+212 6 00 00 00 00" },
-        { "type": "text", "id": "email", "label": "E-mail", "default": "contact@divano.ma" }
-      ]
     }
   ],
+  "max_blocks": 3,
   "default": {
     "blocks": [
-      { "type": "menu", "settings": { "title": "Boutique" } },
-      { "type": "menu", "settings": { "title": "Maison" } },
-      { "type": "menu", "settings": { "title": "Aide" } },
-      { "type": "contact", "settings": {} }
+      { "type": "menu", "settings": { "title": "Découvrir" } },
+      { "type": "menu", "settings": { "title": "La marque" } },
+      { "type": "menu", "settings": { "title": "Aide" } }
     ]
   }
 }

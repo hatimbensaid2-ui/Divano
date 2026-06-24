@@ -59,6 +59,24 @@
     });
   });
 
+  // Filtre par catégorie (produits populaires)
+  document.querySelectorAll('[data-filter-tabs]').forEach(function (tabsEl) {
+    const featured = tabsEl.closest('.featured');
+    const grid = featured ? featured.querySelector('[data-filter-grid]') : null;
+    if (!grid) return;
+    const cards = grid.querySelectorAll('[data-cat]');
+    tabsEl.querySelectorAll('[data-filter]').forEach(function (tab) {
+      tab.addEventListener('click', function () {
+        tabsEl.querySelectorAll('[data-filter]').forEach(function (t) { t.setAttribute('aria-selected', 'false'); });
+        tab.setAttribute('aria-selected', 'true');
+        const key = tab.dataset.filter;
+        cards.forEach(function (card) {
+          card.style.display = (key === 'all' || card.dataset.cat === key) ? '' : 'none';
+        });
+      });
+    });
+  });
+
   // Sélecteur de quantité
   document.querySelectorAll('[data-qty]').forEach(function (qty) {
     const input = qty.querySelector('input');

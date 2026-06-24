@@ -3,27 +3,26 @@
     "hero": {
       "type": "hero",
       "settings": {
-        "eyebrow": "Mobilier d'intérieur · Maroc",
         "title": "Créer de beaux espaces pour la <em>vie moderne</em>",
-        "lead": "Une collection pensée pour apporter harmonie, confort et élégance à chaque pièce de votre maison. Chaque création est conçue pour sublimer votre quotidien.",
-        "button_label": "Découvrir la collection",
-        "link_label": "Nos nouveautés",
-        "chip1_title": "Canapé Bouclé",
-        "chip1_text": "Le confort moelleux au design sculptural.",
-        "chip2_title": "Fauteuil Velours",
-        "chip2_text": "Détendez-vous dans un confort intemporel."
+        "lead": "Une collection pensée pour apporter harmonie, confort et élégance à chaque pièce de votre maison. Chaque création sublime votre quotidien.",
+        "button_label": "Acheter maintenant",
+        "image_left_fallback": "hero-main.png",
+        "chip_left_title": "Canapé Bouclé",
+        "chip_left_text": "Découvrez les tendances confort du moment.",
+        "image_right_fallback": "hero-secondary.png",
+        "chip_right_title": "Fauteuil Velours",
+        "chip_right_text": "Détendez-vous dans un confort intemporel."
       }
     },
     "intro": {
       "type": "intro-stats",
       "blocks": {
         "a1": { "type": "avatar" },
-        "a2": { "type": "avatar" },
-        "a3": { "type": "avatar" }
+        "a2": { "type": "avatar" }
       },
-      "block_order": ["a1", "a2", "a3"],
+      "block_order": ["a1", "a2"],
       "settings": {
-        "title": "Découvrir le mobilier d'exception, en toute simplicité",
+        "title": "Trouver le mobilier d'exception, en toute simplicité",
         "stat_number": "2K+",
         "stat_label": "Clients satisfaits",
         "text": "Notre mission : rendre le mobilier premium accessible, magnifiquement conçu et facile à intégrer dans chaque foyer marocain."
@@ -32,37 +31,30 @@
     "featured": {
       "type": "featured-collection",
       "blocks": {
-        "t1": { "type": "tab", "settings": { "label": "Canapés" } },
-        "t2": { "type": "tab", "settings": { "label": "Fauteuils" } },
-        "t3": { "type": "tab", "settings": { "label": "Tables" } }
+        "p1": { "type": "product", "settings": { "title": "Canapé Bouclé Crème", "category": "Canapés", "price": "8 900 MAD", "image_fallback": "product-sofa-boucle.png", "badge": "Nouveau" } },
+        "p2": { "type": "product", "settings": { "title": "Fauteuil Velours Moutarde", "category": "Fauteuils", "price": "3 200 MAD", "image_fallback": "product-chair-mustard.png" } },
+        "p3": { "type": "product", "settings": { "title": "Table d'Appoint Dorée", "category": "Tables", "price": "1 450 MAD", "image_fallback": "product-side-table-gold.png" } },
+        "p4": { "type": "product", "settings": { "title": "Tables Gigognes Marbre", "category": "Tables", "price": "2 700 MAD", "compare_at": "3 100 MAD", "image_fallback": "product-tables-black.png", "badge": "Promo" } },
+        "p5": { "type": "product", "settings": { "title": "Fauteuil Velours Ambre", "category": "Fauteuils", "price": "3 200 MAD", "image_fallback": "product-chair-mustard-2.png" } },
+        "p6": { "type": "product", "settings": { "title": "Ensemble Salle à Manger", "category": "Tables", "price": "12 500 MAD", "image_fallback": "product-dining-set.png" } },
+        "p7": { "type": "product", "settings": { "title": "Canapé Bouclé (vue face)", "category": "Canapés", "price": "8 900 MAD", "image_fallback": "hero-main.png" } },
+        "p8": { "type": "product", "settings": { "title": "Fauteuil Velours (profil)", "category": "Fauteuils", "price": "3 200 MAD", "image_fallback": "hero-secondary.png" } }
       },
-      "block_order": ["t1", "t2", "t3"],
+      "block_order": ["p1", "p2", "p3", "p4", "p5", "p6", "p7", "p8"],
       "settings": {
         "eyebrow": "Notre sélection",
         "title": "Produits populaires",
         "lead": "Découvrez nos pièces les plus appréciées, alliant confort, durabilité et élégance.",
-        "products_to_show": 8,
         "products_per_row": 4,
         "button_label": "Voir tout"
       }
-    },
-    "categories": {
-      "type": "category-list",
-      "blocks": {
-        "c1": { "type": "category", "settings": { "title": "Canapés", "fallback": "category-sofas.png" } },
-        "c2": { "type": "category", "settings": { "title": "Fauteuils", "fallback": "category-chairs.png" } },
-        "c3": { "type": "category", "settings": { "title": "Tables", "fallback": "category-tables.png" } },
-        "c4": { "type": "category", "settings": { "title": "Tables d'appoint", "fallback": "category-lighting.png" } }
-      },
-      "block_order": ["c1", "c2", "c3", "c4"],
-      "settings": { "eyebrow": "Explorer", "title": "Acheter par catégorie" }
     },
     "values": {
       "type": "value-props",
       "blocks": {
         "v1": { "type": "value", "settings": { "icon": "gem", "title": "Design moderne et intemporel", "text": "Des silhouettes épurées qui traversent les tendances sans se démoder." } },
         "v2": { "type": "value", "settings": { "icon": "leaf", "title": "Fabrication soignée", "text": "Bois nobles et tissus sélectionnés, conçus pour durer dans le temps." } },
-        "v3": { "type": "value", "settings": { "icon": "truck", "title": "Achat sans souci", "text": "Livraison partout au Maroc, retours faciles et paiement à la livraison." } },
+        "v3": { "type": "value", "settings": { "icon": "sofa", "title": "Achat sans souci", "text": "Livraison partout au Maroc, retours faciles et paiement à la livraison." } },
         "v4": { "type": "image" },
         "v5": { "type": "value", "settings": { "icon": "shield", "title": "Matériaux premium", "highlight": true, "text": "Fabriqués avec soin par des artisans. Chaque détail pensé pour la qualité." } }
       },
@@ -73,37 +65,23 @@
         "lead": "Nous allions une esthétique intemporelle à une durabilité réelle, pour que chaque pièce se sente chez elle dans votre espace."
       }
     },
-    "eras": {
-      "type": "collection-carousel",
-      "settings": {
-        "eyebrow": "Collections",
-        "title": "Pièces d'exception. Espaces modernes.",
-        "lead": "Explorez nos dernières créations : chaque collection est un ensemble cohérent de silhouettes architecturales.",
-        "products_to_show": 8,
-        "button_label": "Nos collections"
-      }
-    },
     "testimonials": {
       "type": "testimonials",
       "blocks": {
-        "r1": { "type": "testimonial", "settings": { "name": "Salma B.", "role": "Casablanca", "text": "La qualité dépasse mes attentes. Mon salon est métamorphosé, et la livraison a été impeccable." } },
+        "r1": { "type": "testimonial", "settings": { "name": "Salma B.", "role": "Casablanca", "text": "La qualité dépasse toutes mes attentes. Mon salon est métamorphosé et la livraison a été impeccable." } },
         "r2": { "type": "testimonial", "settings": { "name": "Younes A.", "role": "Rabat", "text": "Un design magnifique et un confort incroyable. L'équipe Divano a été à l'écoute du début à la fin." } }
       },
       "block_order": ["r1", "r2"],
       "settings": {
         "eyebrow": "Avis clients",
         "title": "Ce que disent nos clients",
-        "lead": "Nos clients sont au cœur de tout ce que nous faisons. Voici comment Divano a transformé leur intérieur."
-      }
-    },
-    "newsletter": {
-      "type": "newsletter",
-      "settings": {
-        "eyebrow": "Restons en contact",
-        "title": "Inscrivez-vous à notre newsletter",
-        "lead": "Recevez nos nouveautés, conseils déco et offres exclusives, directement dans votre boîte mail."
+        "lead": "Nos clients sont au cœur de tout ce que nous faisons. Découvrez comment Divano a transformé leur intérieur.",
+        "feat_image_fallback": "product-sofa-boucle.png",
+        "feat_title": "Canapé Bouclé",
+        "feat_price": "8 900 MAD",
+        "feat_text": "Le confort réinventé : un équilibre parfait entre élégance et détente."
       }
     }
   },
-  "order": ["hero", "intro", "featured", "categories", "values", "eras", "testimonials", "newsletter"]
+  "order": ["hero", "intro", "featured", "values", "testimonials"]
 }

@@ -40,8 +40,8 @@
       "sku": "Référence",
       "vendor": "Marque",
       "description": "Description",
-      "free_shipping": "Livraison offerte dès 1500 MAD",
-      "secure_payment": "Paiement 100% sécurisé",
+      "free_shipping": "Livraison rapide partout au Maroc",
+      "secure_payment": "Paiement à la livraison disponible",
       "delivery": "Livraison partout au Maroc"
     },
     "facets": {
@@ -68,7 +68,7 @@
   },
   "sections": {
     "header": {
-      "announcement": "Livraison offerte dès 1500 MAD partout au Maroc"
+      "announcement": "Livraison partout au Maroc · Paiement à la livraison"
     }
   }
 }

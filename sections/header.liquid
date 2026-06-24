@@ -15,9 +15,17 @@
     </a>
 
     <nav class="header__nav" data-nav aria-label="Principal">
-      {%- for link in section.settings.menu.links -%}
-        <a href="{{ link.url }}">{{ link.title }}</a>
-      {%- endfor -%}
+      {%- if section.settings.menu != blank and section.settings.menu.links.size > 0 -%}
+        {%- for link in section.settings.menu.links -%}
+          <a href="{{ link.url }}">{{ link.title }}</a>
+        {%- endfor -%}
+      {%- else -%}
+        <a href="{{ routes.all_products_collection_url }}">Canapés</a>
+        <a href="{{ routes.all_products_collection_url }}">Fauteuils</a>
+        <a href="{{ routes.all_products_collection_url }}">Tables</a>
+        <a href="{{ routes.all_products_collection_url }}">Salle à manger</a>
+        <a href="{{ routes.all_products_collection_url }}">Déco</a>
+      {%- endif -%}
     </nav>
 
     <div class="header__actions">

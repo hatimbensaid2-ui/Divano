@@ -5,7 +5,7 @@
     "announcement-bar": {
       "type": "announcement-bar",
       "settings": {
-        "text": "Livraison offerte dès 1500 MAD partout au Maroc · Paiement à la livraison",
+        "text": "Livraison partout au Maroc · Paiement à la livraison",
         "bg": "#0F2820",
         "color": "#F4EFE7"
       }

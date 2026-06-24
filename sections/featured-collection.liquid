@@ -1,54 +1,76 @@
 {%- liquid
   assign cols = section.settings.products_per_row
-  assign limit = section.settings.products_to_show
+  assign use_collection = false
+  if section.settings.collection != blank and section.settings.collection.products.size > 0
+    assign use_collection = true
+  endif
+
+  comment
+    Catégories uniques issues des blocs (pour les onglets)
+  endcomment
+  assign cats = ''
+  for block in section.blocks
+    assign c = block.settings.category | strip
+    if c != blank and cats contains c == false
+      assign cats = cats | append: c | append: '~'
+    endif
+  endfor
+  assign cat_list = cats | split: '~'
 -%}
-<section class="section featured" id="section-{{ section.id }}">
+<section class="section featured">
   <div class="page-width">
     <div class="collection-head collection-head--center" data-reveal>
       {%- if section.settings.eyebrow != blank -%}<span class="eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
       <h2 class="section-title">{{ section.settings.title }}</h2>
       {%- if section.settings.lead != blank -%}<p class="section-lead" style="text-align:center;">{{ section.settings.lead }}</p>{%- endif -%}
 
-      <div class="tabs" data-tabs="{{ section.id }}" role="tablist" style="margin-top:1.4rem;">
-        <button class="tab" data-tab="all" role="tab" aria-selected="true">Tout</button>
-        {%- for block in section.blocks -%}
-          {%- if block.settings.collection != blank -%}
-            <button class="tab" data-tab="{{ block.id }}" role="tab" aria-selected="false" {{ block.shopify_attributes }}>
-              {{ block.settings.label | default: block.settings.collection.title }}
-            </button>
-          {%- endif -%}
-        {%- endfor -%}
-      </div>
+      {%- unless use_collection -%}
+        <div class="tabs" data-filter-tabs style="margin-top:1.5rem;">
+          <button class="tab" data-filter="all" aria-selected="true">Tout</button>
+          {%- for c in cat_list -%}
+            <button class="tab" data-filter="{{ c | handle }}" aria-selected="false">{{ c }}</button>
+          {%- endfor -%}
+        </div>
+      {%- endunless -%}
     </div>
 
-    {%- comment -%} Panneau « Tout » {%- endcomment -%}
-    <div class="product-grid" style="--cols:{{ cols }};" data-panel="{{ section.id }}" data-key="all">
-      {%- if section.settings.collection != blank and section.settings.collection.products.size > 0 -%}
-        {%- for product in section.settings.collection.products limit: limit -%}
+    <div class="product-grid" style="--cols:{{ cols }};" data-filter-grid>
+      {%- if use_collection -%}
+        {%- for product in section.settings.collection.products limit: section.settings.products_to_show -%}
           {% render 'product-card', card_product: product %}
         {%- endfor -%}
       {%- else -%}
-        {%- for i in (1..cols) -%}
-          <article class="card"><a class="card__media">{{ 'product-' | append: i | placeholder_svg_tag: 'placeholder' }}</a>
-          <div class="card__body"><div><h3 class="card__title">Produit exemple</h3></div><div class="card__price">0,00 MAD</div></div></article>
+        {%- for block in section.blocks -%}
+          <article class="card" data-cat="{{ block.settings.category | handle }}" {{ block.shopify_attributes }} data-reveal>
+            <a class="card__media" href="{{ block.settings.link | default: '#' }}">
+              {%- if block.settings.badge != blank -%}<span class="card__badge">{{ block.settings.badge }}</span>{%- endif -%}
+              <span class="card__fav" aria-hidden="true">{% render 'icon', icon: 'heart' %}</span>
+              {%- if block.settings.image != blank -%}
+                <img src="{{ block.settings.image | image_url: width: 600 }}" alt="{{ block.settings.title | escape }}" width="400" height="400" loading="lazy">
+              {%- elsif block.settings.image_fallback != blank -%}
+                <img src="{{ block.settings.image_fallback | asset_url }}" alt="{{ block.settings.title | escape }}" width="400" height="400" loading="lazy">
+              {%- else -%}
+                {{ 'product-1' | placeholder_svg_tag: 'placeholder' }}
+              {%- endif -%}
+            </a>
+            <div class="card__body">
+              <div>
+                <h3 class="card__title"><a href="{{ block.settings.link | default: '#' }}">{{ block.settings.title }}</a></h3>
+                {%- if block.settings.category != blank -%}<p class="card__vendor">{{ block.settings.category }}</p>{%- endif -%}
+              </div>
+              <div class="card__price">
+                {%- if block.settings.compare_at != blank -%}<del>{{ block.settings.compare_at }}</del>{%- endif -%}
+                {{ block.settings.price }}
+              </div>
+            </div>
+          </article>
         {%- endfor -%}
       {%- endif -%}
     </div>
 
-    {%- comment -%} Panneaux par catégorie {%- endcomment -%}
-    {%- for block in section.blocks -%}
-      {%- if block.settings.collection != blank -%}
-        <div class="product-grid" style="--cols:{{ cols }};" data-panel="{{ section.id }}" data-key="{{ block.id }}" hidden>
-          {%- for product in block.settings.collection.products limit: limit -%}
-            {% render 'product-card', card_product: product %}
-          {%- endfor -%}
-        </div>
-      {%- endif -%}
-    {%- endfor -%}
-
     {%- if section.settings.button_label != blank -%}
       <div style="text-align:center;margin-top:2.6rem;" data-reveal>
-        <a href="{{ section.settings.collection.url | default: routes.all_products_collection_url }}" class="btn btn--outline">
+        <a href="{{ section.settings.button_link | default: section.settings.collection.url | default: routes.all_products_collection_url }}" class="btn btn--outline">
           {{ section.settings.button_label }}<span class="btn__dot" style="background:var(--color-line);">{% render 'icon', icon: 'arrow-right' %}</span>
         </a>
       </div>
@@ -58,27 +80,48 @@
 
 {% schema %}
 {
-  "name": "Collection en vedette",
+  "name": "Produits populaires",
   "settings": [
     { "type": "text", "id": "eyebrow", "label": "Sur-titre", "default": "Notre sélection" },
     { "type": "text", "id": "title", "label": "Titre", "default": "Produits populaires" },
     { "type": "textarea", "id": "lead", "label": "Texte", "default": "Découvrez nos pièces les plus appréciées, alliant confort, durabilité et élégance." },
-    { "type": "collection", "id": "collection", "label": "Collection principale (onglet « Tout »)" },
-    { "type": "range", "id": "products_to_show", "label": "Produits affichés", "min": 4, "max": 16, "step": 4, "default": 8 },
+    { "type": "header", "content": "Mode automatique (optionnel)" },
+    { "type": "collection", "id": "collection", "label": "Collection", "info": "Si renseignée, remplace les produits manuels ci-dessous et masque les onglets." },
+    { "type": "range", "id": "products_to_show", "label": "Produits (mode collection)", "min": 4, "max": 16, "step": 1, "default": 8 },
+    { "type": "header", "content": "Affichage" },
     { "type": "range", "id": "products_per_row", "label": "Produits par ligne", "min": 2, "max": 5, "step": 1, "default": 4 },
-    { "type": "text", "id": "button_label", "label": "Bouton", "default": "Voir tout" }
+    { "type": "text", "id": "button_label", "label": "Bouton", "default": "Voir tout" },
+    { "type": "url", "id": "button_link", "label": "Lien du bouton" }
   ],
   "blocks": [
     {
-      "type": "tab",
-      "name": "Onglet catégorie",
+      "type": "product",
+      "name": "Produit",
       "settings": [
-        { "type": "collection", "id": "collection", "label": "Collection" },
-        { "type": "text", "id": "label", "label": "Libellé de l'onglet" }
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "image_fallback", "label": "Image par défaut (asset)", "info": "ex : product-sofa-boucle.png" },
+        { "type": "text", "id": "title", "label": "Nom", "default": "Canapé Bouclé" },
+        { "type": "text", "id": "category", "label": "Catégorie (onglet)", "default": "Canapés" },
+        { "type": "text", "id": "price", "label": "Prix", "default": "4 500 MAD" },
+        { "type": "text", "id": "compare_at", "label": "Prix barré (optionnel)" },
+        { "type": "text", "id": "badge", "label": "Badge (optionnel)" },
+        { "type": "url", "id": "link", "label": "Lien produit" }
       ]
     }
   ],
-  "max_blocks": 5,
-  "presets": [{ "name": "Collection en vedette", "blocks": [ { "type": "tab" }, { "type": "tab" }, { "type": "tab" } ] }]
+  "max_blocks": 12,
+  "presets": [{
+    "name": "Produits populaires",
+    "blocks": [
+      { "type": "product", "settings": { "title": "Canapé Bouclé", "category": "Canapés", "price": "8 900 MAD", "image_fallback": "product-sofa-boucle.png", "badge": "Nouveau" } },
+      { "type": "product", "settings": { "title": "Fauteuil Velours Moutarde", "category": "Fauteuils", "price": "3 200 MAD", "image_fallback": "product-chair-mustard.png" } },
+      { "type": "product", "settings": { "title": "Table d'Appoint Dorée", "category": "Tables", "price": "1 450 MAD", "image_fallback": "product-side-table-gold.png" } },
+      { "type": "product", "settings": { "title": "Tables Gigognes Marbre", "category": "Tables", "price": "2 700 MAD", "image_fallback": "product-tables-black.png", "compare_at": "3 100 MAD", "badge": "Promo" } },
+      { "type": "product", "settings": { "title": "Fauteuil Velours (profil)", "category": "Fauteuils", "price": "3 200 MAD", "image_fallback": "product-chair-mustard-2.png" } },
+      { "type": "product", "settings": { "title": "Ensemble Salle à Manger", "category": "Tables", "price": "12 500 MAD", "image_fallback": "product-dining-set.png" } },
+      { "type": "product", "settings": { "title": "Canapé Bouclé Crème", "category": "Canapés", "price": "8 900 MAD", "image_fallback": "hero-main.png" } },
+      { "type": "product", "settings": { "title": "Fauteuil Velours Ambre", "category": "Fauteuils", "price": "3 200 MAD", "image_fallback": "hero-secondary.png" } }
+    ]
+  }]
 }
 {% endschema %}

@@ -30,8 +30,8 @@
       "sku": "SKU",
       "vendor": "Brand",
       "description": "Description",
-      "free_shipping": "Free shipping over 1500 MAD",
-      "secure_payment": "100% secure payment",
+      "free_shipping": "Fast delivery across Morocco",
+      "secure_payment": "Cash on delivery available",
       "delivery": "Delivery across Morocco"
     },
     "facets": {
@@ -57,6 +57,6 @@
     "remove": "Remove"
   },
   "sections": {
-    "header": { "announcement": "Free shipping over 1500 MAD across Morocco" }
+    "header": { "announcement": "Delivery across Morocco · Cash on delivery" }
   }
 }
