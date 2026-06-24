@@ -180,7 +180,9 @@
         },
         "v4": {
           "type": "image",
-          "settings": {}
+          "settings": {
+            "image": "shopify://shop_images/Royal_Stranger_Embrace_Armchair_Gentle_373_9-scaled.webp"
+          }
         },
         "v5": {
           "type": "value",
@@ -208,7 +210,7 @@
     "eras": {
       "type": "collection-carousel",
       "settings": {
-        "collection": "",
+        "collection": "fauteuils-chaises",
         "products_to_show": 8,
         "title_line1": "Pièces d'Exception.",
         "title_serif": "Espaces",
