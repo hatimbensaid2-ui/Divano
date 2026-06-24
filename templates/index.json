@@ -102,10 +102,9 @@
         "h3": {
           "type": "hotspot",
           "settings": {
-            "product": "fauteuil-design-sculptural-etreinte",
+            "product": "canape-compact",
             "x": 30,
-            "y": 45,
-            "image": "shopify://shop_images/Royal_Stranger_Embrace_Armchair_Gentle_373_7-scaled.webp",
+            "y": 57,
             "image_fallback": "product-side-table-gold.png",
             "vendor": "Divano",
             "title": "Table d'Appoint",
