@@ -341,7 +341,11 @@
     if (!main) return;
     const lightbox = gallery.querySelector('[data-lightbox]');
     const lbImg = gallery.querySelector('[data-lightbox-img]');
-    let idx = 0;
+    let idx = 0, lbZoomed = false;
+    const resetZoom = function () {
+      lbZoomed = false;
+      if (lbImg) { lbImg.classList.remove('is-zoomed'); lbImg.style.transform = ''; lbImg.style.transformOrigin = 'center'; }
+    };
     const show = function (i) {
       if (!thumbs.length) return;
       idx = (i + thumbs.length) % thumbs.length;
@@ -349,6 +353,7 @@
       const full = t.dataset.full || t.querySelector('img').src;
       main.src = full;
       if (lbImg) lbImg.src = full;
+      resetZoom();
       thumbs.forEach(function (x) { x.classList.toggle('is-active', x === t); });
     };
     thumbs.forEach(function (t, i) { t.addEventListener('click', function () { show(i); }); });
@@ -370,11 +375,29 @@
 
     // Clic sur l'image principale = image suivante. Zoom uniquement via l'icône.
     const zoomBtn = gallery.querySelector('[data-gallery-zoom]');
-    const openLb = function () { if (!lightbox) return; if (lbImg) lbImg.src = main.src; lightbox.hidden = false; document.body.style.overflow = 'hidden'; };
-    const closeLb = function () { if (!lightbox) return; lightbox.hidden = true; document.body.style.overflow = ''; };
+    const openLb = function () { if (!lightbox) return; if (lbImg) lbImg.src = main.src; resetZoom(); lightbox.hidden = false; document.body.style.overflow = 'hidden'; };
+    const closeLb = function () { if (!lightbox) return; resetZoom(); lightbox.hidden = true; document.body.style.overflow = ''; };
     if (zoomBtn) zoomBtn.addEventListener('click', function (e) { e.stopPropagation(); openLb(); });
     if (main && thumbs.length > 1) main.addEventListener('click', function () { show(idx + 1); });
-    if (lbImg) lbImg.addEventListener('click', function () { show(idx + 1); });
+
+    // Dans la visionneuse : clic = zoom/dézoom, déplacement = panoramique
+    if (lbImg) {
+      const panTo = function (clientX, clientY) {
+        const r = lbImg.getBoundingClientRect();
+        const x = Math.max(0, Math.min(100, ((clientX - r.left) / r.width) * 100));
+        const y = Math.max(0, Math.min(100, ((clientY - r.top) / r.height) * 100));
+        lbImg.style.transformOrigin = x + '% ' + y + '%';
+        lbImg.style.transform = 'scale(2.4)';
+      };
+      lbImg.addEventListener('click', function (e) {
+        e.stopPropagation();
+        lbZoomed = !lbZoomed;
+        lbImg.classList.toggle('is-zoomed', lbZoomed);
+        if (lbZoomed) panTo(e.clientX, e.clientY); else { lbImg.style.transform = ''; lbImg.style.transformOrigin = 'center'; }
+      });
+      lbImg.addEventListener('mousemove', function (e) { if (lbZoomed) panTo(e.clientX, e.clientY); });
+      lbImg.addEventListener('touchmove', function (e) { if (lbZoomed && e.touches[0]) panTo(e.touches[0].clientX, e.touches[0].clientY); }, { passive: true });
+    }
     if (lightbox) {
       lightbox.addEventListener('click', function (e) {
         if (e.target === lightbox || e.target.closest('[data-lightbox-close]')) closeLb();
