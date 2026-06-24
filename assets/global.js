@@ -43,12 +43,40 @@
     if (next) next.addEventListener('click', function () { track.scrollBy({ left: amount(), behavior: 'smooth' }); });
   });
 
-  // Carrousel centré « Curated Eras »
+  // Carrousel centré « Curated Eras » — boucle infinie + lecture auto
   document.querySelectorAll('[data-eras]').forEach(function (root) {
     const track = root.querySelector('[data-eras-track]');
     if (!track) return;
+    const originals = Array.prototype.slice.call(track.querySelectorAll('.eras__card'));
+    const N = originals.length;
+    if (N < 2) return;
+
+    // Cloner l'ensemble avant et après pour un défilement sans fin
+    const beforeFrag = document.createDocumentFragment();
+    const afterFrag = document.createDocumentFragment();
+    originals.forEach(function (card) {
+      const a = card.cloneNode(true); a.setAttribute('aria-hidden', 'true'); a.setAttribute('tabindex', '-1'); a.classList.add('is-clone');
+      const b = card.cloneNode(true); b.setAttribute('aria-hidden', 'true'); b.setAttribute('tabindex', '-1'); b.classList.add('is-clone');
+      beforeFrag.appendChild(a); afterFrag.appendChild(b);
+    });
+    track.insertBefore(beforeFrag, track.firstChild);
+    track.appendChild(afterFrag);
+
     const cards = Array.prototype.slice.call(track.querySelectorAll('.eras__card'));
-    if (!cards.length) return;
+    let setWidth = 0;
+
+    function measure() {
+      // distance entre deux cartes consécutives × nombre d'origines
+      const stepW = cards[1].offsetLeft - cards[0].offsetLeft;
+      setWidth = stepW * N;
+    }
+
+    function jump(delta) {
+      const prevBehavior = track.style.scrollBehavior;
+      track.style.scrollBehavior = 'auto';
+      track.scrollLeft += delta;
+      track.style.scrollBehavior = prevBehavior;
+    }
 
     function update() {
       const box = track.getBoundingClientRect();
@@ -64,24 +92,43 @@
 
     let raf;
     track.addEventListener('scroll', function () {
+      // boucle : repositionner silencieusement quand on entre dans une zone clonée
+      if (track.scrollLeft >= setWidth * 2) { jump(-setWidth); }
+      else if (track.scrollLeft <= 0) { jump(setWidth); }
       cancelAnimationFrame(raf);
       raf = requestAnimationFrame(update);
     });
 
-    const step = function () { return cards[0].offsetWidth + 16; };
+    const step = function () { return cards[0].offsetLeft && (cards[1].offsetLeft - cards[0].offsetLeft) || cards[0].offsetWidth + 16; };
     const prev = root.querySelector('[data-eras-prev]');
     const next = root.querySelector('[data-eras-next]');
-    if (prev) prev.addEventListener('click', function () { track.scrollBy({ left: -step(), behavior: 'smooth' }); });
-    if (next) next.addEventListener('click', function () { track.scrollBy({ left: step(), behavior: 'smooth' }); });
+    if (prev) prev.addEventListener('click', function () { stopAuto(); track.scrollBy({ left: -step(), behavior: 'smooth' }); restartAuto(); });
+    if (next) next.addEventListener('click', function () { stopAuto(); track.scrollBy({ left: step(), behavior: 'smooth' }); restartAuto(); });
 
-    function centerMiddle() {
-      const mid = cards[Math.floor(cards.length / 2)];
-      track.scrollLeft = mid.offsetLeft - (track.clientWidth / 2) + (mid.offsetWidth / 2);
+    // Lecture automatique
+    let auto = null, idleTimer = null;
+    function tick() { track.scrollBy({ left: step(), behavior: 'smooth' }); }
+    function startAuto() { if (!auto) auto = setInterval(tick, 3000); }
+    function stopAuto() { clearInterval(auto); auto = null; }
+    function restartAuto() { clearTimeout(idleTimer); idleTimer = setTimeout(startAuto, 4000); }
+
+    ['pointerdown', 'wheel', 'touchstart'].forEach(function (ev) {
+      track.addEventListener(ev, function () { stopAuto(); restartAuto(); }, { passive: true });
+    });
+    root.addEventListener('mouseenter', stopAuto);
+    root.addEventListener('mouseleave', startAuto);
+    document.addEventListener('visibilitychange', function () { document.hidden ? stopAuto() : startAuto(); });
+
+    function init() {
+      measure();
+      // démarrer au début de l'ensemble central (les clones forment les tampons)
+      jump(setWidth - track.scrollLeft);
       update();
     }
-    centerMiddle();
-    window.addEventListener('load', centerMiddle);
-    window.addEventListener('resize', update);
+    init();
+    window.addEventListener('load', init);
+    let rz; window.addEventListener('resize', function () { clearTimeout(rz); rz = setTimeout(init, 200); });
+    startAuto();
   });
 
   // Onglets de filtre (collection en vedette)
