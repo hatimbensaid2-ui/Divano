@@ -99,7 +99,7 @@
     "shopimage": {
       "type": "shop-image",
       "blocks": {
-        "slide_cPjYK7": {
+        "slide_9PqyYr": {
           "type": "slide",
           "settings": {
             "image": "shopify://shop_images/Royal_Stranger_Embrace_Armchair_Gentle_373_9-scaled.webp",
@@ -169,7 +169,7 @@
         }
       },
       "block_order": [
-        "slide_cPjYK7",
+        "slide_9PqyYr",
         "slide1"
       ],
       "settings": {
