@@ -12,16 +12,6 @@
     "hero_banner": {
       "type": "hero-banner",
       "blocks": {
-        "s1": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/Royal_Stranger_Embrace_Armchair_Gentle_373_9-scaled.webp",
-            "eyebrow": "Divano · Mobilier",
-            "title": "Les petits détails font <em>toute</em> la différence",
-            "button_label": "Voir les produits",
-            "button_link": ""
-          }
-        },
         "s2": {
           "type": "slide",
           "settings": {
@@ -31,11 +21,21 @@
             "button_label": "Découvrir",
             "button_link": ""
           }
+        },
+        "s1": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Royal_Stranger_Embrace_Armchair_Gentle_373_9-scaled.webp",
+            "eyebrow": "Divano · Mobilier",
+            "title": "Les petits détails font <em>toute</em> la différence",
+            "button_label": "Voir les produits",
+            "button_link": ""
+          }
         }
       },
       "block_order": [
-        "s1",
-        "s2"
+        "s2",
+        "s1"
       ],
       "settings": {}
     },
