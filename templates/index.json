@@ -99,14 +99,51 @@
     "shopimage": {
       "type": "shop-image",
       "blocks": {
-        "img1": { "type": "image", "settings": { "image": "shopify://shop_images/canape-compact-645992.webp" } },
-        "h3": { "type": "hotspot", "settings": { "product": "canape-compact", "x": 38, "y": 58, "vendor": "Divano" } },
-        "img2": { "type": "image", "settings": {} },
-        "h4": { "type": "hotspot", "settings": { "x": 32, "y": 52, "title": "Tables Gigognes", "vendor": "Divano", "price": "2 700,00 dh", "image_fallback": "product-tables-black.png" } },
-        "h5": { "type": "hotspot", "settings": { "x": 58, "y": 64, "title": "Ensemble Repas", "vendor": "Divano", "price": "12 500,00 dh", "image_fallback": "product-dining-set.png" } },
-        "h6": { "type": "hotspot", "settings": { "x": 72, "y": 44, "title": "Table d'Appoint Dorée", "vendor": "Divano", "price": "1 450,00 dh", "image_fallback": "product-side-table-gold.png" } }
+        "img1": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/canape-compact-645992.webp"
+          }
+        },
+        "h3": {
+          "type": "hotspot",
+          "settings": {
+            "product": "canape-compact",
+            "x": 38,
+            "y": 58,
+            "image_fallback": "",
+            "vendor": "Divano",
+            "title": "Produit Divano",
+            "price": "0,00 dh",
+            "link": ""
+          }
+        },
+        "img2": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Royal_Stranger_Embrace_Armchair_Gentle_373_9-scaled.webp"
+          }
+        },
+        "h4": {
+          "type": "hotspot",
+          "settings": {
+            "product": "fauteuil-design-sculptural-etreinte",
+            "x": 32,
+            "y": 52,
+            "image_fallback": "",
+            "vendor": "Divano",
+            "title": "",
+            "price": "",
+            "link": ""
+          }
+        }
       },
-      "block_order": ["img1", "h3", "img2", "h4", "h5", "h6"],
+      "block_order": [
+        "img1",
+        "h3",
+        "img2",
+        "h4"
+      ],
       "settings": {
         "eyebrow": "",
         "title": "Collection Divano",
@@ -116,9 +153,18 @@
     "intro": {
       "type": "intro-stats",
       "blocks": {
-        "a1": { "type": "avatar", "settings": {} },
-        "a2": { "type": "avatar", "settings": {} },
-        "a3": { "type": "avatar", "settings": {} }
+        "a1": {
+          "type": "avatar",
+          "settings": {}
+        },
+        "a2": {
+          "type": "avatar",
+          "settings": {}
+        },
+        "a3": {
+          "type": "avatar",
+          "settings": {}
+        }
       },
       "block_order": [
         "a1",
