@@ -81,8 +81,8 @@
           {%- if product.selected_or_first_available_variant.sku != blank -%}
             <span><strong>{{ 'products.product.sku' | t }} :</strong> {{ product.selected_or_first_available_variant.sku }}</span>
           {%- endif -%}
-          <span>{% render 'icon', icon: 'truck' %} {{ 'products.product.free_shipping' | t }}</span>
-          <span>{% render 'icon', icon: 'shield' %} {{ 'products.product.secure_payment' | t }}</span>
+          <span>{{ 'products.product.free_shipping' | t }}</span>
+          <span>{{ 'products.product.secure_payment' | t }}</span>
         </div>
       </div>
     </div>

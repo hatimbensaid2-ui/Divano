@@ -584,9 +584,15 @@ body.template-index .header.header--solid {
 .product__main-img {
   position: relative;
   background: var(--color-card); border-radius: var(--radius-m); aspect-ratio: 1/1;
-  display: grid; place-items: center; overflow: hidden;
+  display: grid; place-items: center; overflow: hidden; cursor: zoom-in;
 }
-.product__main-img img { object-fit: contain; max-height: 100%; padding: 6%; }
+.product__main-img.is-grabbing { cursor: grabbing; }
+.product__main-img img {
+  object-fit: contain; max-height: 100%; padding: 6%;
+  transition: transform .2s var(--ease); will-change: transform;
+  user-select: none; -webkit-user-drag: none;
+}
+.product__meta svg { width: 18px; height: 18px; }
 .product__nav {
   position: absolute; top: 50%; transform: translateY(-50%); z-index: 2;
   width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center;

@@ -292,6 +292,7 @@
       idx = (i + thumbs.length) % thumbs.length;
       const t = thumbs[idx];
       main.src = t.dataset.full || t.querySelector('img').src;
+      main.style.transform = ''; main.style.transformOrigin = 'center';
       thumbs.forEach(function (x) { x.classList.toggle('is-active', x === t); });
     };
     thumbs.forEach(function (t, i) { t.addEventListener('click', function () { show(i); }); });
@@ -299,16 +300,41 @@
     const next = gallery.querySelector('[data-gallery-next]');
     if (prev) prev.addEventListener('click', function () { show(idx - 1); });
     if (next) next.addEventListener('click', function () { show(idx + 1); });
+
     const stage = gallery.querySelector('[data-gallery-stage]');
     if (stage) {
-      let x0 = null;
-      stage.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; }, { passive: true });
+      // glissement tactile
+      let tx0 = null;
+      stage.addEventListener('touchstart', function (e) { tx0 = e.touches[0].clientX; }, { passive: true });
       stage.addEventListener('touchend', function (e) {
-        if (x0 === null) return;
-        const dx = e.changedTouches[0].clientX - x0;
+        if (tx0 === null) return;
+        const dx = e.changedTouches[0].clientX - tx0;
         if (Math.abs(dx) > 40) show(dx < 0 ? idx + 1 : idx - 1);
-        x0 = null;
+        tx0 = null;
       }, { passive: true });
+
+      // souris : survol = zoom, clic-glisser = changer d'image
+      let pressing = false, mx0 = 0, moved = 0;
+      stage.addEventListener('mousedown', function (e) {
+        if (e.target.closest('.product__nav')) return;
+        pressing = true; mx0 = e.clientX; moved = 0;
+        main.style.transition = 'none'; main.style.transform = ''; main.style.transformOrigin = 'center';
+        stage.classList.add('is-grabbing'); e.preventDefault();
+      });
+      window.addEventListener('mouseup', function () {
+        if (!pressing) return;
+        pressing = false; stage.classList.remove('is-grabbing'); main.style.transition = '';
+        if (Math.abs(moved) > 40) show(moved < 0 ? idx + 1 : idx - 1);
+      });
+      stage.addEventListener('mousemove', function (e) {
+        if (pressing) { moved = e.clientX - mx0; return; }
+        const r = stage.getBoundingClientRect();
+        main.style.transformOrigin = ((e.clientX - r.left) / r.width * 100) + '% ' + ((e.clientY - r.top) / r.height * 100) + '%';
+        main.style.transform = 'scale(2)';
+      });
+      stage.addEventListener('mouseleave', function () {
+        if (!pressing) { main.style.transform = ''; main.style.transformOrigin = 'center'; }
+      });
     }
   });
 
