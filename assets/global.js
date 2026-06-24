@@ -282,13 +282,34 @@
     });
   });
 
-  // Galerie produit
+  // Galerie produit (vignettes + flèches + glissement tactile)
   document.querySelectorAll('[data-gallery]').forEach(function (gallery) {
     const main = gallery.querySelector('[data-main-img]');
-    gallery.querySelectorAll('[data-thumb]').forEach(function (thumb) {
-      thumb.addEventListener('click', function () {
-        if (main) main.src = thumb.dataset.full || thumb.querySelector('img').src;
-      });
-    });
+    const thumbs = Array.prototype.slice.call(gallery.querySelectorAll('[data-thumb]'));
+    if (!main || !thumbs.length) return;
+    let idx = 0;
+    const show = function (i) {
+      idx = (i + thumbs.length) % thumbs.length;
+      const t = thumbs[idx];
+      main.src = t.dataset.full || t.querySelector('img').src;
+      thumbs.forEach(function (x) { x.classList.toggle('is-active', x === t); });
+    };
+    thumbs.forEach(function (t, i) { t.addEventListener('click', function () { show(i); }); });
+    const prev = gallery.querySelector('[data-gallery-prev]');
+    const next = gallery.querySelector('[data-gallery-next]');
+    if (prev) prev.addEventListener('click', function () { show(idx - 1); });
+    if (next) next.addEventListener('click', function () { show(idx + 1); });
+    const stage = gallery.querySelector('[data-gallery-stage]');
+    if (stage) {
+      let x0 = null;
+      stage.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; }, { passive: true });
+      stage.addEventListener('touchend', function (e) {
+        if (x0 === null) return;
+        const dx = e.changedTouches[0].clientX - x0;
+        if (Math.abs(dx) > 40) show(dx < 0 ? idx + 1 : idx - 1);
+        x0 = null;
+      }, { passive: true });
+    }
   });
+
 })();
