@@ -15,9 +15,11 @@
         "s1": {
           "type": "slide",
           "settings": {
+            "image": "shopify://shop_images/Royal_Stranger_Embrace_Armchair_Gentle_373_9-scaled.webp",
             "eyebrow": "Divano · Mobilier",
             "title": "Les petits détails font <em>toute</em> la différence",
-            "button_label": "Voir les produits"
+            "button_label": "Voir les produits",
+            "button_link": ""
           }
         },
         "s2": {
@@ -25,11 +27,16 @@
           "settings": {
             "eyebrow": "Collection Salon",
             "title": "Donnez vie à votre <em>intérieur</em>",
-            "button_label": "Découvrir"
+            "button_label": "Découvrir",
+            "button_link": ""
           }
         }
       },
-      "block_order": ["s1", "s2"]
+      "block_order": [
+        "s1",
+        "s2"
+      ],
+      "settings": {}
     },
     "values": {
       "type": "value-props",
@@ -73,6 +80,21 @@
         "lead": "Nous allions une esthétique intemporelle à une durabilité réelle, pour que chaque pièce se sente chez elle dans votre espace."
       }
     },
+    "eras": {
+      "type": "collection-carousel",
+      "settings": {
+        "collection": "fauteuils-chaises",
+        "products_to_show": 8,
+        "title_line1": "Pièces d'Exception.",
+        "title_serif": "Espaces",
+        "title_bold": "Modernes.",
+        "description": "Découvrez nos dernières créations. Chaque collection est un ensemble cohérent de silhouettes architecturales, pensées pour durer.",
+        "top_button_label": "Nos collections",
+        "top_button_link": "",
+        "bottom_button_label": "Explorer nos pièces",
+        "bottom_button_link": ""
+      }
+    },
     "intro": {
       "type": "intro-stats",
       "blocks": {
@@ -100,21 +122,6 @@
         "stat_number": "2K+",
         "stat_label": "Clients satisfaits",
         "text": "Notre mission : rendre le mobilier premium accessible, magnifiquement conçu et facile à intégrer dans chaque foyer marocain."
-      }
-    },
-    "eras": {
-      "type": "collection-carousel",
-      "settings": {
-        "collection": "fauteuils-chaises",
-        "products_to_show": 8,
-        "title_line1": "Pièces d'Exception.",
-        "title_serif": "Espaces",
-        "title_bold": "Modernes.",
-        "description": "Découvrez nos dernières créations. Chaque collection est un ensemble cohérent de silhouettes architecturales, pensées pour durer.",
-        "top_button_label": "Nos collections",
-        "top_button_link": "",
-        "bottom_button_label": "Explorer nos pièces",
-        "bottom_button_link": ""
       }
     }
   },
