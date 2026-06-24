@@ -691,6 +691,25 @@ body.template-index .header.header--solid {
 .cart__total { font-size: 1.3rem; font-weight: 700; border-top: 1px solid var(--color-line); padding-top: 1rem; margin-top: .6rem; }
 
 /* --------------------------------------------------------------------------
+   Bouton WhatsApp flottant
+   -------------------------------------------------------------------------- */
+.whatsapp-fab {
+  position: fixed; right: clamp(14px, 3vw, 26px); bottom: clamp(14px, 3vw, 26px); z-index: 90;
+  display: inline-flex; align-items: center; gap: .5rem;
+  background: #25D366; color: #fff; border-radius: var(--radius-pill); padding: 13px;
+  box-shadow: 0 12px 28px -10px rgba(0,0,0,.45);
+  transition: transform .25s var(--ease), box-shadow .25s var(--ease);
+}
+.whatsapp-fab:hover { transform: translateY(-2px) scale(1.05); box-shadow: 0 16px 32px -10px rgba(0,0,0,.5); }
+.whatsapp-fab svg { width: 30px; height: 30px; display: block; }
+.whatsapp-fab--labeled { padding: 11px 18px 11px 14px; }
+.whatsapp-fab__label { font-size: .92rem; font-weight: 600; white-space: nowrap; }
+@media (max-width: 600px) {
+  .whatsapp-fab--labeled .whatsapp-fab__label { display: none; }
+  .whatsapp-fab--labeled { padding: 13px; }
+}
+
+/* --------------------------------------------------------------------------
    Animations à l'apparition
    -------------------------------------------------------------------------- */
 [data-reveal] { opacity: 0; transform: translateY(26px); transition: opacity .7s var(--ease), transform .7s var(--ease); }

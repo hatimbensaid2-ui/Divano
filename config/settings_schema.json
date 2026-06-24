@@ -42,6 +42,14 @@
     ]
   },
   {
+    "name": "WhatsApp",
+    "settings": [
+      { "type": "text", "id": "whatsapp_number", "label": "Numéro WhatsApp", "info": "Format international, ex : +212 773 217 741. Laisser vide pour masquer le bouton.", "default": "+212 773 217 741" },
+      { "type": "text", "id": "whatsapp_message", "label": "Message pré-rempli", "default": "Bonjour Divano, j'ai une question à propos de vos produits." },
+      { "type": "text", "id": "whatsapp_label", "label": "Libellé à côté de l'icône (optionnel)" }
+    ]
+  },
+  {
     "name": "Réseaux sociaux",
     "settings": [
       { "type": "text", "id": "social_instagram", "label": "Instagram", "default": "https://instagram.com" },
