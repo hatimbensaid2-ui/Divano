@@ -28,35 +28,6 @@
         "chip_right_link": ""
       }
     },
-    "intro": {
-      "type": "intro-stats",
-      "blocks": {
-        "a1": {
-          "type": "avatar",
-          "settings": {}
-        },
-        "a2": {
-          "type": "avatar",
-          "settings": {}
-        },
-        "a3": {
-          "type": "avatar",
-          "settings": {}
-        }
-      },
-      "block_order": [
-        "a1",
-        "a2",
-        "a3"
-      ],
-      "settings": {
-        "title": "Découvrir le mobilier d'exception, en toute simplicité",
-        "show_avatars": true,
-        "stat_number": "2K+",
-        "stat_label": "Clients satisfaits",
-        "text": "Notre mission : rendre le mobilier premium accessible, magnifiquement conçu et facile à intégrer dans chaque foyer marocain."
-      }
-    },
     "values": {
       "type": "value-props",
       "blocks": {
@@ -99,6 +70,35 @@
         "lead": "Nous allions une esthétique intemporelle à une durabilité réelle, pour que chaque pièce se sente chez elle dans votre espace."
       }
     },
+    "intro": {
+      "type": "intro-stats",
+      "blocks": {
+        "a1": {
+          "type": "avatar",
+          "settings": {}
+        },
+        "a2": {
+          "type": "avatar",
+          "settings": {}
+        },
+        "a3": {
+          "type": "avatar",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "a1",
+        "a2",
+        "a3"
+      ],
+      "settings": {
+        "title": "Découvrir le mobilier d'exception, en toute simplicité",
+        "show_avatars": true,
+        "stat_number": "2K+",
+        "stat_label": "Clients satisfaits",
+        "text": "Notre mission : rendre le mobilier premium accessible, magnifiquement conçu et facile à intégrer dans chaque foyer marocain."
+      }
+    },
     "eras": {
       "type": "collection-carousel",
       "settings": {
@@ -117,8 +117,8 @@
   },
   "order": [
     "hero",
-    "intro",
     "values",
-    "eras"
+    "eras",
+    "intro"
   ]
 }
