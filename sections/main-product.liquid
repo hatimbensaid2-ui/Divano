@@ -8,6 +8,7 @@
           {%- else -%}
             {{ 'product-1' | placeholder_svg_tag: 'placeholder' }}
           {%- endif -%}
+          <button class="product__zoom" type="button" data-gallery-zoom aria-label="Agrandir l'image">{% render 'icon', icon: 'zoom' %}</button>
           {%- if product.media.size > 1 -%}
             <button class="product__nav product__nav--prev" type="button" data-gallery-prev aria-label="Image précédente">{% render 'icon', icon: 'arrow-left' %}</button>
             <button class="product__nav product__nav--next" type="button" data-gallery-next aria-label="Image suivante">{% render 'icon', icon: 'arrow-right' %}</button>
@@ -61,20 +62,19 @@
             {%- endfor -%}
           </select>
 
-          <div class="product__actions">
-            <div class="qty" data-qty>
-              <button type="button" data-step="down" aria-label="Moins">−</button>
-              <input type="number" name="quantity" value="1" min="1" aria-label="{{ 'products.product.quantity' | t }}">
-              <button type="button" data-step="up" aria-label="Plus">+</button>
-            </div>
+          <div class="qty" data-qty>
+            <button type="button" data-step="down" aria-label="Moins">−</button>
+            <input type="number" name="quantity" value="1" min="1" aria-label="{{ 'products.product.quantity' | t }}">
+            <button type="button" data-step="up" aria-label="Plus">+</button>
+          </div>
+          <div class="product__buttons">
             <button type="submit" name="add" class="btn btn--green" {% unless product.available %}disabled{% endunless %}>
               {%- if product.available -%}{{ 'products.product.add_to_cart' | t }}{%- else -%}{{ 'products.product.sold_out' | t }}{%- endif -%}
-              <span class="btn__dot">{% render 'icon', icon: 'cart' %}</span>
             </button>
+            {%- if product.available -%}
+              <button type="submit" name="checkout" class="btn btn--accent">{{ 'products.product.buy_now' | t }}</button>
+            {%- endif -%}
           </div>
-          {%- if product.available -%}
-            <button type="submit" name="checkout" class="btn btn--accent btn--block">{{ 'products.product.buy_now' | t }}</button>
-          {%- endif -%}
         {%- endform -%}
 
         <div class="product__meta">
@@ -85,6 +85,15 @@
           <span>{{ 'products.product.secure_payment' | t }}</span>
         </div>
       </div>
+    </div>
+
+    <div class="lightbox" data-lightbox hidden>
+      <button class="lightbox__close" type="button" data-lightbox-close aria-label="Fermer">{% render 'icon', icon: 'close' %}</button>
+      {%- if product.media.size > 1 -%}
+        <button class="lightbox__nav lightbox__nav--prev" type="button" data-gallery-prev aria-label="Image précédente">{% render 'icon', icon: 'arrow-left' %}</button>
+        <button class="lightbox__nav lightbox__nav--next" type="button" data-gallery-next aria-label="Image suivante">{% render 'icon', icon: 'arrow-right' %}</button>
+      {%- endif -%}
+      <img class="lightbox__img" data-lightbox-img src="" alt="{{ product.title | escape }}">
     </div>
 
     {%- if product.description != blank -%}

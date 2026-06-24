@@ -586,23 +586,60 @@ body.template-index .header.header--solid {
   background: var(--color-card); border-radius: var(--radius-m); aspect-ratio: 1/1;
   display: grid; place-items: center; overflow: hidden; cursor: zoom-in;
 }
-.product__main-img.is-grabbing { cursor: grabbing; }
-.product__main-img img {
-  object-fit: contain; max-height: 100%; padding: 6%;
-  transition: transform .2s var(--ease); will-change: transform;
-  user-select: none; -webkit-user-drag: none;
-}
+.product__main-img img { object-fit: contain; max-height: 100%; padding: 6%; }
 .product__meta svg { width: 18px; height: 18px; }
+
+/* Flèches : révélées au survol de l'image */
 .product__nav {
   position: absolute; top: 50%; transform: translateY(-50%); z-index: 2;
   width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center;
-  background: rgba(255,255,255,.9); color: var(--color-text); box-shadow: var(--shadow-card);
-  transition: background .25s var(--ease), transform .25s var(--ease);
+  background: rgba(255,255,255,.92); color: var(--color-text); box-shadow: var(--shadow-card);
+  opacity: 0; transition: opacity .25s var(--ease), background .25s var(--ease);
 }
+.product__main-img:hover .product__nav { opacity: 1; }
 .product__nav:hover { background: var(--color-text); color: #fff; }
 .product__nav svg { width: 20px; height: 20px; }
 .product__nav--prev { left: 14px; }
 .product__nav--next { right: 14px; }
+
+/* Icône zoom */
+.product__zoom {
+  position: absolute; top: 14px; right: 14px; z-index: 2;
+  width: 42px; height: 42px; border-radius: 50%; display: grid; place-items: center;
+  background: rgba(255,255,255,.92); color: var(--color-text); box-shadow: var(--shadow-card);
+  opacity: 0; transition: opacity .25s var(--ease), background .25s var(--ease);
+}
+.product__main-img:hover .product__zoom { opacity: 1; }
+.product__zoom:hover { background: var(--color-text); color: #fff; }
+.product__zoom svg { width: 20px; height: 20px; }
+@media (hover: none) {
+  .product__nav, .product__zoom { opacity: 1; }
+}
+
+/* Visionneuse plein écran */
+.lightbox {
+  position: fixed; inset: 0; z-index: 100; display: grid; place-items: center;
+  background: rgba(8, 18, 14, .92); padding: clamp(20px, 5vw, 64px);
+}
+.lightbox[hidden] { display: none; }
+.lightbox__img { max-width: 92vw; max-height: 88vh; object-fit: contain; border-radius: var(--radius-s); }
+.lightbox__close {
+  position: absolute; top: 20px; right: 24px; width: 48px; height: 48px; border-radius: 50%;
+  display: grid; place-items: center; color: #fff; border: 1px solid var(--color-line-light);
+  background: rgba(255,255,255,.06); transition: background .2s var(--ease);
+}
+.lightbox__close:hover { background: rgba(255,255,255,.16); }
+.lightbox__close svg { width: 22px; height: 22px; }
+.lightbox__nav {
+  position: absolute; top: 50%; transform: translateY(-50%); width: 54px; height: 54px;
+  border-radius: 50%; display: grid; place-items: center; color: #fff;
+  border: 1px solid var(--color-line-light); background: rgba(255,255,255,.06);
+  transition: background .2s var(--ease);
+}
+.lightbox__nav:hover { background: rgba(255,255,255,.16); }
+.lightbox__nav svg { width: 24px; height: 24px; }
+.lightbox__nav--prev { left: clamp(12px, 3vw, 40px); }
+.lightbox__nav--next { right: clamp(12px, 3vw, 40px); }
 .product__thumbs { display: flex; flex-wrap: wrap; gap: .7rem; margin-top: .8rem; }
 .product__thumb { width: 78px; height: 78px; border-radius: var(--radius-s); overflow: hidden; background: var(--color-card); border: 1px solid var(--color-line); padding: 6px; transition: border-color .2s var(--ease); }
 .product__thumb.is-active { border-color: var(--color-text); }
@@ -632,6 +669,8 @@ body.template-index .header.header--solid {
 .qty button { width: 44px; height: 46px; font-size: 1.2rem; color: var(--color-text); }
 .qty input { width: 44px; text-align: center; border: none; background: transparent; }
 .product__actions { display: flex; gap: .8rem; flex-wrap: wrap; align-items: center; }
+.product__buttons { display: flex; gap: .8rem; }
+.product__buttons .btn { flex: 1; justify-content: center; }
 .product__meta { margin-top: 1.8rem; border-top: 1px solid var(--color-line); padding-top: 1.4rem; display: grid; gap: .6rem; font-size: .9rem; color: var(--color-muted); }
 .product__meta strong { color: var(--color-text); }
 

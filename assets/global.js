@@ -287,23 +287,24 @@
     const main = gallery.querySelector('[data-main-img]');
     const thumbs = Array.prototype.slice.call(gallery.querySelectorAll('[data-thumb]'));
     if (!main || !thumbs.length) return;
+    const lightbox = gallery.querySelector('[data-lightbox]');
+    const lbImg = gallery.querySelector('[data-lightbox-img]');
     let idx = 0;
     const show = function (i) {
       idx = (i + thumbs.length) % thumbs.length;
       const t = thumbs[idx];
-      main.src = t.dataset.full || t.querySelector('img').src;
-      main.style.transform = ''; main.style.transformOrigin = 'center';
+      const full = t.dataset.full || t.querySelector('img').src;
+      main.src = full;
+      if (lbImg) lbImg.src = full;
       thumbs.forEach(function (x) { x.classList.toggle('is-active', x === t); });
     };
     thumbs.forEach(function (t, i) { t.addEventListener('click', function () { show(i); }); });
-    const prev = gallery.querySelector('[data-gallery-prev]');
-    const next = gallery.querySelector('[data-gallery-next]');
-    if (prev) prev.addEventListener('click', function () { show(idx - 1); });
-    if (next) next.addEventListener('click', function () { show(idx + 1); });
+    gallery.querySelectorAll('[data-gallery-prev]').forEach(function (b) { b.addEventListener('click', function () { show(idx - 1); }); });
+    gallery.querySelectorAll('[data-gallery-next]').forEach(function (b) { b.addEventListener('click', function () { show(idx + 1); }); });
 
+    // glissement tactile sur l'image principale
     const stage = gallery.querySelector('[data-gallery-stage]');
     if (stage) {
-      // glissement tactile
       let tx0 = null;
       stage.addEventListener('touchstart', function (e) { tx0 = e.touches[0].clientX; }, { passive: true });
       stage.addEventListener('touchend', function (e) {
@@ -312,28 +313,23 @@
         if (Math.abs(dx) > 40) show(dx < 0 ? idx + 1 : idx - 1);
         tx0 = null;
       }, { passive: true });
+    }
 
-      // souris : survol = zoom, clic-glisser = changer d'image
-      let pressing = false, mx0 = 0, moved = 0;
-      stage.addEventListener('mousedown', function (e) {
-        if (e.target.closest('.product__nav')) return;
-        pressing = true; mx0 = e.clientX; moved = 0;
-        main.style.transition = 'none'; main.style.transform = ''; main.style.transformOrigin = 'center';
-        stage.classList.add('is-grabbing'); e.preventDefault();
+    // Zoom = ouverture de la visionneuse (icône ou clic sur l'image)
+    const zoomBtn = gallery.querySelector('[data-gallery-zoom]');
+    const openLb = function () { if (!lightbox) return; if (lbImg) lbImg.src = main.src; lightbox.hidden = false; document.body.style.overflow = 'hidden'; };
+    const closeLb = function () { if (!lightbox) return; lightbox.hidden = true; document.body.style.overflow = ''; };
+    if (zoomBtn) zoomBtn.addEventListener('click', openLb);
+    if (main) main.addEventListener('click', openLb);
+    if (lightbox) {
+      lightbox.addEventListener('click', function (e) {
+        if (e.target === lightbox || e.target.closest('[data-lightbox-close]')) closeLb();
       });
-      window.addEventListener('mouseup', function () {
-        if (!pressing) return;
-        pressing = false; stage.classList.remove('is-grabbing'); main.style.transition = '';
-        if (Math.abs(moved) > 40) show(moved < 0 ? idx + 1 : idx - 1);
-      });
-      stage.addEventListener('mousemove', function (e) {
-        if (pressing) { moved = e.clientX - mx0; return; }
-        const r = stage.getBoundingClientRect();
-        main.style.transformOrigin = ((e.clientX - r.left) / r.width * 100) + '% ' + ((e.clientY - r.top) / r.height * 100) + '%';
-        main.style.transform = 'scale(2)';
-      });
-      stage.addEventListener('mouseleave', function () {
-        if (!pressing) { main.style.transform = ''; main.style.transformOrigin = 'center'; }
+      document.addEventListener('keydown', function (e) {
+        if (lightbox.hidden) return;
+        if (e.key === 'Escape') closeLb();
+        else if (e.key === 'ArrowRight') show(idx + 1);
+        else if (e.key === 'ArrowLeft') show(idx - 1);
       });
     }
   });
