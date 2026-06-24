@@ -121,8 +121,12 @@ p { margin: 0; }
 /* --------------------------------------------------------------------------
    En-tête / Header
    -------------------------------------------------------------------------- */
+/* Le groupe de sections est l'élément qui colle réellement (le wrapper de
+   section interne empêche position:sticky sur .header seul). */
+.shopify-section-group-header-group { position: sticky; top: 0; z-index: 60; }
+
 .header {
-  position: sticky; top: 0; z-index: 50;
+  position: relative; z-index: 50;
   background: var(--color-green); color: #fff;
   transition: background .3s var(--ease);
 }
