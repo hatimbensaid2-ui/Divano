@@ -99,22 +99,46 @@
     "shopimage": {
       "type": "shop-image",
       "blocks": {
-        "h1": { "type": "hotspot", "settings": { "x": 40, "y": 58, "title": "Divano - Pouf", "vendor": "Divano", "price": "1 850,00 dh", "image_fallback": "product-sofa-boucle.png" } },
-        "h2": { "type": "hotspot", "settings": { "x": 58, "y": 70, "title": "Fauteuil Velours", "vendor": "Divano", "price": "3 200,00 dh", "image_fallback": "product-chair-mustard.png" } },
-        "h3": { "type": "hotspot", "settings": { "x": 30, "y": 45, "title": "Table d'Appoint", "vendor": "Divano", "price": "1 450,00 dh", "image_fallback": "product-side-table-gold.png" } }
+        "h3": {
+          "type": "hotspot",
+          "settings": {
+            "product": "fauteuil-design-sculptural-etreinte",
+            "x": 30,
+            "y": 45,
+            "image": "shopify://shop_images/Royal_Stranger_Embrace_Armchair_Gentle_373_7-scaled.webp",
+            "image_fallback": "product-side-table-gold.png",
+            "vendor": "Divano",
+            "title": "Table d'Appoint",
+            "price": "1 450,00 dh",
+            "link": ""
+          }
+        }
       },
-      "block_order": ["h1", "h2", "h3"],
+      "block_order": [
+        "h3"
+      ],
       "settings": {
+        "eyebrow": "",
         "title": "Collection Divano",
-        "description": "<p>Idéal pour les petits et grands espaces, profitez d'un confort absolu tout en ajoutant une touche d'élégance à votre intérieur grâce à la <em>collection Divano</em> modulable.</p>"
+        "description": "<p>Idéal pour les petits et grands espaces, profitez d'un confort absolu tout en ajoutant une touche d'élégance à votre intérieur grâce à la <em>collection Divano</em> modulable.</p>",
+        "image": "shopify://shop_images/canape-compact-645992.webp"
       }
     },
     "intro": {
       "type": "intro-stats",
       "blocks": {
-        "a1": { "type": "avatar", "settings": {} },
-        "a2": { "type": "avatar", "settings": {} },
-        "a3": { "type": "avatar", "settings": {} }
+        "a1": {
+          "type": "avatar",
+          "settings": {}
+        },
+        "a2": {
+          "type": "avatar",
+          "settings": {}
+        },
+        "a3": {
+          "type": "avatar",
+          "settings": {}
+        }
       },
       "block_order": [
         "a1",
