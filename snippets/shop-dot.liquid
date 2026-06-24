@@ -1,0 +1,11 @@
+{%- liquid
+  assign show = false
+  if product != blank or title != blank
+    assign show = true
+  endif
+-%}
+{%- if show -%}
+  <button class="shop-image__dot{% if first == index %} is-active{% endif %}" type="button" data-hotspot
+          style="left: {{ x | default: 50 }}%; top: {{ y | default: 50 }}%;"
+          aria-label="{% if product != blank %}{{ product.title | escape }}{% else %}{{ title | escape }}{% endif %}"></button>
+{%- endif -%}

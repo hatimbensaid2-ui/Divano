@@ -1,0 +1,25 @@
+{%- liquid
+  assign show = false
+  if product != blank or title != blank
+    assign show = true
+  endif
+  assign url = product.url | default: link | default: '#'
+-%}
+{%- if show -%}
+  <article class="shop-image__product{% if first == index %} is-active{% endif %}" data-hsproduct>
+    <a class="shop-image__card" href="{{ url }}">
+      {%- if product != blank and product.featured_image != blank -%}
+        <img src="{{ product.featured_image | image_url: width: 600 }}" alt="{{ product.title | escape }}" width="360" height="360">
+      {%- elsif fallback != blank -%}
+        <img src="{{ fallback | asset_url }}" alt="{{ title | escape }}" width="360" height="360">
+      {%- else -%}
+        {{ 'product-1' | placeholder_svg_tag: 'placeholder' }}
+      {%- endif -%}
+    </a>
+    <div class="shop-image__meta">
+      <div class="shop-image__vendor">{% if product != blank and product.vendor != blank %}{{ product.vendor }}{% else %}{{ vendor }}{% endif %}</div>
+      <h3 class="shop-image__name"><a href="{{ url }}">{% if product != blank %}{{ product.title }}{% else %}{{ title }}{% endif %}</a></h3>
+      <div class="shop-image__price">{% if product != blank %}{{ product.price | money }}{% else %}{{ price }}{% endif %}</div>
+    </div>
+  </article>
+{%- endif -%}

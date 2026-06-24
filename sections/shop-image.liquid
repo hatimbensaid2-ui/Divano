@@ -9,60 +9,38 @@
     <div class="shop-image__viewport" data-reveal>
       {%- assign slide_total = section.blocks.size -%}
       {%- for block in section.blocks -%}
+        {%- liquid
+          assign s = block.settings
+          assign vendor = section.settings.default_vendor
+          # premier emplacement réellement rempli (affiché par défaut)
+          assign first = 0
+          if s.hp1_product != blank or s.hp1_title != blank
+            assign first = 1
+          elsif s.hp2_product != blank or s.hp2_title != blank
+            assign first = 2
+          elsif s.hp3_product != blank or s.hp3_title != blank
+            assign first = 3
+          elsif s.hp4_product != blank or s.hp4_title != blank
+            assign first = 4
+          endif
+        -%}
         <div class="shop-image__slide{% if forloop.first %} is-active{% endif %}" data-slide {{ block.shopify_attributes }}>
           <div class="shop-image__grid">
-            <div class="shop-image__stage{% if block.settings.image == blank %} shop-image__stage--fallback{% endif %}">
-              {%- if block.settings.image != blank -%}
-                <img src="{{ block.settings.image | image_url: width: 1400 }}" alt="{{ block.settings.image.alt | escape }}" width="900" height="765" loading="lazy">
+            <div class="shop-image__stage{% if s.image == blank %} shop-image__stage--fallback{% endif %}">
+              {%- if s.image != blank -%}
+                <img src="{{ s.image | image_url: width: 1400 }}" alt="{{ s.image.alt | escape }}" width="900" height="765" loading="lazy">
               {%- endif -%}
-              {%- for k in (1..4) -%}
-                {%- liquid
-                  assign pk = 'hp' | append: k | append: '_product'
-                  assign tk = 'hp' | append: k | append: '_title'
-                  assign xk = 'hp' | append: k | append: '_x'
-                  assign yk = 'hp' | append: k | append: '_y'
-                  assign prod = block.settings[pk]
-                  assign manual_title = block.settings[tk]
-                -%}
-                {%- if prod != blank or manual_title != blank -%}
-                  <button class="shop-image__dot" type="button" data-hotspot
-                          style="left: {{ block.settings[xk] }}%; top: {{ block.settings[yk] }}%;"
-                          aria-label="{% if prod != blank %}{{ prod.title | escape }}{% else %}{{ manual_title | escape }}{% endif %}"></button>
-                {%- endif -%}
-              {%- endfor -%}
+              {% render 'shop-dot', index: 1, first: first, product: s.hp1_product, title: s.hp1_title, x: s.hp1_x, y: s.hp1_y %}
+              {% render 'shop-dot', index: 2, first: first, product: s.hp2_product, title: s.hp2_title, x: s.hp2_x, y: s.hp2_y %}
+              {% render 'shop-dot', index: 3, first: first, product: s.hp3_product, title: s.hp3_title, x: s.hp3_x, y: s.hp3_y %}
+              {% render 'shop-dot', index: 4, first: first, product: s.hp4_product, title: s.hp4_title, x: s.hp4_x, y: s.hp4_y %}
             </div>
 
             <div class="shop-image__panel">
-              {%- for k in (1..4) -%}
-                {%- liquid
-                  assign pk = 'hp' | append: k | append: '_product'
-                  assign tk = 'hp' | append: k | append: '_title'
-                  assign prk = 'hp' | append: k | append: '_price'
-                  assign fk = 'hp' | append: k | append: '_image_fallback'
-                  assign lk = 'hp' | append: k | append: '_link'
-                  assign prod = block.settings[pk]
-                  assign manual_title = block.settings[tk]
-                  assign url = prod.url | default: block.settings[lk] | default: '#'
-                -%}
-                {%- if prod != blank or manual_title != blank -%}
-                  <article class="shop-image__product" data-hsproduct>
-                    <a class="shop-image__card" href="{{ url }}">
-                      {%- if prod != blank and prod.featured_image != blank -%}
-                        <img src="{{ prod.featured_image | image_url: width: 600 }}" alt="{{ prod.title | escape }}" width="360" height="360">
-                      {%- elsif block.settings[fk] != blank -%}
-                        <img src="{{ block.settings[fk] | asset_url }}" alt="{{ manual_title | escape }}" width="360" height="360">
-                      {%- else -%}
-                        {{ 'product-1' | placeholder_svg_tag: 'placeholder' }}
-                      {%- endif -%}
-                    </a>
-                    <div class="shop-image__meta">
-                      <div class="shop-image__vendor">{% if prod != blank and prod.vendor != blank %}{{ prod.vendor }}{% else %}{{ section.settings.default_vendor }}{% endif %}</div>
-                      <h3 class="shop-image__name"><a href="{{ url }}">{% if prod != blank %}{{ prod.title }}{% else %}{{ manual_title }}{% endif %}</a></h3>
-                      <div class="shop-image__price">{% if prod != blank %}{{ prod.price | money }}{% else %}{{ block.settings[prk] }}{% endif %}</div>
-                    </div>
-                  </article>
-                {%- endif -%}
-              {%- endfor -%}
+              {% render 'shop-card', index: 1, first: first, product: s.hp1_product, title: s.hp1_title, price: s.hp1_price, fallback: s.hp1_image_fallback, link: s.hp1_link, vendor: vendor %}
+              {% render 'shop-card', index: 2, first: first, product: s.hp2_product, title: s.hp2_title, price: s.hp2_price, fallback: s.hp2_image_fallback, link: s.hp2_link, vendor: vendor %}
+              {% render 'shop-card', index: 3, first: first, product: s.hp3_product, title: s.hp3_title, price: s.hp3_price, fallback: s.hp3_image_fallback, link: s.hp3_link, vendor: vendor %}
+              {% render 'shop-card', index: 4, first: first, product: s.hp4_product, title: s.hp4_title, price: s.hp4_price, fallback: s.hp4_image_fallback, link: s.hp4_link, vendor: vendor %}
 
               <div class="shop-image__pager">
                 {%- if slide_total > 1 -%}

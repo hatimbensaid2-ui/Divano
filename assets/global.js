@@ -42,7 +42,9 @@
   });
 
   // Image shoppable (produits épinglés) — multi-images
-  document.querySelectorAll('[data-shopimage]').forEach(function (root) {
+  function bindShopImage(root) {
+    if (root.dataset.bound === '1') return;
+    root.dataset.bound = '1';
     const slides = Array.prototype.slice.call(root.querySelectorAll('[data-slide]'));
     if (!slides.length) return;
 
@@ -74,7 +76,14 @@
     root.querySelectorAll('[data-slide-prev]').forEach(function (b) { b.addEventListener('click', function () { showSlide(s - 1); }); });
     root.querySelectorAll('[data-slide-next]').forEach(function (b) { b.addEventListener('click', function () { showSlide(s + 1); }); });
     showSlide(0);
-  });
+  }
+  document.querySelectorAll('[data-shopimage]').forEach(bindShopImage);
+  // Réinitialisation dans l'éditeur de thème (les sections sont re-rendues)
+  if (window.Shopify && window.Shopify.designMode) {
+    document.addEventListener('shopify:section:load', function (e) {
+      e.target.querySelectorAll('[data-shopimage]').forEach(bindShopImage);
+    });
+  }
 
   // Menu mobile
   const burger = document.querySelector('[data-burger]');
