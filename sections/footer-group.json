@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "type": "footer",
   "name": "Pied de page",
@@ -5,13 +14,37 @@
     "footer": {
       "type": "footer",
       "blocks": {
-        "discover": { "type": "menu", "settings": { "title": "Découvrir", "menu": "footer" } },
-        "brand": { "type": "menu", "settings": { "title": "La marque", "menu": "footer" } },
-        "help": { "type": "menu", "settings": { "title": "Aide", "menu": "footer" } }
+        "discover": {
+          "type": "menu",
+          "settings": {
+            "title": "Découvrir",
+            "menu": "footer-navigation"
+          }
+        },
+        "help": {
+          "type": "menu",
+          "settings": {
+            "title": "Aide",
+            "menu": "footer-informations"
+          }
+        }
       },
-      "block_order": ["discover", "brand", "help"],
-      "settings": {}
+      "block_order": [
+        "discover",
+        "help"
+      ],
+      "settings": {
+        "newsletter_title": "Inscrivez-vous à notre newsletter",
+        "address": "123 Boulevard Anfa, Casablanca, Maroc",
+        "phone": "+212 6 00 00 00 00",
+        "email": "contact@divano.ma",
+        "wordmark": "DIVANO",
+        "rights": "Tous droits réservés.",
+        "payment_note": "Paiement à la livraison · Cartes bancaires"
+      }
     }
   },
-  "order": ["footer"]
+  "order": [
+    "footer"
+  ]
 }
