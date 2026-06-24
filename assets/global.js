@@ -325,11 +325,16 @@
   // Sélecteur de quantité
   document.querySelectorAll('[data-qty]').forEach(function (qty) {
     const input = qty.querySelector('input');
+    const min = parseInt(input.getAttribute('min'), 10);
+    const floor = isNaN(min) ? 1 : min;
     qty.querySelectorAll('button').forEach(function (btn) {
       btn.addEventListener('click', function () {
         const step = btn.dataset.step === 'down' ? -1 : 1;
-        const val = Math.max(1, (parseInt(input.value, 10) || 1) + step);
+        const val = Math.max(floor, (parseInt(input.value, 10) || floor) + step);
+        if (val === parseInt(input.value, 10)) return;
         input.value = val;
+        // déclenche la mise à jour du panier (onchange="this.form.submit()")
+        input.dispatchEvent(new Event('change', { bubbles: true }));
       });
     });
   });
