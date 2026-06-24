@@ -10,37 +10,34 @@
       {%- assign slide_total = section.blocks.size -%}
       {%- for block in section.blocks -%}
         {%- liquid
-          assign s = block.settings
-          assign vendor = section.settings.default_vendor
-          # premier emplacement réellement rempli (affiché par défaut)
           assign first = 0
-          if s.hp1_product != blank or s.hp1_title != blank
+          if block.settings.hp1_product != blank or block.settings.hp1_title != blank
             assign first = 1
-          elsif s.hp2_product != blank or s.hp2_title != blank
+          elsif block.settings.hp2_product != blank or block.settings.hp2_title != blank
             assign first = 2
-          elsif s.hp3_product != blank or s.hp3_title != blank
+          elsif block.settings.hp3_product != blank or block.settings.hp3_title != blank
             assign first = 3
-          elsif s.hp4_product != blank or s.hp4_title != blank
+          elsif block.settings.hp4_product != blank or block.settings.hp4_title != blank
             assign first = 4
           endif
         -%}
         <div class="shop-image__slide{% if forloop.first %} is-active{% endif %}" data-slide {{ block.shopify_attributes }}>
           <div class="shop-image__grid">
-            <div class="shop-image__stage{% if s.image == blank %} shop-image__stage--fallback{% endif %}">
-              {%- if s.image != blank -%}
-                <img src="{{ s.image | image_url: width: 1400 }}" alt="{{ s.image.alt | escape }}" width="900" height="765" loading="lazy">
+            <div class="shop-image__stage{% if block.settings.image == blank %} shop-image__stage--fallback{% endif %}">
+              {%- if block.settings.image != blank -%}
+                <img src="{{ block.settings.image | image_url: width: 1400 }}" alt="{{ block.settings.image.alt | escape }}" width="900" height="765" loading="lazy">
               {%- endif -%}
-              {% render 'shop-dot', index: 1, first: first, product: s.hp1_product, title: s.hp1_title, x: s.hp1_x, y: s.hp1_y %}
-              {% render 'shop-dot', index: 2, first: first, product: s.hp2_product, title: s.hp2_title, x: s.hp2_x, y: s.hp2_y %}
-              {% render 'shop-dot', index: 3, first: first, product: s.hp3_product, title: s.hp3_title, x: s.hp3_x, y: s.hp3_y %}
-              {% render 'shop-dot', index: 4, first: first, product: s.hp4_product, title: s.hp4_title, x: s.hp4_x, y: s.hp4_y %}
+              {% render 'shop-dot', index: 1, first: first, product: block.settings.hp1_product, title: block.settings.hp1_title, x: block.settings.hp1_x, y: block.settings.hp1_y %}
+              {% render 'shop-dot', index: 2, first: first, product: block.settings.hp2_product, title: block.settings.hp2_title, x: block.settings.hp2_x, y: block.settings.hp2_y %}
+              {% render 'shop-dot', index: 3, first: first, product: block.settings.hp3_product, title: block.settings.hp3_title, x: block.settings.hp3_x, y: block.settings.hp3_y %}
+              {% render 'shop-dot', index: 4, first: first, product: block.settings.hp4_product, title: block.settings.hp4_title, x: block.settings.hp4_x, y: block.settings.hp4_y %}
             </div>
 
             <div class="shop-image__panel">
-              {% render 'shop-card', index: 1, first: first, product: s.hp1_product, title: s.hp1_title, price: s.hp1_price, fallback: s.hp1_image_fallback, link: s.hp1_link, vendor: vendor %}
-              {% render 'shop-card', index: 2, first: first, product: s.hp2_product, title: s.hp2_title, price: s.hp2_price, fallback: s.hp2_image_fallback, link: s.hp2_link, vendor: vendor %}
-              {% render 'shop-card', index: 3, first: first, product: s.hp3_product, title: s.hp3_title, price: s.hp3_price, fallback: s.hp3_image_fallback, link: s.hp3_link, vendor: vendor %}
-              {% render 'shop-card', index: 4, first: first, product: s.hp4_product, title: s.hp4_title, price: s.hp4_price, fallback: s.hp4_image_fallback, link: s.hp4_link, vendor: vendor %}
+              {% render 'shop-card', index: 1, first: first, product: block.settings.hp1_product, title: block.settings.hp1_title, price: block.settings.hp1_price, fallback: block.settings.hp1_image_fallback, link: block.settings.hp1_link, vendor: section.settings.default_vendor %}
+              {% render 'shop-card', index: 2, first: first, product: block.settings.hp2_product, title: block.settings.hp2_title, price: block.settings.hp2_price, fallback: block.settings.hp2_image_fallback, link: block.settings.hp2_link, vendor: section.settings.default_vendor %}
+              {% render 'shop-card', index: 3, first: first, product: block.settings.hp3_product, title: block.settings.hp3_title, price: block.settings.hp3_price, fallback: block.settings.hp3_image_fallback, link: block.settings.hp3_link, vendor: section.settings.default_vendor %}
+              {% render 'shop-card', index: 4, first: first, product: block.settings.hp4_product, title: block.settings.hp4_title, price: block.settings.hp4_price, fallback: block.settings.hp4_image_fallback, link: block.settings.hp4_link, vendor: section.settings.default_vendor %}
 
               <div class="shop-image__pager">
                 {%- if slide_total > 1 -%}
