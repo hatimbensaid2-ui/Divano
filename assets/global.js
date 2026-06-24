@@ -270,6 +270,33 @@
     });
   });
 
+  // Sélecteur de variante (pastilles) → met à jour la variante, le prix, la dispo
+  document.querySelectorAll('.product__form').forEach(function (form) {
+    const select = form.querySelector('[data-variant-select]');
+    const swatches = Array.prototype.slice.call(form.querySelectorAll('[data-swatch]'));
+    if (!select || !swatches.length) return;
+    const priceEl = form.closest('.product__info') ? form.closest('.product__info').querySelector('[data-price-display]') : document.querySelector('[data-price-display]');
+    const addBtn = form.querySelector('button[name="add"]');
+    const update = function () {
+      const byPos = {};
+      swatches.forEach(function (s) { if (s.classList.contains('is-selected')) byPos[s.dataset.optionPosition] = s.dataset.value; });
+      const want = Object.keys(byPos).sort().map(function (p) { return byPos[p]; }).join(' / ');
+      const opt = Array.prototype.slice.call(select.options).filter(function (o) { return o.dataset.options === want; })[0];
+      if (!opt) return;
+      select.value = opt.value;
+      if (priceEl && opt.dataset.price) priceEl.innerHTML = opt.dataset.price;
+      if (addBtn) addBtn.disabled = (opt.dataset.available !== 'true');
+    };
+    swatches.forEach(function (s) {
+      s.addEventListener('click', function () {
+        swatches.forEach(function (x) { if (x.dataset.optionPosition === s.dataset.optionPosition) x.classList.remove('is-selected'); });
+        s.classList.add('is-selected');
+        update();
+      });
+    });
+    update();
+  });
+
   // Sélecteur de quantité
   document.querySelectorAll('[data-qty]').forEach(function (qty) {
     const input = qty.querySelector('input');

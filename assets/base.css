@@ -663,11 +663,12 @@ body.template-index .header.header--solid {
 .option { display: grid; gap: .55rem; }
 .option__label { font-size: .82rem; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--color-muted); }
 .option__values { display: flex; flex-wrap: wrap; gap: .5rem; }
-.swatch { padding: .55rem 1rem; border-radius: var(--radius-pill); border: 1px solid var(--color-line); font-size: .88rem; background: #fff; transition: all .2s var(--ease); }
+.swatch { padding: .5rem .95rem; border-radius: var(--radius-pill); border: 1px solid var(--color-line); font-size: .88rem; background: #fff; color: var(--color-text); transition: all .2s var(--ease); }
 .swatch:hover { border-color: var(--color-text); }
-.qty { display: inline-flex; align-items: center; border: 1px solid var(--color-line); border-radius: var(--radius-pill); overflow: hidden; }
-.qty button { width: 44px; height: 46px; font-size: 1.2rem; color: var(--color-text); }
-.qty input { width: 44px; text-align: center; border: none; background: transparent; }
+.swatch.is-selected { background: var(--color-green); color: #fff; border-color: var(--color-green); }
+.qty { display: inline-flex; align-items: center; justify-self: start; border: 1px solid var(--color-line); border-radius: var(--radius-pill); overflow: hidden; }
+.qty button { width: 36px; height: 38px; font-size: 1.05rem; color: var(--color-text); }
+.qty input { width: 34px; height: 38px; text-align: center; border: none; background: transparent; font-size: .92rem; }
 .product__actions { display: flex; gap: .8rem; flex-wrap: wrap; align-items: center; }
 .product__buttons { display: flex; gap: .8rem; }
 .product__buttons .btn { flex: 1; justify-content: center; }

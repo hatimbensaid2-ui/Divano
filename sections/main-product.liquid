@@ -33,7 +33,7 @@
           {%- if product.compare_at_price > product.price -%}
             <del>{{ product.compare_at_price | money }}</del>
           {%- endif -%}
-          {{ product.price | money }}
+          <span data-price-display>{{ product.price | money }}</span>
         </div>
 
         {%- form 'product', product, class: 'product__form' -%}
@@ -43,22 +43,22 @@
                 <span class="option__label">{{ option.name }}</span>
                 <div class="option__values">
                   {%- for value in option.values -%}
-                    <button type="button" class="swatch"
-                      onclick="this.closest('.option').querySelector('select').value='{{ value | escape }}';this.closest('.option').querySelector('select').dispatchEvent(new Event('change'));this.parentNode.querySelectorAll('.swatch').forEach(s=>s.style.borderColor='');this.style.borderColor='var(--color-text)';">
-                      {{ value }}
-                    </button>
+                    <button type="button" class="swatch{% if option.selected_value == value %} is-selected{% endif %}"
+                            data-swatch data-option-position="{{ option.position }}" data-value="{{ value | escape }}">{{ value }}</button>
                   {%- endfor -%}
                 </div>
-                <select name="options[{{ option.name | escape }}]" class="visually-hidden">
-                  {%- for value in option.values -%}<option value="{{ value | escape }}">{{ value }}</option>{%- endfor -%}
-                </select>
               </div>
             {%- endfor -%}
           {%- endunless -%}
 
           <select name="id" class="visually-hidden" data-variant-select>
             {%- for variant in product.variants -%}
-              <option value="{{ variant.id }}" {% unless variant.available %}disabled{% endunless %}>{{ variant.title }}</option>
+              <option value="{{ variant.id }}"
+                      data-options="{{ variant.options | join: ' / ' | escape }}"
+                      data-price="{{ variant.price | money }}"
+                      data-available="{{ variant.available }}"
+                      {% if variant == product.selected_or_first_available_variant %}selected{% endif %}
+                      {% unless variant.available %}disabled{% endunless %}>{{ variant.title }}</option>
             {%- endfor -%}
           </select>
 
