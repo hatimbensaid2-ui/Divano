@@ -270,6 +270,28 @@
     });
   });
 
+  // Recommandations produit (chargées via l'API Section Rendering)
+  document.querySelectorAll('[data-recommendations]').forEach(function (el) {
+    const pid = el.dataset.productId;
+    const base = el.dataset.url;
+    const sid = el.dataset.sectionId;
+    const limit = el.dataset.limit || 4;
+    if (!pid || !base || el.dataset.loaded) return;
+    const url = base + '?section_id=' + encodeURIComponent(sid) + '&product_id=' + encodeURIComponent(pid) + '&limit=' + encodeURIComponent(limit);
+    fetch(url)
+      .then(function (r) { return r.text(); })
+      .then(function (html) {
+        const doc = new DOMParser().parseFromString(html, 'text/html');
+        const inner = doc.querySelector('[data-recommendations]');
+        if (inner && inner.innerHTML.trim()) {
+          el.innerHTML = inner.innerHTML;
+          el.querySelectorAll('[data-reveal]').forEach(function (x) { x.classList.add('is-visible'); });
+          el.dataset.loaded = '1';
+        }
+      })
+      .catch(function () {});
+  });
+
   // Sélecteur de variante (pastilles) → met à jour la variante, le prix, la dispo
   document.querySelectorAll('.product__form').forEach(function (form) {
     const select = form.querySelector('[data-variant-select]');

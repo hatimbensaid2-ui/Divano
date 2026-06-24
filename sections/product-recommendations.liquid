@@ -1,0 +1,32 @@
+<div class="product-recs" data-recommendations
+     data-section-id="{{ section.id }}"
+     data-product-id="{{ product.id }}"
+     data-limit="{{ section.settings.limit }}"
+     data-url="{{ routes.product_recommendations_url }}">
+  {%- if recommendations.performed and recommendations.products_count > 0 -%}
+    <div class="page-width">
+      <div class="collection-head collection-head--center">
+        {%- if section.settings.eyebrow != blank -%}<span class="eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+        <h2 class="section-title">{{ section.settings.title }}</h2>
+      </div>
+      <div class="product-grid" style="--cols: {{ section.settings.columns }};">
+        {%- for product in recommendations.products -%}
+          {% render 'product-card', card_product: product %}
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Recommandations produit",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Sur-titre", "default": "Pour aller plus loin" },
+    { "type": "text", "id": "title", "label": "Titre", "default": "Vous aimerez aussi" },
+    { "type": "range", "id": "limit", "label": "Nombre de produits", "min": 2, "max": 10, "step": 1, "default": 4 },
+    { "type": "range", "id": "columns", "label": "Colonnes (bureau)", "min": 2, "max": 5, "step": 1, "default": 4 }
+  ],
+  "presets": [{ "name": "Recommandations produit" }]
+}
+{% endschema %}

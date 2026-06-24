@@ -667,6 +667,8 @@ body.template-index .header.header--solid {
 .product__buttons .btn { flex: 1; justify-content: center; }
 .product__meta { margin-top: 1.8rem; border-top: 1px solid var(--color-line); padding-top: 1.4rem; display: grid; gap: .6rem; font-size: .9rem; color: var(--color-muted); }
 .product__meta strong { color: var(--color-text); }
+.product-recs:empty { display: none; }
+.product-recs { padding-block: clamp(40px, 6vw, 80px); border-top: 1px solid var(--color-line); }
 
 /* --------------------------------------------------------------------------
    Collection / liste
