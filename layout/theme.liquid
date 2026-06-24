@@ -20,12 +20,30 @@
       assign font_heading = settings.font_heading
       assign font_body = settings.font_body
     -%}
-    {{ font_heading | font_face: font_display: 'swap' }}
-    {{ font_body | font_face: font_display: 'swap' }}
 
     {{ content_for_header }}
 
     {{ 'base.css' | asset_url | stylesheet_tag }}
+
+    <style>
+      {{ font_heading | font_face: font_display: 'swap' }}
+      {{ font_body | font_face: font_display: 'swap' }}
+      :root {
+        --color-green: {{ settings.color_green | default: '#16352B' }};
+        --color-green-deep: {{ settings.color_green_deep | default: '#0F2820' }};
+        --color-cream: {{ settings.color_cream | default: '#F4EFE7' }};
+        --color-card: {{ settings.color_card | default: '#FBF8F3' }};
+        --color-text: {{ settings.color_text | default: '#16140F' }};
+        --color-muted: {{ settings.color_muted | default: '#5C5C54' }};
+        --color-accent: {{ settings.color_accent | default: '#B5793A' }};
+        --font-heading: {{ font_heading.family }}, {{ font_heading.fallback_families }};
+        --font-body: {{ font_body.family }}, {{ font_body.fallback_families }};
+        --fw-heading: {{ font_heading.weight }};
+        --fw-body: {{ font_body.weight }};
+        --page-width: {{ settings.page_width | default: 1320 }}px;
+      }
+    </style>
+
     <script src="{{ 'global.js' | asset_url }}" defer></script>
   </head>
 

@@ -4,26 +4,27 @@
    ========================================================================== */
 
 :root {
-  /* Couleurs — pilotées par les réglages du thème */
-  --color-green:      {{ settings.color_green | default: '#16352B' }};
-  --color-green-deep: {{ settings.color_green_deep | default: '#0F2820' }};
-  --color-cream:      {{ settings.color_cream | default: '#F4EFE7' }};
-  --color-card:       {{ settings.color_card | default: '#FBF8F3' }};
-  --color-text:       {{ settings.color_text | default: '#16140F' }};
-  --color-muted:      {{ settings.color_muted | default: '#5C5C54' }};
-  --color-accent:     {{ settings.color_accent | default: '#B5793A' }};
+  /* Couleurs — valeurs de repli ; surchargées par les réglages du thème
+     via un <style> dans theme.liquid (Liquid n'est pas évalué dans un .css) */
+  --color-green:      #16352B;
+  --color-green-deep: #0F2820;
+  --color-cream:      #F4EFE7;
+  --color-card:       #FBF8F3;
+  --color-text:       #16140F;
+  --color-muted:      #5C5C54;
+  --color-accent:     #B5793A;
   --color-line:       rgba(22, 53, 43, 0.12);
   --color-line-light: rgba(255, 255, 255, 0.16);
   --color-white:      #ffffff;
 
   /* Typographie */
-  --font-heading: {{ settings.font_heading.family }}, {{ settings.font_heading.fallback_families }};
-  --font-body:    {{ settings.font_body.family }}, {{ settings.font_body.fallback_families }};
-  --fw-heading:   {{ settings.font_heading.weight }};
-  --fw-body:      {{ settings.font_body.weight }};
+  --font-heading: "Playfair Display", Georgia, "Times New Roman", serif;
+  --font-body:    "Assistant", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --fw-heading:   500;
+  --fw-body:      400;
 
   /* Echelle */
-  --page-width: {{ settings.page_width | default: 1320 }}px;
+  --page-width: 1320px;
   --gutter: clamp(18px, 4vw, 48px);
   --radius-s: 10px;
   --radius-m: 18px;
