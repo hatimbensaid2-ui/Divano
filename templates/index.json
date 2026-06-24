@@ -99,51 +99,26 @@
     "shopimage": {
       "type": "shop-image",
       "blocks": {
-        "img1": {
-          "type": "image",
+        "slide1": {
+          "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/canape-compact-645992.webp"
+            "image": "shopify://shop_images/canape-compact-645992.webp",
+            "hp1_product": "canape-compact",
+            "hp1_x": 38,
+            "hp1_y": 58
           }
         },
-        "h3": {
-          "type": "hotspot",
+        "slide2": {
+          "type": "slide",
           "settings": {
-            "product": "canape-compact",
-            "x": 38,
-            "y": 58,
-            "image_fallback": "",
-            "vendor": "Divano",
-            "title": "Produit Divano",
-            "price": "0,00 dh",
-            "link": ""
-          }
-        },
-        "img2": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/Royal_Stranger_Embrace_Armchair_Gentle_373_9-scaled.webp"
-          }
-        },
-        "h4": {
-          "type": "hotspot",
-          "settings": {
-            "product": "fauteuil-design-sculptural-etreinte",
-            "x": 32,
-            "y": 39,
-            "image_fallback": "",
-            "vendor": "Divano",
-            "title": "",
-            "price": "",
-            "link": ""
+            "image": "shopify://shop_images/Royal_Stranger_Embrace_Armchair_Gentle_373_9-scaled.webp",
+            "hp1_product": "fauteuil-design-sculptural-etreinte",
+            "hp1_x": 32,
+            "hp1_y": 39
           }
         }
       },
-      "block_order": [
-        "img1",
-        "h3",
-        "img2",
-        "h4"
-      ],
+      "block_order": ["slide1", "slide2"],
       "settings": {
         "eyebrow": "",
         "title": "Collection Divano",
@@ -153,18 +128,9 @@
     "intro": {
       "type": "intro-stats",
       "blocks": {
-        "a1": {
-          "type": "avatar",
-          "settings": {}
-        },
-        "a2": {
-          "type": "avatar",
-          "settings": {}
-        },
-        "a3": {
-          "type": "avatar",
-          "settings": {}
-        }
+        "a1": { "type": "avatar", "settings": {} },
+        "a2": { "type": "avatar", "settings": {} },
+        "a3": { "type": "avatar", "settings": {} }
       },
       "block_order": [
         "a1",
