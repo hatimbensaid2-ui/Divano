@@ -41,6 +41,25 @@
     start();
   });
 
+  // Image shoppable (produits épinglés)
+  document.querySelectorAll('[data-shopimage]').forEach(function (root) {
+    const dots = Array.prototype.slice.call(root.querySelectorAll('[data-hotspot]'));
+    const products = Array.prototype.slice.call(root.querySelectorAll('[data-hsproduct]'));
+    if (!dots.length) return;
+    let i = 0;
+    const show = function (n) {
+      i = (n + dots.length) % dots.length;
+      dots.forEach(function (d, idx) { d.classList.toggle('is-active', idx === i); });
+      products.forEach(function (p, idx) { p.classList.toggle('is-active', idx === i); });
+    };
+    dots.forEach(function (d, idx) { d.addEventListener('click', function () { show(idx); }); });
+    const prev = root.querySelector('[data-hs-prev]');
+    const next = root.querySelector('[data-hs-next]');
+    if (prev) prev.addEventListener('click', function () { show(i - 1); });
+    if (next) next.addEventListener('click', function () { show(i + 1); });
+    show(0);
+  });
+
   // Menu mobile
   const burger = document.querySelector('[data-burger]');
   const nav = document.querySelector('[data-nav]');
