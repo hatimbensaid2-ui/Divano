@@ -130,7 +130,7 @@ p { margin: 0; }
   display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;
   gap: 1rem; padding-block: 1.05rem;
 }
-.header__logo img { height: clamp(26px, 3.4vw, 34px); width: auto; }
+.header__logo img { height: clamp(34px, 4.4vw, 48px); width: auto; }
 .header__logo--text { font-family: var(--font-heading); font-size: 1.7rem; letter-spacing: .04em; color:#fff; }
 .header__nav { display: flex; justify-content: center; gap: clamp(1rem, 2.3vw, 2.3rem); }
 .header__nav a {
