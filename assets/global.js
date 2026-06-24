@@ -356,7 +356,11 @@
       idx = (i + thumbs.length) % thumbs.length;
       const t = thumbs[idx];
       const full = t.dataset.full || t.querySelector('img').src;
+      main.classList.add('is-fading');
+      const done = function () { main.classList.remove('is-fading'); };
+      main.onload = done;
       main.src = full;
+      setTimeout(done, 350);
       if (lbImg) lbImg.src = full;
       resetZoom();
       thumbs.forEach(function (x) { x.classList.toggle('is-active', x === t); });

@@ -1,7 +1,16 @@
 <section class="product">
   <div class="page-width">
     <div class="product__grid" data-gallery>
-      <div class="product__gallery">
+      <div class="product__gallery{% if product.media.size > 1 %} product__gallery--with-thumbs{% endif %}">
+        {%- if product.media.size > 1 -%}
+          <div class="product__thumbs">
+            {%- for media in product.media limit: 10 -%}
+              <button class="product__thumb{% if forloop.first %} is-active{% endif %}" data-thumb data-index="{{ forloop.index0 }}" data-full="{{ media | image_url: width: 1000 }}" aria-label="Vue {{ forloop.index }}">
+                <img src="{{ media | image_url: width: 160 }}" alt="{{ media.alt | escape }}" width="78" height="78" loading="lazy">
+              </button>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
         <div class="product__main-img" data-gallery-stage>
           {%- if product.featured_media -%}
             <img data-main-img src="{{ product.featured_media | image_url: width: 1000 }}" alt="{{ product.featured_media.alt | escape }}" width="700" height="700">
@@ -14,15 +23,6 @@
             <button class="product__nav product__nav--next" type="button" data-gallery-next aria-label="Image suivante">{% render 'icon', icon: 'arrow-right' %}</button>
           {%- endif -%}
         </div>
-        {%- if product.media.size > 1 -%}
-          <div class="product__thumbs">
-            {%- for media in product.media limit: 8 -%}
-              <button class="product__thumb{% if forloop.first %} is-active{% endif %}" data-thumb data-index="{{ forloop.index0 }}" data-full="{{ media | image_url: width: 1000 }}" aria-label="Vue {{ forloop.index }}">
-                <img src="{{ media | image_url: width: 160 }}" alt="{{ media.alt | escape }}" width="78" height="78" loading="lazy">
-              </button>
-            {%- endfor -%}
-          </div>
-        {%- endif -%}
       </div>
 
       <div class="product__info" data-reveal>
