@@ -57,97 +57,6 @@
         "text": "Notre mission : rendre le mobilier premium accessible, magnifiquement conçu et facile à intégrer dans chaque foyer marocain."
       }
     },
-    "featured": {
-      "type": "featured-collection",
-      "blocks": {
-        "t1": {
-          "type": "tab",
-          "settings": {
-            "collection": "",
-            "label": "Canapés"
-          }
-        },
-        "t2": {
-          "type": "tab",
-          "settings": {
-            "collection": "",
-            "label": "Fauteuils"
-          }
-        },
-        "t3": {
-          "type": "tab",
-          "settings": {
-            "collection": "",
-            "label": "Tables"
-          }
-        }
-      },
-      "block_order": [
-        "t1",
-        "t2",
-        "t3"
-      ],
-      "settings": {
-        "eyebrow": "Notre sélection",
-        "title": "Produits populaires",
-        "lead": "Découvrez nos pièces les plus appréciées, alliant confort, durabilité et élégance.",
-        "collection": "canapes",
-        "products_to_show": 8,
-        "products_per_row": 4,
-        "button_label": "Voir tout"
-      }
-    },
-    "categories": {
-      "type": "category-list",
-      "blocks": {
-        "c1": {
-          "type": "category",
-          "settings": {
-            "collection": "",
-            "title": "Canapés",
-            "link": "",
-            "fallback": "category-sofas.png"
-          }
-        },
-        "c2": {
-          "type": "category",
-          "settings": {
-            "collection": "",
-            "title": "Fauteuils",
-            "link": "",
-            "fallback": "category-chairs.png"
-          }
-        },
-        "c3": {
-          "type": "category",
-          "settings": {
-            "collection": "",
-            "title": "Tables",
-            "link": "",
-            "fallback": "category-tables.png"
-          }
-        },
-        "c4": {
-          "type": "category",
-          "settings": {
-            "collection": "",
-            "title": "Tables d'appoint",
-            "link": "",
-            "fallback": "category-lighting.png"
-          }
-        }
-      },
-      "block_order": [
-        "c1",
-        "c2",
-        "c3",
-        "c4"
-      ],
-      "settings": {
-        "eyebrow": "Explorer",
-        "title": "Acheter par catégorie"
-      }
-    },
     "values": {
       "type": "value-props",
       "blocks": {
@@ -188,7 +97,7 @@
           "type": "value",
           "settings": {
             "icon": "shield",
-            "highlight": true,
+            "highlight": false,
             "title": "Matériaux premium",
             "text": "Fabriqués avec soin par des artisans. Chaque détail pensé pour la qualité."
           }
@@ -221,58 +130,12 @@
         "bottom_button_label": "Explorer nos pièces",
         "bottom_button_link": ""
       }
-    },
-    "testimonials": {
-      "type": "testimonials",
-      "blocks": {
-        "r1": {
-          "type": "testimonial",
-          "settings": {
-            "text": "La qualité dépasse mes attentes. Mon salon est métamorphosé, et la livraison a été impeccable.",
-            "name": "Salma B.",
-            "role": "Casablanca"
-          }
-        },
-        "r2": {
-          "type": "testimonial",
-          "settings": {
-            "text": "Un design magnifique et un confort incroyable. L'équipe Divano a été à l'écoute du début à la fin.",
-            "name": "Younes A.",
-            "role": "Rabat"
-          }
-        }
-      },
-      "block_order": [
-        "r1",
-        "r2"
-      ],
-      "settings": {
-        "eyebrow": "Avis clients",
-        "title": "Ce que disent nos clients",
-        "lead": "Nos clients sont au cœur de tout ce que nous faisons. Voici comment Divano a transformé leur intérieur.",
-        "feat_image_fallback": "product-sofa-boucle.png",
-        "feat_title": "Canapé Bouclé",
-        "feat_price": "8 900 MAD",
-        "feat_text": "Le confort réinventé : un équilibre parfait entre élégance et détente."
-      }
-    },
-    "newsletter": {
-      "type": "newsletter",
-      "settings": {
-        "eyebrow": "Restons en contact",
-        "title": "Inscrivez-vous à notre newsletter",
-        "lead": "Recevez nos nouveautés, conseils déco et offres exclusives, directement dans votre boîte mail."
-      }
     }
   },
   "order": [
     "hero",
     "intro",
-    "featured",
-    "categories",
     "values",
-    "eras",
-    "testimonials",
-    "newsletter"
+    "eras"
   ]
 }
