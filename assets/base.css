@@ -368,6 +368,10 @@ body.template-index .header.header--solid {
 .shop-image__desc { color: var(--color-muted); margin-top: 1rem; }
 .shop-image__desc em { font-style: italic; }
 .shop-image__grid { display: grid; grid-template-columns: 1.55fr 1fr; gap: clamp(20px, 3vw, 48px); align-items: start; }
+.shop-image__slide { display: none; }
+.shop-image__slide.is-active { display: block; animation: fade-in .45s var(--ease); }
+.shop-image__count { font-size: .85rem; color: var(--color-muted); font-weight: 600; letter-spacing: .04em; }
+.shop-image__pager { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-top: 1.2rem; }
 .shop-image__stage { position: relative; border-radius: var(--radius-m); overflow: hidden; background: var(--color-card); aspect-ratio: 4 / 3.4; }
 .shop-image__stage > img { width: 100%; height: 100%; object-fit: cover; }
 .shop-image__stage--fallback { background: linear-gradient(135deg, #efe7da, #e3d8c6); }

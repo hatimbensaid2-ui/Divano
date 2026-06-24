@@ -41,23 +41,39 @@
     start();
   });
 
-  // Image shoppable (produits épinglés)
+  // Image shoppable (produits épinglés) — multi-images
   document.querySelectorAll('[data-shopimage]').forEach(function (root) {
-    const dots = Array.prototype.slice.call(root.querySelectorAll('[data-hotspot]'));
-    const products = Array.prototype.slice.call(root.querySelectorAll('[data-hsproduct]'));
-    if (!dots.length) return;
-    let i = 0;
-    const show = function (n) {
-      i = (n + dots.length) % dots.length;
-      dots.forEach(function (d, idx) { d.classList.toggle('is-active', idx === i); });
-      products.forEach(function (p, idx) { p.classList.toggle('is-active', idx === i); });
+    const slides = Array.prototype.slice.call(root.querySelectorAll('[data-slide]'));
+    if (!slides.length) return;
+
+    // Hotspots scoped à chaque diapositive
+    slides.forEach(function (slide) {
+      const dots = Array.prototype.slice.call(slide.querySelectorAll('[data-hotspot]'));
+      const products = Array.prototype.slice.call(slide.querySelectorAll('[data-hsproduct]'));
+      let h = 0;
+      const showHot = function (n) {
+        h = (n + dots.length) % dots.length;
+        dots.forEach(function (d, idx) { d.classList.toggle('is-active', idx === h); });
+        products.forEach(function (p, idx) { p.classList.toggle('is-active', idx === h); });
+      };
+      dots.forEach(function (d, idx) { d.addEventListener('click', function () { showHot(idx); }); });
+      // flèches produit (cas d'une seule image)
+      const hp = slide.querySelector('[data-hs-prev]');
+      const hn = slide.querySelector('[data-hs-next]');
+      if (hp) hp.addEventListener('click', function () { showHot(h - 1); });
+      if (hn) hn.addEventListener('click', function () { showHot(h + 1); });
+      if (dots.length) showHot(0);
+    });
+
+    // Carrousel entre les images
+    let s = 0;
+    const showSlide = function (n) {
+      s = (n + slides.length) % slides.length;
+      slides.forEach(function (sl, idx) { sl.classList.toggle('is-active', idx === s); });
     };
-    dots.forEach(function (d, idx) { d.addEventListener('click', function () { show(idx); }); });
-    const prev = root.querySelector('[data-hs-prev]');
-    const next = root.querySelector('[data-hs-next]');
-    if (prev) prev.addEventListener('click', function () { show(i - 1); });
-    if (next) next.addEventListener('click', function () { show(i + 1); });
-    show(0);
+    root.querySelectorAll('[data-slide-prev]').forEach(function (b) { b.addEventListener('click', function () { showSlide(s - 1); }); });
+    root.querySelectorAll('[data-slide-next]').forEach(function (b) { b.addEventListener('click', function () { showSlide(s + 1); }); });
+    showSlide(0);
   });
 
   // Menu mobile

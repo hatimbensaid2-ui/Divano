@@ -99,45 +99,26 @@
     "shopimage": {
       "type": "shop-image",
       "blocks": {
-        "h3": {
-          "type": "hotspot",
-          "settings": {
-            "product": "canape-compact",
-            "x": 30,
-            "y": 57,
-            "image_fallback": "",
-            "vendor": "Divano",
-            "title": "",
-            "price": "",
-            "link": ""
-          }
-        }
+        "img1": { "type": "image", "settings": { "image": "shopify://shop_images/canape-compact-645992.webp" } },
+        "h3": { "type": "hotspot", "settings": { "product": "canape-compact", "x": 30, "y": 57, "vendor": "Divano" } },
+        "h1": { "type": "hotspot", "settings": { "x": 55, "y": 64, "title": "Fauteuil Velours", "vendor": "Divano", "price": "3 200,00 dh", "image_fallback": "product-chair-mustard.png" } },
+        "img2": { "type": "image", "settings": {} },
+        "h4": { "type": "hotspot", "settings": { "x": 45, "y": 55, "title": "Tables Gigognes", "vendor": "Divano", "price": "2 700,00 dh", "image_fallback": "product-tables-black.png" } },
+        "h5": { "type": "hotspot", "settings": { "x": 65, "y": 62, "title": "Ensemble Repas", "vendor": "Divano", "price": "12 500,00 dh", "image_fallback": "product-dining-set.png" } }
       },
-      "block_order": [
-        "h3"
-      ],
+      "block_order": ["img1", "h3", "h1", "img2", "h4", "h5"],
       "settings": {
         "eyebrow": "",
         "title": "Collection Divano",
-        "description": "<p>Idéal pour les petits et grands espaces, profitez d'un confort absolu tout en ajoutant une touche d'élégance à votre intérieur grâce à la <em>collection Divano</em> modulable.</p>",
-        "image": "shopify://shop_images/canape-compact-645992.webp"
+        "description": "<p>Idéal pour les petits et grands espaces, profitez d'un confort absolu tout en ajoutant une touche d'élégance à votre intérieur grâce à la <em>collection Divano</em> modulable.</p>"
       }
     },
     "intro": {
       "type": "intro-stats",
       "blocks": {
-        "a1": {
-          "type": "avatar",
-          "settings": {}
-        },
-        "a2": {
-          "type": "avatar",
-          "settings": {}
-        },
-        "a3": {
-          "type": "avatar",
-          "settings": {}
-        }
+        "a1": { "type": "avatar", "settings": {} },
+        "a2": { "type": "avatar", "settings": {} },
+        "a3": { "type": "avatar", "settings": {} }
       },
       "block_order": [
         "a1",

@@ -1,3 +1,11 @@
+{%- liquid
+  assign img_count = 0
+  for b in section.blocks
+    if b.type == 'image'
+      assign img_count = img_count | plus: 1
+    endif
+  endfor
+-%}
 <section class="section shop-image" data-shopimage>
   <div class="page-width">
     <div class="shop-image__head" data-reveal>
@@ -6,52 +14,71 @@
       {%- if section.settings.description != blank -%}<p class="shop-image__desc">{{ section.settings.description }}</p>{%- endif -%}
     </div>
 
-    <div class="shop-image__grid">
-      <div class="shop-image__stage{% if section.settings.image == blank %} shop-image__stage--fallback{% endif %}" data-reveal>
-        {%- if section.settings.image != blank -%}
-          <img src="{{ section.settings.image | image_url: width: 1400 }}" alt="{{ section.settings.image.alt | escape }}" width="900" height="765" loading="lazy">
-        {%- endif -%}
-        {%- for block in section.blocks -%}
-          <button class="shop-image__dot" type="button" data-hotspot
-                  style="left: {{ block.settings.x }}%; top: {{ block.settings.y }}%;"
-                  aria-label="{% if block.settings.product != blank %}{{ block.settings.product.title | escape }}{% else %}{{ block.settings.title | escape }}{% endif %}"
-                  {{ block.shopify_attributes }}></button>
-        {%- endfor -%}
-      </div>
-
-      <div class="shop-image__panel" data-reveal>
-        {%- for block in section.blocks -%}
-          {%- liquid
-            assign p = block.settings.product
-            assign url = p.url | default: block.settings.link | default: '#'
-          -%}
-          <article class="shop-image__product" data-hsproduct>
-            <a class="shop-image__card" href="{{ url }}">
-              {%- if p != blank and p.featured_image != blank -%}
-                <img src="{{ p.featured_image | image_url: width: 600 }}" alt="{{ p.title | escape }}" width="360" height="360">
-              {%- elsif block.settings.image != blank -%}
-                <img src="{{ block.settings.image | image_url: width: 600 }}" alt="{{ block.settings.title | escape }}" width="360" height="360">
-              {%- elsif block.settings.image_fallback != blank -%}
-                <img src="{{ block.settings.image_fallback | asset_url }}" alt="{{ block.settings.title | escape }}" width="360" height="360">
-              {%- else -%}
-                {{ 'product-1' | placeholder_svg_tag: 'placeholder' }}
+    <div class="shop-image__viewport" data-reveal>
+      {%- assign slide_i = 0 -%}
+      {%- for img in section.blocks -%}
+        {%- if img.type != 'image' -%}{%- continue -%}{%- endif -%}
+        {%- assign img_pos = forloop.index0 -%}
+        <div class="shop-image__slide{% if slide_i == 0 %} is-active{% endif %}" data-slide {{ img.shopify_attributes }}>
+          <div class="shop-image__grid">
+            <div class="shop-image__stage{% if img.settings.image == blank %} shop-image__stage--fallback{% endif %}">
+              {%- if img.settings.image != blank -%}
+                <img src="{{ img.settings.image | image_url: width: 1400 }}" alt="{{ img.settings.image.alt | escape }}" width="900" height="765" loading="lazy">
               {%- endif -%}
-            </a>
-            <div class="shop-image__meta">
-              <div class="shop-image__vendor">{% if p != blank and p.vendor != blank %}{{ p.vendor }}{% else %}{{ block.settings.vendor }}{% endif %}</div>
-              <h3 class="shop-image__name"><a href="{{ url }}">{% if p != blank %}{{ p.title }}{% else %}{{ block.settings.title }}{% endif %}</a></h3>
-              <div class="shop-image__price">{% if p != blank %}{{ p.price | money }}{% else %}{{ block.settings.price }}{% endif %}</div>
+              {%- for hb in section.blocks -%}
+                {%- if forloop.index0 <= img_pos -%}{%- continue -%}{%- endif -%}
+                {%- if hb.type == 'image' -%}{%- break -%}{%- endif -%}
+                <button class="shop-image__dot" type="button" data-hotspot
+                        style="left: {{ hb.settings.x }}%; top: {{ hb.settings.y }}%;"
+                        aria-label="{% if hb.settings.product != blank %}{{ hb.settings.product.title | escape }}{% else %}{{ hb.settings.title | escape }}{% endif %}"
+                        {{ hb.shopify_attributes }}></button>
+              {%- endfor -%}
             </div>
-          </article>
-        {%- endfor -%}
 
-        {%- if section.blocks.size > 1 -%}
-          <div class="shop-image__arrows">
-            <button class="scroller__btn" type="button" data-hs-prev aria-label="Précédent">{% render 'icon', icon: 'arrow-left' %}</button>
-            <button class="scroller__btn" type="button" data-hs-next aria-label="Suivant">{% render 'icon', icon: 'arrow-right' %}</button>
+            <div class="shop-image__panel">
+              {%- for hb in section.blocks -%}
+                {%- if forloop.index0 <= img_pos -%}{%- continue -%}{%- endif -%}
+                {%- if hb.type == 'image' -%}{%- break -%}{%- endif -%}
+                {%- liquid
+                  assign p = hb.settings.product
+                  assign url = p.url | default: hb.settings.link | default: '#'
+                -%}
+                <article class="shop-image__product" data-hsproduct>
+                  <a class="shop-image__card" href="{{ url }}">
+                    {%- if p != blank and p.featured_image != blank -%}
+                      <img src="{{ p.featured_image | image_url: width: 600 }}" alt="{{ p.title | escape }}" width="360" height="360">
+                    {%- elsif hb.settings.image != blank -%}
+                      <img src="{{ hb.settings.image | image_url: width: 600 }}" alt="{{ hb.settings.title | escape }}" width="360" height="360">
+                    {%- elsif hb.settings.image_fallback != blank -%}
+                      <img src="{{ hb.settings.image_fallback | asset_url }}" alt="{{ hb.settings.title | escape }}" width="360" height="360">
+                    {%- else -%}
+                      {{ 'product-1' | placeholder_svg_tag: 'placeholder' }}
+                    {%- endif -%}
+                  </a>
+                  <div class="shop-image__meta">
+                    <div class="shop-image__vendor">{% if p != blank and p.vendor != blank %}{{ p.vendor }}{% else %}{{ hb.settings.vendor }}{% endif %}</div>
+                    <h3 class="shop-image__name"><a href="{{ url }}">{% if p != blank %}{{ p.title }}{% else %}{{ hb.settings.title }}{% endif %}</a></h3>
+                    <div class="shop-image__price">{% if p != blank %}{{ p.price | money }}{% else %}{{ hb.settings.price }}{% endif %}</div>
+                  </div>
+                </article>
+              {%- endfor -%}
+
+              <div class="shop-image__pager">
+                {%- if img_count > 1 -%}
+                  <span class="shop-image__count">{{ slide_i | plus: 1 | prepend: '0' | slice: -2, 2 }} / {{ img_count | prepend: '0' | slice: -2, 2 }}</span>
+                {%- else -%}
+                  <span></span>
+                {%- endif -%}
+                <div class="shop-image__arrows">
+                  <button class="scroller__btn" type="button" {% if img_count > 1 %}data-slide-prev{% else %}data-hs-prev{% endif %} aria-label="Précédent">{% render 'icon', icon: 'arrow-left' %}</button>
+                  <button class="scroller__btn" type="button" {% if img_count > 1 %}data-slide-next{% else %}data-hs-next{% endif %} aria-label="Suivant">{% render 'icon', icon: 'arrow-right' %}</button>
+                </div>
+              </div>
+            </div>
           </div>
-        {%- endif -%}
-      </div>
+        </div>
+        {%- assign slide_i = slide_i | plus: 1 -%}
+      {%- endfor -%}
     </div>
   </div>
 </section>
@@ -62,13 +89,20 @@
   "settings": [
     { "type": "text", "id": "eyebrow", "label": "Sur-titre" },
     { "type": "text", "id": "title", "label": "Titre", "default": "Collection Divano" },
-    { "type": "richtext", "id": "description", "label": "Description", "default": "<p>Idéal pour les petits et grands espaces, profitez d'un confort absolu tout en ajoutant une touche d'élégance à votre intérieur grâce à la <em>collection Divano</em> modulable.</p>" },
-    { "type": "image_picker", "id": "image", "label": "Image d'ambiance" }
+    { "type": "richtext", "id": "description", "label": "Description", "default": "<p>Idéal pour les petits et grands espaces, profitez d'un confort absolu tout en ajoutant une touche d'élégance à votre intérieur grâce à la <em>collection Divano</em> modulable.</p>" }
   ],
   "blocks": [
     {
+      "type": "image",
+      "name": "① Image d'ambiance",
+      "settings": [
+        { "type": "paragraph", "content": "Ajoutez ensuite des blocs « Produit épinglé » juste en dessous : ils seront rattachés à cette image." },
+        { "type": "image_picker", "id": "image", "label": "Image d'ambiance" }
+      ]
+    },
+    {
       "type": "hotspot",
-      "name": "Produit épinglé",
+      "name": "② Produit épinglé",
       "settings": [
         { "type": "product", "id": "product", "label": "Produit", "info": "Recommandé. Sinon, remplissez les champs manuels." },
         { "type": "range", "id": "x", "label": "Position horizontale", "min": 0, "max": 100, "step": 1, "unit": "%", "default": 50 },
@@ -83,13 +117,17 @@
       ]
     }
   ],
-  "max_blocks": 8,
+  "max_blocks": 24,
   "presets": [{
     "name": "Image shoppable",
     "blocks": [
+      { "type": "image" },
       { "type": "hotspot", "settings": { "x": 40, "y": 58, "title": "Divano - Pouf", "vendor": "Divano", "price": "1 850,00 dh", "image_fallback": "product-sofa-boucle.png" } },
       { "type": "hotspot", "settings": { "x": 58, "y": 70, "title": "Fauteuil Velours", "vendor": "Divano", "price": "3 200,00 dh", "image_fallback": "product-chair-mustard.png" } },
-      { "type": "hotspot", "settings": { "x": 30, "y": 45, "title": "Table d'Appoint", "vendor": "Divano", "price": "1 450,00 dh", "image_fallback": "product-side-table-gold.png" } }
+      { "type": "hotspot", "settings": { "x": 30, "y": 45, "title": "Table d'Appoint", "vendor": "Divano", "price": "1 450,00 dh", "image_fallback": "product-side-table-gold.png" } },
+      { "type": "image" },
+      { "type": "hotspot", "settings": { "x": 45, "y": 55, "title": "Tables Gigognes", "vendor": "Divano", "price": "2 700,00 dh", "image_fallback": "product-tables-black.png" } },
+      { "type": "hotspot", "settings": { "x": 65, "y": 62, "title": "Ensemble Repas", "vendor": "Divano", "price": "12 500,00 dh", "image_fallback": "product-dining-set.png" } }
     ]
   }]
 }
