@@ -105,7 +105,32 @@
             "image": "shopify://shop_images/canape-compact-645992.webp",
             "hp1_product": "canape-compact",
             "hp1_x": 38,
-            "hp1_y": 58
+            "hp1_y": 58,
+            "hp1_title": "",
+            "hp1_price": "",
+            "hp1_image_fallback": "",
+            "hp1_link": "",
+            "hp2_product": "",
+            "hp2_x": 60,
+            "hp2_y": 65,
+            "hp2_title": "",
+            "hp2_price": "",
+            "hp2_image_fallback": "",
+            "hp2_link": "",
+            "hp3_product": "",
+            "hp3_x": 30,
+            "hp3_y": 45,
+            "hp3_title": "",
+            "hp3_price": "",
+            "hp3_image_fallback": "",
+            "hp3_link": "",
+            "hp4_product": "",
+            "hp4_x": 72,
+            "hp4_y": 42,
+            "hp4_title": "",
+            "hp4_price": "",
+            "hp4_image_fallback": "",
+            "hp4_link": ""
           }
         },
         "slide2": {
@@ -114,23 +139,61 @@
             "image": "shopify://shop_images/Royal_Stranger_Embrace_Armchair_Gentle_373_9-scaled.webp",
             "hp1_product": "fauteuil-design-sculptural-etreinte",
             "hp1_x": 32,
-            "hp1_y": 39
+            "hp1_y": 39,
+            "hp1_title": "",
+            "hp1_price": "",
+            "hp1_image_fallback": "",
+            "hp1_link": "",
+            "hp2_product": "",
+            "hp2_x": 60,
+            "hp2_y": 65,
+            "hp2_title": "",
+            "hp2_price": "",
+            "hp2_image_fallback": "",
+            "hp2_link": "",
+            "hp3_product": "",
+            "hp3_x": 30,
+            "hp3_y": 45,
+            "hp3_title": "",
+            "hp3_price": "",
+            "hp3_image_fallback": "",
+            "hp3_link": "",
+            "hp4_product": "",
+            "hp4_x": 72,
+            "hp4_y": 42,
+            "hp4_title": "",
+            "hp4_price": "",
+            "hp4_image_fallback": "",
+            "hp4_link": ""
           }
         }
       },
-      "block_order": ["slide1", "slide2"],
+      "block_order": [
+        "slide1",
+        "slide2"
+      ],
       "settings": {
         "eyebrow": "",
         "title": "Collection Divano",
-        "description": "<p>Idéal pour les petits et grands espaces, profitez d'un confort absolu tout en ajoutant une touche d'élégance à votre intérieur grâce à la <em>collection Divano</em> modulable.</p>"
+        "description": "<p>Idéal pour les petits et grands espaces, profitez d'un confort absolu tout en ajoutant une touche d'élégance à votre intérieur grâce à la <em>collection Divano</em> modulable.</p>",
+        "default_vendor": "Divano"
       }
     },
     "intro": {
       "type": "intro-stats",
       "blocks": {
-        "a1": { "type": "avatar", "settings": {} },
-        "a2": { "type": "avatar", "settings": {} },
-        "a3": { "type": "avatar", "settings": {} }
+        "a1": {
+          "type": "avatar",
+          "settings": {}
+        },
+        "a2": {
+          "type": "avatar",
+          "settings": {}
+        },
+        "a3": {
+          "type": "avatar",
+          "settings": {}
+        }
       },
       "block_order": [
         "a1",
