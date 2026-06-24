@@ -86,19 +86,12 @@
             "title": "Achat sans souci",
             "text": "Livraison partout au Maroc, retours faciles et paiement à la livraison."
           }
-        },
-        "v4": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/Royal_Stranger_Embrace_Armchair_Gentle_373_9-scaled.webp"
-          }
         }
       },
       "block_order": [
         "v1",
         "v2",
-        "v3",
-        "v4"
+        "v3"
       ],
       "settings": {
         "eyebrow": "Pourquoi Divano",
