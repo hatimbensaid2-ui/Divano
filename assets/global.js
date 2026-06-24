@@ -313,11 +313,12 @@
   document.querySelectorAll('[data-gallery]').forEach(function (gallery) {
     const main = gallery.querySelector('[data-main-img]');
     const thumbs = Array.prototype.slice.call(gallery.querySelectorAll('[data-thumb]'));
-    if (!main || !thumbs.length) return;
+    if (!main) return;
     const lightbox = gallery.querySelector('[data-lightbox]');
     const lbImg = gallery.querySelector('[data-lightbox-img]');
     let idx = 0;
     const show = function (i) {
+      if (!thumbs.length) return;
       idx = (i + thumbs.length) % thumbs.length;
       const t = thumbs[idx];
       const full = t.dataset.full || t.querySelector('img').src;
@@ -342,12 +343,13 @@
       }, { passive: true });
     }
 
-    // Zoom = ouverture de la visionneuse (icône ou clic sur l'image)
+    // Clic sur l'image principale = image suivante. Zoom uniquement via l'icône.
     const zoomBtn = gallery.querySelector('[data-gallery-zoom]');
     const openLb = function () { if (!lightbox) return; if (lbImg) lbImg.src = main.src; lightbox.hidden = false; document.body.style.overflow = 'hidden'; };
     const closeLb = function () { if (!lightbox) return; lightbox.hidden = true; document.body.style.overflow = ''; };
-    if (zoomBtn) zoomBtn.addEventListener('click', openLb);
-    if (main) main.addEventListener('click', openLb);
+    if (zoomBtn) zoomBtn.addEventListener('click', function (e) { e.stopPropagation(); openLb(); });
+    if (main && thumbs.length > 1) main.addEventListener('click', function () { show(idx + 1); });
+    if (lbImg) lbImg.addEventListener('click', function () { show(idx + 1); });
     if (lightbox) {
       lightbox.addEventListener('click', function (e) {
         if (e.target === lightbox || e.target.closest('[data-lightbox-close]')) closeLb();

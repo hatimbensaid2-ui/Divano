@@ -577,7 +577,7 @@ body.template-index .header.header--solid {
 .product__main-img {
   position: relative;
   background: var(--color-card); border-radius: var(--radius-m); aspect-ratio: 1/1;
-  display: grid; place-items: center; overflow: hidden; cursor: zoom-in;
+  display: grid; place-items: center; overflow: hidden; cursor: pointer;
 }
 .product__main-img img { object-fit: contain; max-height: 100%; padding: 6%; }
 .product__meta svg { width: 18px; height: 18px; }
