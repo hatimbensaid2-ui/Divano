@@ -43,6 +43,47 @@
     if (next) next.addEventListener('click', function () { track.scrollBy({ left: amount(), behavior: 'smooth' }); });
   });
 
+  // Carrousel centré « Curated Eras »
+  document.querySelectorAll('[data-eras]').forEach(function (root) {
+    const track = root.querySelector('[data-eras-track]');
+    if (!track) return;
+    const cards = Array.prototype.slice.call(track.querySelectorAll('.eras__card'));
+    if (!cards.length) return;
+
+    function update() {
+      const box = track.getBoundingClientRect();
+      const center = box.left + box.width / 2;
+      let best = null, bestDist = Infinity;
+      cards.forEach(function (card) {
+        const r = card.getBoundingClientRect();
+        const dist = Math.abs(r.left + r.width / 2 - center);
+        if (dist < bestDist) { bestDist = dist; best = card; }
+      });
+      cards.forEach(function (card) { card.classList.toggle('is-active', card === best); });
+    }
+
+    let raf;
+    track.addEventListener('scroll', function () {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(update);
+    });
+
+    const step = function () { return cards[0].offsetWidth + 16; };
+    const prev = root.querySelector('[data-eras-prev]');
+    const next = root.querySelector('[data-eras-next]');
+    if (prev) prev.addEventListener('click', function () { track.scrollBy({ left: -step(), behavior: 'smooth' }); });
+    if (next) next.addEventListener('click', function () { track.scrollBy({ left: step(), behavior: 'smooth' }); });
+
+    function centerMiddle() {
+      const mid = cards[Math.floor(cards.length / 2)];
+      track.scrollLeft = mid.offsetLeft - (track.clientWidth / 2) + (mid.offsetWidth / 2);
+      update();
+    }
+    centerMiddle();
+    window.addEventListener('load', centerMiddle);
+    window.addEventListener('resize', update);
+  });
+
   // Onglets de filtre (collection en vedette)
   document.querySelectorAll('[data-tabs]').forEach(function (tabsEl) {
     const tabs = tabsEl.querySelectorAll('[data-tab]');

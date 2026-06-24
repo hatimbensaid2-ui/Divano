@@ -321,14 +321,49 @@ p { margin: 0; }
 .value-card--feature p { color: rgba(255,255,255,.74); }
 
 /* --------------------------------------------------------------------------
-   Bannière collection (Curated Eras)
+   Curated Eras — carrousel centré
    -------------------------------------------------------------------------- */
-.eras { background: var(--color-card); }
-.eras__featured {
-  border-radius: var(--radius-m); background: #fff; padding: clamp(16px, 2vw, 26px);
-  box-shadow: var(--shadow-card); aspect-ratio: 1/1; display: grid; place-items: center;
+.eras { --eras-card: clamp(150px, 16vw, 210px); background: var(--color-cream); overflow: hidden; }
+.eras__head { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(20px, 4vw, 60px); align-items: start; }
+.eras__title { font-family: var(--font-body); font-weight: 800; font-size: clamp(2rem, 4.8vw, 3.5rem); line-height: 1.0; letter-spacing: -0.025em; }
+.eras__title .ln { display: block; }
+.eras__title .eras__serif { font-family: var(--font-heading); font-weight: 500; font-style: italic; color: #b4afa6; letter-spacing: 0; }
+.eras__right { display: flex; flex-direction: column; align-items: flex-end; gap: 1.1rem; }
+.eras__desc { color: var(--color-muted); max-width: 44ch; text-align: left; font-size: .98rem; }
+.eras__arrows { display: inline-flex; gap: .6rem; margin-top: clamp(20px, 3vw, 36px); }
+
+.eras__viewport { position: relative; }
+.eras__track {
+  display: flex; gap: clamp(10px, 1.4vw, 20px); overflow-x: auto;
+  scroll-snap-type: x mandatory; scroll-behavior: smooth;
+  padding-block: clamp(46px, 6vw, 80px);
+  padding-inline: calc(50% - (var(--eras-card) / 2));
+  scrollbar-width: none; -ms-overflow-style: none;
 }
-.eras__featured img { object-fit: contain; max-height: 100%; }
+.eras__track::-webkit-scrollbar { display: none; }
+.eras__card {
+  flex: 0 0 var(--eras-card); width: var(--eras-card); aspect-ratio: 1 / 1;
+  background: #e9e7e2; border-radius: 16px; display: grid; place-items: center;
+  scroll-snap-align: center; padding: 11%; opacity: .92; position: relative;
+  transition: transform .5s var(--ease), background .5s var(--ease), box-shadow .5s var(--ease), opacity .5s var(--ease);
+}
+.eras__card img { width: 100%; height: 100%; object-fit: contain; }
+.eras__card.is-active {
+  transform: scale(1.42) rotate(-4deg); background: #fff; opacity: 1; z-index: 4;
+  border-radius: 20px; box-shadow: 0 44px 80px -34px rgba(22, 53, 43, .55);
+}
+.eras__card.is-active::after {
+  content: ""; position: absolute; inset: -14px; border-radius: 26px; z-index: -1;
+  background: rgba(255, 255, 255, .35); border: 1px solid rgba(22, 53, 43, .06);
+  backdrop-filter: blur(2px);
+}
+.eras__cta { text-align: center; margin-top: clamp(10px, 2vw, 24px); }
+@media (max-width: 760px) {
+  .eras__head { grid-template-columns: 1fr; }
+  .eras__right { align-items: flex-start; }
+  .eras__desc { text-align: left; }
+  .eras { --eras-card: clamp(140px, 50vw, 200px); }
+}
 
 /* --------------------------------------------------------------------------
    Témoignages

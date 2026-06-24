@@ -1,50 +1,85 @@
-<section class="section eras">
+{%- liquid
+  assign coll = section.settings.collection
+  assign has_products = false
+  if coll != blank and coll.products.size > 0
+    assign has_products = true
+  endif
+  assign fallbacks = 'product-chair-mustard.png,hero-secondary.png,product-sofa-boucle.png,product-side-table-gold.png,product-tables-black.png,product-dining-set.png,product-chair-mustard-2.png' | split: ','
+-%}
+<section class="section eras" data-eras>
   <div class="page-width">
-    <div class="collection-head" data-reveal>
-      <div>
-        {%- if section.settings.eyebrow != blank -%}<span class="eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
-        <h2 class="section-title">{{ section.settings.title }}</h2>
-        {%- if section.settings.lead != blank -%}<p class="section-lead" style="margin-top:.8rem;">{{ section.settings.lead }}</p>{%- endif -%}
-      </div>
-      <div style="display:flex;flex-direction:column;gap:1.2rem;align-items:flex-end;">
-        {%- if section.settings.button_label != blank -%}
-          <a href="{{ section.settings.collection.url | default: routes.all_products_collection_url }}" class="btn btn--outline btn--small">{{ section.settings.button_label }}</a>
+    <div class="eras__head" data-reveal>
+      <h2 class="eras__title">
+        <span class="ln">{{ section.settings.title_line1 }}</span>
+        <span class="ln"><span class="eras__serif">{{ section.settings.title_serif }}</span> {{ section.settings.title_bold }}</span>
+      </h2>
+      <div class="eras__right">
+        {%- if section.settings.top_button_label != blank -%}
+          <a href="{{ section.settings.top_button_link | default: coll.url | default: routes.all_products_collection_url }}" class="btn btn--outline btn--small">{{ section.settings.top_button_label }}</a>
         {%- endif -%}
-        <div class="scroller__nav">
-          <button class="scroller__btn" data-prev aria-label="Précédent">{% render 'icon', icon: 'arrow-left' %}</button>
-          <button class="scroller__btn" data-next aria-label="Suivant">{% render 'icon', icon: 'arrow-right' %}</button>
-        </div>
+        {%- if section.settings.description != blank -%}
+          <p class="eras__desc">{{ section.settings.description }}</p>
+        {%- endif -%}
       </div>
     </div>
 
-    <div class="scroller" data-scroller>
-      <div class="scroller__track" data-track style="grid-auto-columns:clamp(240px, 26vw, 320px);">
-        {%- if section.settings.collection != blank and section.settings.collection.products.size > 0 -%}
-          {%- for product in section.settings.collection.products limit: section.settings.products_to_show -%}
-            {% render 'product-card', card_product: product %}
-          {%- endfor -%}
-        {%- else -%}
-          {%- for i in (1..6) -%}
-            <article class="card"><a class="card__media">{{ 'product-' | append: i | placeholder_svg_tag: 'placeholder' }}</a>
-            <div class="card__body"><div><h3 class="card__title">Produit exemple</h3></div><div class="card__price">0,00 MAD</div></div></article>
-          {%- endfor -%}
-        {%- endif -%}
-      </div>
+    <div class="eras__arrows" data-reveal>
+      <button class="scroller__btn" type="button" data-eras-prev aria-label="Précédent">{% render 'icon', icon: 'arrow-left' %}</button>
+      <button class="scroller__btn" type="button" data-eras-next aria-label="Suivant">{% render 'icon', icon: 'arrow-right' %}</button>
     </div>
+  </div>
+
+  <div class="eras__viewport">
+    <div class="eras__track" data-eras-track>
+      {%- if has_products -%}
+        {%- for product in coll.products limit: section.settings.products_to_show -%}
+          <a class="eras__card" href="{{ product.url }}" aria-label="{{ product.title | escape }}">
+            {%- if product.featured_media -%}
+              <img src="{{ product.featured_media | image_url: width: 500 }}" alt="{{ product.featured_media.alt | escape }}" width="300" height="300" loading="lazy">
+            {%- else -%}
+              {{ 'product-1' | placeholder_svg_tag: 'placeholder' }}
+            {%- endif -%}
+          </a>
+        {%- endfor -%}
+      {%- else -%}
+        {%- for img in fallbacks -%}
+          <a class="eras__card" href="{{ routes.all_products_collection_url }}" aria-label="Produit">
+            <img src="{{ img | asset_url }}" alt="Produit Divano" width="300" height="300" loading="lazy">
+          </a>
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+  </div>
+
+  <div class="page-width">
+    {%- if section.settings.bottom_button_label != blank -%}
+      <div class="eras__cta" data-reveal>
+        <a href="{{ section.settings.bottom_button_link | default: coll.url | default: routes.all_products_collection_url }}" class="btn btn--green">
+          {{ section.settings.bottom_button_label }}<span class="btn__dot">{% render 'icon', icon: 'arrow-up-right' %}</span>
+        </a>
+      </div>
+    {%- endif -%}
   </div>
 </section>
 
 {% schema %}
 {
-  "name": "Carrousel de collection",
+  "name": "Carrousel Époques",
   "settings": [
-    { "type": "text", "id": "eyebrow", "label": "Sur-titre", "default": "Collections" },
-    { "type": "text", "id": "title", "label": "Titre", "default": "Pièces d'exception. Espaces modernes." },
-    { "type": "textarea", "id": "lead", "label": "Texte", "default": "Explorez nos dernières créations : chaque collection est un ensemble cohérent de silhouettes architecturales." },
-    { "type": "collection", "id": "collection", "label": "Collection" },
-    { "type": "range", "id": "products_to_show", "label": "Produits affichés", "min": 4, "max": 12, "step": 1, "default": 8 },
-    { "type": "text", "id": "button_label", "label": "Bouton", "default": "Nos collections" }
+    { "type": "collection", "id": "collection", "label": "Collection", "info": "Affiche les produits de la collection. Sinon, des produits de démonstration sont utilisés." },
+    { "type": "range", "id": "products_to_show", "label": "Produits affichés", "min": 5, "max": 15, "step": 1, "default": 9 },
+    { "type": "header", "content": "Titre" },
+    { "type": "text", "id": "title_line1", "label": "Ligne 1 (gras)", "default": "Pièces d'Exception." },
+    { "type": "text", "id": "title_serif", "label": "Ligne 2 — mot en serif italic", "default": "Espaces" },
+    { "type": "text", "id": "title_bold", "label": "Ligne 2 — mot en gras", "default": "Modernes." },
+    { "type": "header", "content": "Texte à droite" },
+    { "type": "textarea", "id": "description", "label": "Description", "default": "Découvrez nos dernières créations. Chaque collection est un ensemble cohérent de silhouettes architecturales, pensées pour durer." },
+    { "type": "text", "id": "top_button_label", "label": "Bouton (haut droite)", "default": "Nos collections" },
+    { "type": "url", "id": "top_button_link", "label": "Lien bouton (haut)" },
+    { "type": "header", "content": "Bouton du bas" },
+    { "type": "text", "id": "bottom_button_label", "label": "Libellé", "default": "Explorer nos pièces" },
+    { "type": "url", "id": "bottom_button_link", "label": "Lien" }
   ],
-  "presets": [{ "name": "Carrousel de collection" }]
+  "presets": [{ "name": "Carrousel Époques" }]
 }
 {% endschema %}

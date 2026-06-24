@@ -65,6 +65,17 @@
         "lead": "Nous allions une esthétique intemporelle à une durabilité réelle, pour que chaque pièce se sente chez elle dans votre espace."
       }
     },
+    "eras": {
+      "type": "collection-carousel",
+      "settings": {
+        "title_line1": "Pièces d'Exception.",
+        "title_serif": "Espaces",
+        "title_bold": "Modernes.",
+        "description": "Découvrez nos dernières créations. Chaque collection est un ensemble cohérent de silhouettes architecturales, pensées pour durer.",
+        "top_button_label": "Nos collections",
+        "bottom_button_label": "Explorer nos pièces"
+      }
+    },
     "testimonials": {
       "type": "testimonials",
       "blocks": {
@@ -83,5 +94,5 @@
       }
     }
   },
-  "order": ["hero", "intro", "featured", "values", "testimonials"]
+  "order": ["hero", "intro", "featured", "values", "eras", "testimonials"]
 }
