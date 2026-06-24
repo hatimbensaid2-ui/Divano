@@ -99,6 +99,40 @@
     "shopimage": {
       "type": "shop-image",
       "blocks": {
+        "slide_cPjYK7": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Royal_Stranger_Embrace_Armchair_Gentle_373_9-scaled.webp",
+            "hp1_product": "fauteuil-design-sculptural-etreinte",
+            "hp1_x": 40,
+            "hp1_y": 55,
+            "hp1_title": "",
+            "hp1_price": "",
+            "hp1_image_fallback": "",
+            "hp1_link": "",
+            "hp2_product": "",
+            "hp2_x": 60,
+            "hp2_y": 65,
+            "hp2_title": "",
+            "hp2_price": "",
+            "hp2_image_fallback": "",
+            "hp2_link": "",
+            "hp3_product": "",
+            "hp3_x": 30,
+            "hp3_y": 45,
+            "hp3_title": "",
+            "hp3_price": "",
+            "hp3_image_fallback": "",
+            "hp3_link": "",
+            "hp4_product": "",
+            "hp4_x": 72,
+            "hp4_y": 42,
+            "hp4_title": "",
+            "hp4_price": "",
+            "hp4_image_fallback": "",
+            "hp4_link": ""
+          }
+        },
         "slide1": {
           "type": "slide",
           "settings": {
@@ -132,45 +166,11 @@
             "hp4_image_fallback": "",
             "hp4_link": ""
           }
-        },
-        "slide2": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/Royal_Stranger_Embrace_Armchair_Gentle_373_9-scaled.webp",
-            "hp1_product": "fauteuil-design-sculptural-etreinte",
-            "hp1_x": 32,
-            "hp1_y": 39,
-            "hp1_title": "",
-            "hp1_price": "",
-            "hp1_image_fallback": "",
-            "hp1_link": "",
-            "hp2_product": "",
-            "hp2_x": 60,
-            "hp2_y": 65,
-            "hp2_title": "",
-            "hp2_price": "",
-            "hp2_image_fallback": "",
-            "hp2_link": "",
-            "hp3_product": "",
-            "hp3_x": 30,
-            "hp3_y": 45,
-            "hp3_title": "",
-            "hp3_price": "",
-            "hp3_image_fallback": "",
-            "hp3_link": "",
-            "hp4_product": "",
-            "hp4_x": 72,
-            "hp4_y": 42,
-            "hp4_title": "",
-            "hp4_price": "",
-            "hp4_image_fallback": "",
-            "hp4_link": ""
-          }
         }
       },
       "block_order": [
-        "slide1",
-        "slide2"
+        "slide_cPjYK7",
+        "slide1"
       ],
       "settings": {
         "eyebrow": "",
