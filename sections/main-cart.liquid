@@ -1,0 +1,49 @@
+<section class="cart">
+  <div class="page-width">
+    <h1 class="section-title" style="margin-bottom:2rem;">{{ 'cart.title' | t }}</h1>
+
+    {%- if cart.item_count > 0 -%}
+      <form action="{{ routes.cart_url }}" method="post" novalidate>
+        <div class="cart__grid" style="display:grid;grid-template-columns:1.6fr .9fr;gap:clamp(24px,4vw,48px);align-items:start;">
+          <div>
+            {%- for item in cart.items -%}
+              <div class="cart__row">
+                <a href="{{ item.url }}">
+                  {%- if item.image -%}<img src="{{ item.image | image_url: width: 180 }}" alt="{{ item.title | escape }}" width="90" height="90">{%- endif -%}
+                </a>
+                <div>
+                  <a href="{{ item.url }}" style="font-weight:600;">{{ item.product.title }}</a>
+                  {%- unless item.variant.title contains 'Default' -%}<div class="card__vendor">{{ item.variant.title }}</div>{%- endunless -%}
+                  <a href="{{ item.url_to_remove }}" class="link-underline" style="font-size:.8rem;color:var(--color-muted);margin-top:.4rem;">{{ 'cart.remove' | t }}</a>
+                </div>
+                <div class="qty" data-qty>
+                  <button type="button" data-step="down" aria-label="Moins">−</button>
+                  <input type="number" name="updates[]" value="{{ item.quantity }}" min="0" data-line="{{ forloop.index }}" onchange="this.form.submit()">
+                  <button type="button" data-step="up" aria-label="Plus">+</button>
+                </div>
+                <div class="card__price">{{ item.final_line_price | money }}</div>
+              </div>
+            {%- endfor -%}
+          </div>
+
+          <aside class="cart__summary">
+            <div class="cart__line"><span>{{ 'cart.subtotal' | t }}</span><span>{{ cart.total_price | money }}</span></div>
+            <p class="card__vendor">{{ 'cart.shipping_note' | t }}</p>
+            <div class="cart__line cart__total"><span>{{ 'cart.total' | t }}</span><span>{{ cart.total_price | money }}</span></div>
+            <button type="submit" name="checkout" class="btn btn--green btn--block" style="margin-top:1.2rem;">{{ 'cart.checkout' | t }}<span class="btn__dot">{% render 'icon', icon: 'arrow-right' %}</span></button>
+            <a href="{{ routes.all_products_collection_url }}" class="link-underline" style="display:inline-flex;margin-top:1.2rem;">{{ 'cart.continue' | t }}</a>
+          </aside>
+        </div>
+      </form>
+    {%- else -%}
+      <div style="text-align:center;padding-block:4rem;">
+        <p class="section-lead" style="margin-inline:auto;">{{ 'cart.empty' | t }}</p>
+        <a href="{{ routes.all_products_collection_url }}" class="btn btn--green" style="margin-top:1.4rem;">{{ 'cart.continue' | t }}</a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Panier", "settings": [] }
+{% endschema %}

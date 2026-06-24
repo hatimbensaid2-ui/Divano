@@ -1,0 +1,25 @@
+<section class="section">
+  <div class="page-width">
+    <div class="collection-head collection-head--center" data-reveal>
+      <span class="eyebrow">Nos univers</span>
+      <h1 class="section-title">{{ page_title | default: 'Collections' }}</h1>
+    </div>
+    <div class="product-grid" style="--cols:3;">
+      {%- for collection in collections -%}
+        <a class="category-card" href="{{ collection.url }}" style="aspect-ratio:4/3;" data-reveal>
+          <div class="category-card__img">
+            {%- if collection.featured_image -%}
+              <img src="{{ collection.featured_image | image_url: width: 700 }}" alt="{{ collection.title | escape }}" width="400" height="300" loading="lazy">
+            {%- endif -%}
+          </div>
+          <span class="category-card__name">{{ collection.title }}</span>
+          <span class="category-card__count">{{ collection.products_count }} produits</span>
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Liste des collections", "settings": [] }
+{% endschema %}

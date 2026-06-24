@@ -1,0 +1,99 @@
+<section class="product">
+  <div class="page-width">
+    <div class="product__grid" data-gallery>
+      <div class="product__gallery">
+        <div class="product__main-img">
+          {%- if product.featured_media -%}
+            <img data-main-img src="{{ product.featured_media | image_url: width: 1000 }}" alt="{{ product.featured_media.alt | escape }}" width="700" height="700">
+          {%- else -%}
+            {{ 'product-1' | placeholder_svg_tag: 'placeholder' }}
+          {%- endif -%}
+        </div>
+        {%- if product.media.size > 1 -%}
+          <div class="product__thumbs">
+            {%- for media in product.media limit: 6 -%}
+              <button class="product__thumb" data-thumb data-full="{{ media | image_url: width: 1000 }}" aria-label="Vue {{ forloop.index }}">
+                <img src="{{ media | image_url: width: 160 }}" alt="{{ media.alt | escape }}" width="78" height="78" loading="lazy">
+              </button>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      <div class="product__info" data-reveal>
+        {%- if product.vendor != blank -%}<span class="eyebrow">{{ product.vendor }}</span>{%- endif -%}
+        <h1 class="product__title">{{ product.title }}</h1>
+
+        <div class="product__price">
+          {%- if product.compare_at_price > product.price -%}
+            <del>{{ product.compare_at_price | money }}</del>
+          {%- endif -%}
+          {{ product.price | money }}
+        </div>
+
+        {%- if product.description != blank -%}
+          <div class="product__desc">{{ product.description }}</div>
+        {%- endif -%}
+
+        {%- form 'product', product, class: 'product__form' -%}
+          {%- unless product.has_only_default_variant -%}
+            {%- for option in product.options_with_values -%}
+              <div class="option">
+                <span class="option__label">{{ option.name }}</span>
+                <div class="option__values">
+                  {%- for value in option.values -%}
+                    <button type="button" class="swatch"
+                      onclick="this.closest('.option').querySelector('select').value='{{ value | escape }}';this.closest('.option').querySelector('select').dispatchEvent(new Event('change'));this.parentNode.querySelectorAll('.swatch').forEach(s=>s.style.borderColor='');this.style.borderColor='var(--color-text)';">
+                      {{ value }}
+                    </button>
+                  {%- endfor -%}
+                </div>
+                <select name="options[{{ option.name | escape }}]" class="visually-hidden">
+                  {%- for value in option.values -%}<option value="{{ value | escape }}">{{ value }}</option>{%- endfor -%}
+                </select>
+              </div>
+            {%- endfor -%}
+          {%- endunless -%}
+
+          <select name="id" class="visually-hidden" data-variant-select>
+            {%- for variant in product.variants -%}
+              <option value="{{ variant.id }}" {% unless variant.available %}disabled{% endunless %}>{{ variant.title }}</option>
+            {%- endfor -%}
+          </select>
+
+          <div class="product__actions">
+            <div class="qty" data-qty>
+              <button type="button" data-step="down" aria-label="Moins">−</button>
+              <input type="number" name="quantity" value="1" min="1" aria-label="{{ 'products.product.quantity' | t }}">
+              <button type="button" data-step="up" aria-label="Plus">+</button>
+            </div>
+            <button type="submit" name="add" class="btn btn--green" {% unless product.available %}disabled{% endunless %}>
+              {%- if product.available -%}{{ 'products.product.add_to_cart' | t }}{%- else -%}{{ 'products.product.sold_out' | t }}{%- endif -%}
+              <span class="btn__dot">{% render 'icon', icon: 'cart' %}</span>
+            </button>
+          </div>
+          {%- if product.available -%}
+            <button type="submit" name="checkout" class="btn btn--accent btn--block">{{ 'products.product.buy_now' | t }}</button>
+          {%- endif -%}
+        {%- endform -%}
+
+        <div class="product__meta">
+          {%- if product.selected_or_first_available_variant.sku != blank -%}
+            <span><strong>{{ 'products.product.sku' | t }} :</strong> {{ product.selected_or_first_available_variant.sku }}</span>
+          {%- endif -%}
+          <span>{% render 'icon', icon: 'truck' %} {{ 'products.product.free_shipping' | t }}</span>
+          <span>{% render 'icon', icon: 'shield' %} {{ 'products.product.secure_payment' | t }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Page produit",
+  "settings": [],
+  "blocks": [],
+  "presets": [{ "name": "Page produit" }]
+}
+{% endschema %}

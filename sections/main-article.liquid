@@ -1,0 +1,16 @@
+<article class="section">
+  <div class="page-width" style="max-width:820px;">
+    <div class="collection-head collection-head--center" data-reveal>
+      <span class="eyebrow">{{ article.published_at | date: '%d %B %Y' }}</span>
+      <h1 class="section-title">{{ article.title }}</h1>
+      {%- if article.author != blank -%}<p class="card__vendor">Par {{ article.author }}</p>{%- endif -%}
+    </div>
+    {%- if article.image -%}
+      <img src="{{ article.image | image_url: width: 1200 }}" alt="{{ article.title | escape }}" width="820" height="460" style="border-radius:var(--radius-m);object-fit:cover;margin-bottom:2rem;" data-reveal>
+    {%- endif -%}
+    <div class="rte" data-reveal style="line-height:1.8;">{{ article.content }}</div>
+  </div>
+</article>
+{% schema %}
+{ "name": "Article", "settings": [] }
+{% endschema %}

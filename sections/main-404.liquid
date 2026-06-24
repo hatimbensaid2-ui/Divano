@@ -1,0 +1,12 @@
+<section class="section" style="text-align:center;">
+  <div class="page-width" style="max-width:620px;">
+    <div class="intro__stat-num" style="font-size:clamp(5rem,18vw,11rem);color:var(--color-accent);">404</div>
+    <h1 class="section-title">Page introuvable</h1>
+    <p class="section-lead" style="margin:1rem auto 2rem;">La page que vous cherchez n'existe pas ou a été déplacée.</p>
+    <a href="{{ routes.root_url }}" class="btn btn--green">Retour à l'accueil<span class="btn__dot">{% render 'icon', icon: 'arrow-right' %}</span></a>
+  </div>
+</section>
+
+{% schema %}
+{ "name": "404", "settings": [] }
+{% endschema %}

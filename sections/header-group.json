@@ -1,0 +1,19 @@
+{
+  "type": "header",
+  "name": "En-tête",
+  "sections": {
+    "announcement-bar": {
+      "type": "announcement-bar",
+      "settings": {
+        "text": "Livraison offerte dès 1500 MAD partout au Maroc · Paiement à la livraison",
+        "bg": "#0F2820",
+        "color": "#F4EFE7"
+      }
+    },
+    "header": {
+      "type": "header",
+      "settings": { "menu": "main-menu" }
+    }
+  },
+  "order": ["announcement-bar", "header"]
+}

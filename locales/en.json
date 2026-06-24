@@ -1,0 +1,62 @@
+{
+  "general": {
+    "accessibility": {
+      "skip_to_content": "Skip to content",
+      "previous": "Previous",
+      "next": "Next",
+      "menu": "Menu",
+      "close": "Close",
+      "cart": "Cart"
+    },
+    "meta": { "tags": "Tags: {{ tags }}", "page": "Page {{ page }}" },
+    "search": { "search": "Search", "placeholder": "Search a product…" },
+    "newsletter": {
+      "label": "Email address",
+      "placeholder": "Your email address",
+      "button": "Subscribe",
+      "success": "Thanks for subscribing!"
+    },
+    "pagination": { "label": "Pagination", "previous": "Previous", "next": "Next" }
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "Add to cart",
+      "buy_now": "Buy it now",
+      "sold_out": "Sold out",
+      "unavailable": "Unavailable",
+      "on_sale": "Sale",
+      "from_price": "From {{ price }}",
+      "quantity": "Quantity",
+      "sku": "SKU",
+      "vendor": "Brand",
+      "description": "Description",
+      "free_shipping": "Free shipping over 1500 MAD",
+      "secure_payment": "100% secure payment",
+      "delivery": "Delivery across Morocco"
+    },
+    "facets": {
+      "sort_by": "Sort by",
+      "from_low_to_high": "Price, low to high",
+      "from_high_to_low": "Price, high to low",
+      "newest": "Newest",
+      "best_selling": "Best selling",
+      "results": "{{ count }} products"
+    }
+  },
+  "cart": {
+    "title": "Your cart",
+    "empty": "Your cart is empty",
+    "continue": "Continue shopping",
+    "product": "Product",
+    "price": "Price",
+    "quantity": "Quantity",
+    "total": "Total",
+    "subtotal": "Subtotal",
+    "shipping_note": "Shipping calculated at checkout.",
+    "checkout": "Checkout",
+    "remove": "Remove"
+  },
+  "sections": {
+    "header": { "announcement": "Free shipping over 1500 MAD across Morocco" }
+  }
+}

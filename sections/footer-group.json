@@ -1,0 +1,26 @@
+{
+  "type": "footer",
+  "name": "Pied de page",
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "shop": { "type": "menu", "settings": { "title": "Boutique", "menu": "footer" } },
+        "home": { "type": "menu", "settings": { "title": "Maison", "menu": "footer" } },
+        "help": { "type": "menu", "settings": { "title": "Aide", "menu": "footer" } },
+        "contact": {
+          "type": "contact",
+          "settings": {
+            "title": "Contact",
+            "address": "Casablanca, Maroc",
+            "phone": "+212 6 00 00 00 00",
+            "email": "contact@divano.ma"
+          }
+        }
+      },
+      "block_order": ["shop", "home", "help", "contact"],
+      "settings": {}
+    }
+  },
+  "order": ["footer"]
+}

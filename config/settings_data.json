@@ -1,0 +1,31 @@
+{
+  "current": {
+    "color_green": "#16352B",
+    "color_green_deep": "#0F2820",
+    "color_cream": "#F4EFE7",
+    "color_card": "#FBF8F3",
+    "color_text": "#16140F",
+    "color_muted": "#5C5C54",
+    "color_accent": "#B5793A",
+    "font_heading": "playfair_display_n4",
+    "font_body": "assistant_n4",
+    "page_width": 1320,
+    "social_instagram": "https://instagram.com",
+    "social_facebook": "https://facebook.com",
+    "social_tiktok": "https://tiktok.com"
+  },
+  "presets": {
+    "Divano": {
+      "color_green": "#16352B",
+      "color_green_deep": "#0F2820",
+      "color_cream": "#F4EFE7",
+      "color_card": "#FBF8F3",
+      "color_text": "#16140F",
+      "color_muted": "#5C5C54",
+      "color_accent": "#B5793A",
+      "font_heading": "playfair_display_n4",
+      "font_body": "assistant_n4",
+      "page_width": 1320
+    }
+  }
+}

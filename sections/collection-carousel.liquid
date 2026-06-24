@@ -1,0 +1,50 @@
+<section class="section eras">
+  <div class="page-width">
+    <div class="collection-head" data-reveal>
+      <div>
+        {%- if section.settings.eyebrow != blank -%}<span class="eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+        <h2 class="section-title">{{ section.settings.title }}</h2>
+        {%- if section.settings.lead != blank -%}<p class="section-lead" style="margin-top:.8rem;">{{ section.settings.lead }}</p>{%- endif -%}
+      </div>
+      <div style="display:flex;flex-direction:column;gap:1.2rem;align-items:flex-end;">
+        {%- if section.settings.button_label != blank -%}
+          <a href="{{ section.settings.collection.url | default: routes.all_products_collection_url }}" class="btn btn--outline btn--small">{{ section.settings.button_label }}</a>
+        {%- endif -%}
+        <div class="scroller__nav">
+          <button class="scroller__btn" data-prev aria-label="Précédent">{% render 'icon', icon: 'arrow-left' %}</button>
+          <button class="scroller__btn" data-next aria-label="Suivant">{% render 'icon', icon: 'arrow-right' %}</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="scroller" data-scroller>
+      <div class="scroller__track" data-track style="grid-auto-columns:clamp(240px, 26vw, 320px);">
+        {%- if section.settings.collection != blank and section.settings.collection.products.size > 0 -%}
+          {%- for product in section.settings.collection.products limit: section.settings.products_to_show -%}
+            {% render 'product-card', card_product: product %}
+          {%- endfor -%}
+        {%- else -%}
+          {%- for i in (1..6) -%}
+            <article class="card"><a class="card__media">{{ 'product-' | append: i | placeholder_svg_tag: 'placeholder' }}</a>
+            <div class="card__body"><div><h3 class="card__title">Produit exemple</h3></div><div class="card__price">0,00 MAD</div></div></article>
+          {%- endfor -%}
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Carrousel de collection",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Sur-titre", "default": "Collections" },
+    { "type": "text", "id": "title", "label": "Titre", "default": "Pièces d'exception. Espaces modernes." },
+    { "type": "textarea", "id": "lead", "label": "Texte", "default": "Explorez nos dernières créations : chaque collection est un ensemble cohérent de silhouettes architecturales." },
+    { "type": "collection", "id": "collection", "label": "Collection" },
+    { "type": "range", "id": "products_to_show", "label": "Produits affichés", "min": 4, "max": 12, "step": 1, "default": 8 },
+    { "type": "text", "id": "button_label", "label": "Bouton", "default": "Nos collections" }
+  ],
+  "presets": [{ "name": "Carrousel de collection" }]
+}
+{% endschema %}

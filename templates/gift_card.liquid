@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ shop.name }} — Carte cadeau</title>
+  {{ 'base.css' | asset_url | stylesheet_tag }}
+</head>
+<body>
+  <section class="section" style="text-align:center;">
+    <div class="page-width" style="max-width:560px;">
+      <span class="eyebrow">Divano</span>
+      <h1 class="section-title">Votre carte cadeau</h1>
+      <div class="cart__summary" style="margin-top:2rem;">
+        <div class="intro__stat-num" style="color:var(--color-accent);">{{ gift_card.balance | money }}</div>
+        <img src="{{ gift_card.qr_identifier | generate_variant_url }}" alt="" style="margin:1.5rem auto;">
+        <p class="card__vendor">Code : <strong>{{ gift_card.code | format_code }}</strong></p>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

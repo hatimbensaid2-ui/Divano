@@ -1,0 +1,48 @@
+<section class="section">
+  <div class="page-width">
+    <div class="collection-banner" data-reveal>
+      <span class="eyebrow" style="color:var(--color-accent);">Collection</span>
+      <h1>{{ collection.title }}</h1>
+      {%- if collection.description != blank -%}<p>{{ collection.description | strip_html | truncatewords: 40 }}</p>{%- endif -%}
+    </div>
+
+    <div class="collection-toolbar">
+      <span class="section-lead">{{ 'products.facets.results' | t: count: collection.products_count }}</span>
+      <form method="get">
+        {%- assign sort_by = collection.sort_by | default: collection.default_sort_by -%}
+        <select name="sort_by" onchange="this.form.submit()" aria-label="{{ 'products.facets.sort_by' | t }}">
+          <option value="manual" {% if sort_by == 'manual' %}selected{% endif %}>{{ 'products.facets.best_selling' | t }}</option>
+          <option value="price-ascending" {% if sort_by == 'price-ascending' %}selected{% endif %}>{{ 'products.facets.from_low_to_high' | t }}</option>
+          <option value="price-descending" {% if sort_by == 'price-descending' %}selected{% endif %}>{{ 'products.facets.from_high_to_low' | t }}</option>
+          <option value="created-descending" {% if sort_by == 'created-descending' %}selected{% endif %}>{{ 'products.facets.newest' | t }}</option>
+        </select>
+      </form>
+    </div>
+
+    {%- paginate collection.products by 12 -%}
+      <div class="product-grid" style="--cols:4;">
+        {%- for product in collection.products -%}
+          {% render 'product-card', card_product: product %}
+        {%- else -%}
+          <p>Aucun produit pour le moment.</p>
+        {%- endfor -%}
+      </div>
+
+      {%- if paginate.pages > 1 -%}
+        <nav class="pagination" aria-label="{{ 'general.pagination.label' | t }}" style="display:flex;justify-content:center;gap:.5rem;margin-top:3rem;">
+          {%- for part in paginate.parts -%}
+            {%- if part.is_link -%}
+              <a class="tab" href="{{ part.url }}">{{ part.title }}</a>
+            {%- else -%}
+              <span class="tab" aria-selected="true">{{ part.title }}</span>
+            {%- endif -%}
+          {%- endfor -%}
+        </nav>
+      {%- endif -%}
+    {%- endpaginate -%}
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Page collection", "settings": [] }
+{% endschema %}

@@ -1,0 +1,27 @@
+<section class="section">
+  <div class="page-width">
+    <div class="collection-head collection-head--center" data-reveal>
+      <span class="eyebrow">Journal</span>
+      <h1 class="section-title">{{ blog.title }}</h1>
+    </div>
+    <div class="product-grid" style="--cols:3;">
+      {%- for article in blog.articles -%}
+        <a class="card" href="{{ article.url }}" data-reveal>
+          <div class="card__media" style="aspect-ratio:4/3;">
+            {%- if article.image -%}<img src="{{ article.image | image_url: width: 700 }}" alt="{{ article.title | escape }}" width="400" height="300" loading="lazy" style="object-fit:cover;padding:0;">{%- endif -%}
+          </div>
+          <div class="card__body" style="flex-direction:column;align-items:flex-start;gap:.3rem;">
+            <span class="card__vendor">{{ article.published_at | date: '%d %B %Y' }}</span>
+            <h3 class="card__title">{{ article.title }}</h3>
+            <p class="card__vendor">{{ article.excerpt_or_content | strip_html | truncatewords: 18 }}</p>
+          </div>
+        </a>
+      {%- else -%}
+        <p>Aucun article pour le moment.</p>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+{% schema %}
+{ "name": "Blog", "settings": [] }
+{% endschema %}

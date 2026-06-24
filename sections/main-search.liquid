@@ -1,0 +1,30 @@
+<section class="section">
+  <div class="page-width">
+    <div class="collection-head collection-head--center" data-reveal>
+      <span class="eyebrow">{{ 'general.search.search' | t }}</span>
+      <h1 class="section-title">{{ 'general.search.search' | t }}</h1>
+      <form action="{{ routes.search_url }}" method="get" role="search" style="display:flex;gap:.6rem;margin-top:1.4rem;width:min(560px,100%);">
+        <input type="search" name="q" value="{{ search.terms | escape }}" placeholder="{{ 'general.search.placeholder' | t }}"
+          style="flex:1;border:1px solid var(--color-line);border-radius:var(--radius-pill);padding:.9rem 1.3rem;background:#fff;">
+        <button type="submit" class="btn btn--green">{{ 'general.search.search' | t }}</button>
+      </form>
+    </div>
+
+    {%- if search.performed -%}
+      <p class="section-lead" style="margin-bottom:1.6rem;">{{ search.results_count }} résultat(s)</p>
+      <div class="product-grid" style="--cols:4;">
+        {%- for item in search.results -%}
+          {%- if item.object_type == 'product' -%}
+            {% render 'product-card', card_product: item %}
+          {%- endif -%}
+        {%- else -%}
+          <p>Aucun résultat trouvé.</p>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Recherche", "settings": [] }
+{% endschema %}
