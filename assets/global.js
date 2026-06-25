@@ -352,29 +352,46 @@
       lbZoomed = false;
       if (lbImg) { lbImg.classList.remove('is-zoomed'); lbImg.style.transform = ''; lbImg.style.transformOrigin = 'center'; }
     };
-    const show = function (i) {
+    const show = function (i) { setImage(i, false); };
+    function setImage(i, instant) {
       if (!thumbs.length) return;
       idx = (i + thumbs.length) % thumbs.length;
       const t = thumbs[idx];
       const full = t.dataset.full || t.querySelector('img').src;
-      main.classList.add('is-fading');
-      const done = function () { main.classList.remove('is-fading'); };
-      main.onload = done;
-      main.src = full;
-      setTimeout(done, 350);
+      if (instant) {
+        main.classList.remove('is-fading');
+        main.src = full;
+      } else {
+        main.classList.add('is-fading');
+        const done = function () { main.classList.remove('is-fading'); };
+        main.onload = done;
+        main.src = full;
+        setTimeout(done, 350);
+      }
       if (lbImg) lbImg.src = full;
       resetZoom();
       if (lbCount) lbCount.textContent = (idx + 1) + ' / ' + thumbs.length;
       thumbs.forEach(function (x) { x.classList.toggle('is-active', x === t); });
-    };
+    }
     thumbs.forEach(function (t, i) { t.addEventListener('click', function () { show(i); }); });
     gallery.querySelectorAll('[data-gallery-prev]').forEach(function (b) { b.addEventListener('click', function () { show(idx - 1); }); });
     gallery.querySelectorAll('[data-gallery-next]').forEach(function (b) { b.addEventListener('click', function () { show(idx + 1); }); });
 
     const stage = gallery.querySelector('[data-gallery-stage]');
-    const CHEV_L = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>';
-    const CHEV_R = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>';
+    const zoomBtn = gallery.querySelector('[data-gallery-zoom]');
+    const openLb = function () { if (!lightbox) return; if (lbImg) lbImg.src = main.src; resetZoom(); lightbox.hidden = false; document.body.style.overflow = 'hidden'; };
+    const closeLb = function () { if (!lightbox) return; resetZoom(); lightbox.hidden = true; document.body.style.overflow = ''; };
+    if (zoomBtn) zoomBtn.addEventListener('click', function (e) { e.stopPropagation(); openLb(); });
+
     if (stage && thumbs.length > 1) {
+      // Survol : on change l'image en bougeant la souris (sans cliquer) — façon markeio
+      stage.addEventListener('mousemove', function (e) {
+        if (e.target.closest('[data-gallery-zoom]')) return;
+        const r = stage.getBoundingClientRect();
+        let i = Math.floor((e.clientX - r.left) / r.width * thumbs.length);
+        i = Math.max(0, Math.min(thumbs.length - 1, i));
+        if (i !== idx) setImage(i, true);
+      });
       // glissement tactile
       let tx0 = null;
       stage.addEventListener('touchstart', function (e) { tx0 = e.touches[0].clientX; }, { passive: true });
@@ -384,33 +401,9 @@
         if (Math.abs(dx) > 40) show(dx < 0 ? idx + 1 : idx - 1);
         tx0 = null;
       }, { passive: true });
-
-      // flèche qui suit le curseur (gauche = précédent, droite = suivant)
-      const cursorNav = stage.querySelector('[data-cursor-nav]');
-      stage.addEventListener('mousemove', function (e) {
-        if (!cursorNav) return;
-        if (e.target.closest('[data-gallery-zoom]')) { cursorNav.classList.remove('is-visible'); return; }
-        const r = stage.getBoundingClientRect();
-        const x = e.clientX - r.left, y = e.clientY - r.top;
-        const isLeft = x < r.width / 2;
-        cursorNav.style.left = x + 'px';
-        cursorNav.style.top = y + 'px';
-        cursorNav.innerHTML = isLeft ? CHEV_L : CHEV_R;
-        cursorNav.classList.add('is-visible');
-      });
-      stage.addEventListener('mouseleave', function () { if (cursorNav) cursorNav.classList.remove('is-visible'); });
-      stage.addEventListener('click', function (e) {
-        if (e.target.closest('[data-gallery-zoom]')) return;
-        const r = stage.getBoundingClientRect();
-        if ((e.clientX - r.left) < r.width / 2) show(idx - 1); else show(idx + 1);
-      });
     }
-
-    // Zoom : l'icône loupe ouvre la grande image
-    const zoomBtn = gallery.querySelector('[data-gallery-zoom]');
-    const openLb = function () { if (!lightbox) return; if (lbImg) lbImg.src = main.src; resetZoom(); lightbox.hidden = false; document.body.style.overflow = 'hidden'; };
-    const closeLb = function () { if (!lightbox) return; resetZoom(); lightbox.hidden = true; document.body.style.overflow = ''; };
-    if (zoomBtn) zoomBtn.addEventListener('click', function (e) { e.stopPropagation(); openLb(); });
+    // Clic sur l'image = agrandir (visionneuse)
+    if (main) main.addEventListener('click', function (e) { if (e.target.closest('[data-gallery-zoom]')) return; openLb(); });
 
     // Dans la visionneuse : clic = zoom/dézoom, déplacement = panoramique
     if (lbImg) {

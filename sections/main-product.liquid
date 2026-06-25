@@ -11,7 +11,6 @@
           {%- if product.media.size > 1 -%}
             <button class="product__nav product__nav--prev" type="button" data-gallery-prev aria-label="Image précédente">{% render 'icon', icon: 'chevron-left' %}</button>
             <button class="product__nav product__nav--next" type="button" data-gallery-next aria-label="Image suivante">{% render 'icon', icon: 'chevron-right' %}</button>
-            <div class="product__cursor" data-cursor-nav aria-hidden="true"></div>
           {%- endif -%}
           <button class="product__zoom" type="button" data-gallery-zoom aria-label="Agrandir l'image">{% render 'icon', icon: 'zoom' %}</button>
         </div>
