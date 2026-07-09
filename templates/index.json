@@ -45,21 +45,28 @@
         "tab_wGcjUp": {
           "type": "tab",
           "settings": {
-            "collection": "",
+            "collection": "canapes",
             "label": ""
           }
         },
         "tab_WqwbnE": {
           "type": "tab",
           "settings": {
-            "collection": "",
+            "collection": "fauteuils-chaises",
+            "label": ""
+          }
+        },
+        "tab_kmwUnE": {
+          "type": "tab",
+          "settings": {
+            "collection": "lits",
             "label": ""
           }
         },
         "tab_34Hm8N": {
           "type": "tab",
           "settings": {
-            "collection": "",
+            "collection": "salle-a-manger",
             "label": ""
           }
         }
@@ -67,6 +74,7 @@
       "block_order": [
         "tab_wGcjUp",
         "tab_WqwbnE",
+        "tab_kmwUnE",
         "tab_34Hm8N"
       ],
       "name": "Collection en vedette",
