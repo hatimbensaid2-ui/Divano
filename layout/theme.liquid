@@ -58,6 +58,8 @@
 
     {% sections 'footer-group' %}
 
-    {% render 'whatsapp' %}
+    {%- if request.page_type == 'index' or request.page_type == 'collection' -%}
+      {% render 'whatsapp' %}
+    {%- endif -%}
   </body>
 </html>
