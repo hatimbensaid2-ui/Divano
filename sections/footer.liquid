@@ -1,0 +1,104 @@
+<footer class="footer">
+  <div class="page-width">
+    <div class="footer__top">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'menu' -%}
+          <div class="footer__col" {{ block.shopify_attributes }}>
+            <h4>{{ block.settings.title }}</h4>
+            <ul>
+              {%- if block.settings.menu != blank and block.settings.menu.links.size > 0 -%}
+                {%- for link in block.settings.menu.links -%}
+                  <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+                {%- endfor -%}
+              {%- else -%}
+                {%- case forloop.index -%}
+                {%- when 1 -%}
+                  <li><a href="{{ routes.all_products_collection_url }}">Boutique</a></li>
+                  <li><a href="{{ routes.all_products_collection_url }}">Nouveautés</a></li>
+                  <li><a href="{{ routes.all_products_collection_url }}">Meilleures ventes</a></li>
+                {%- when 2 -%}
+                  <li><a href="/pages/notre-histoire">Notre histoire</a></li>
+                  <li><a href="/pages/showroom">Showroom</a></li>
+                  <li><a href="{{ blog.url | default: '/blogs/journal' }}">Journal</a></li>
+                {%- else -%}
+                  <li><a href="/pages/livraison">Livraison &amp; retours</a></li>
+                  <li><a href="/pages/faq">FAQ</a></li>
+                  <li><a href="/pages/contact">Contact</a></li>
+                {%- endcase -%}
+              {%- endif -%}
+            </ul>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+
+      <div class="footer__col footer__news">
+        <h4>{{ section.settings.newsletter_title }}</h4>
+        <form class="footer__form" action="/contact#newsletter" method="post" accept-charset="UTF-8">
+          <input type="hidden" name="form_type" value="customer">
+          <input type="hidden" name="contact[tags]" value="newsletter">
+          <input type="email" name="contact[email]" placeholder="{{ 'general.newsletter.placeholder' | t }}" required aria-label="{{ 'general.newsletter.label' | t }}">
+          <button type="submit" class="btn btn--accent btn--small">{{ 'general.newsletter.button' | t }}</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="footer__mid">
+      <div class="footer__social">
+        {%- if settings.social_facebook != blank -%}<a href="{{ settings.social_facebook }}" target="_blank" rel="noopener">Facebook {% render 'icon', icon: 'arrow-up-right' %}</a>{%- endif -%}
+        {%- if settings.social_instagram != blank -%}<a href="{{ settings.social_instagram }}" target="_blank" rel="noopener">Instagram {% render 'icon', icon: 'arrow-up-right' %}</a>{%- endif -%}
+        {%- if settings.social_tiktok != blank -%}<a href="{{ settings.social_tiktok }}" target="_blank" rel="noopener">TikTok {% render 'icon', icon: 'arrow-up-right' %}</a>{%- endif -%}
+      </div>
+      <div class="footer__info">
+        <div class="footer__info-label">Adresse</div>
+        <p>{{ section.settings.address }}</p>
+      </div>
+      <div class="footer__info">
+        <div class="footer__info-label">Contact</div>
+        <p>
+          {%- if section.settings.phone != blank -%}<a href="tel:{{ section.settings.phone | replace: ' ', '' }}">{{ section.settings.phone }}</a><br>{%- endif -%}
+          {%- if section.settings.email != blank -%}<a href="mailto:{{ section.settings.email }}">{{ section.settings.email }}</a>{%- endif -%}
+        </p>
+      </div>
+    </div>
+
+    <div class="footer__wordmark" aria-hidden="true">{{ section.settings.wordmark | default: 'DIVANO' }}</div>
+
+    <div class="footer__bottom">
+      <span>© {{ 'now' | date: '%Y' }} {{ shop.name }}. {{ section.settings.rights }}</span>
+      <span>{{ section.settings.payment_note }}</span>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Pied de page",
+  "settings": [
+    { "type": "text", "id": "newsletter_title", "label": "Titre newsletter", "default": "Inscrivez-vous à notre newsletter" },
+    { "type": "text", "id": "address", "label": "Adresse", "default": "123 Boulevard Anfa, Casablanca, Maroc" },
+    { "type": "text", "id": "phone", "label": "Téléphone", "default": "+212 6 00 00 00 00" },
+    { "type": "text", "id": "email", "label": "E-mail", "default": "contact@divano.ma" },
+    { "type": "text", "id": "wordmark", "label": "Grand mot-symbole", "default": "DIVANO" },
+    { "type": "text", "id": "rights", "label": "Mentions", "default": "Tous droits réservés." },
+    { "type": "text", "id": "payment_note", "label": "Note paiement", "default": "Paiement à la livraison · Cartes bancaires" }
+  ],
+  "blocks": [
+    {
+      "type": "menu",
+      "name": "Colonne de menu",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Titre", "default": "Boutique" },
+        { "type": "link_list", "id": "menu", "label": "Menu" }
+      ]
+    }
+  ],
+  "max_blocks": 3,
+  "default": {
+    "blocks": [
+      { "type": "menu", "settings": { "title": "Découvrir" } },
+      { "type": "menu", "settings": { "title": "La marque" } },
+      { "type": "menu", "settings": { "title": "Aide" } }
+    ]
+  }
+}
+{% endschema %}

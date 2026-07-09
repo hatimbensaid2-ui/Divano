@@ -1,0 +1,41 @@
+<section class="section section--tight intro">
+  <div class="page-width">
+    <div class="intro__grid">
+      <h2 class="intro__title" data-reveal>{{ section.settings.title }}</h2>
+
+      <div class="intro__stat" data-reveal>
+        {%- if section.settings.show_avatars -%}
+          <div class="intro__avatars">
+            {%- for block in section.blocks limit: 3 -%}
+              {%- if block.settings.avatar != blank -%}
+                <img src="{{ block.settings.avatar | image_url: width: 88 }}" alt="" width="44" height="44">
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+        <div class="intro__stat-num">{{ section.settings.stat_number }}</div>
+        <div class="intro__stat-label">{{ section.settings.stat_label }}</div>
+      </div>
+
+      <p class="intro__text" data-reveal>{{ section.settings.text }}</p>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Intro + statistique",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Titre", "default": "Découvrir le mobilier d'exception, en toute simplicité" },
+    { "type": "checkbox", "id": "show_avatars", "label": "Afficher les avatars", "default": true },
+    { "type": "text", "id": "stat_number", "label": "Chiffre", "default": "2K+" },
+    { "type": "text", "id": "stat_label", "label": "Légende", "default": "Clients satisfaits" },
+    { "type": "textarea", "id": "text", "label": "Texte", "default": "Notre mission : rendre le mobilier premium accessible, magnifiquement conçu et facile à intégrer dans chaque foyer marocain." }
+  ],
+  "blocks": [
+    { "type": "avatar", "name": "Avatar", "settings": [ { "type": "image_picker", "id": "avatar", "label": "Photo" } ] }
+  ],
+  "max_blocks": 3,
+  "presets": [{ "name": "Intro + statistique", "blocks": [ { "type": "avatar" }, { "type": "avatar" }, { "type": "avatar" } ] }]
+}
+{% endschema %}

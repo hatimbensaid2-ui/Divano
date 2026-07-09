@@ -1,0 +1,40 @@
+<section class="section newsletter">
+  <div class="page-width">
+    <div class="newsletter__card" data-reveal>
+      <div class="newsletter__content">
+        {%- if section.settings.eyebrow != blank -%}<span class="eyebrow" style="color:var(--color-accent);">{{ section.settings.eyebrow }}</span>{%- endif -%}
+        <h2 class="newsletter__title">{{ section.settings.title }}</h2>
+        {%- if section.settings.lead != blank -%}<p class="newsletter__lead">{{ section.settings.lead }}</p>{%- endif -%}
+        {%- form 'customer', class: 'newsletter__form' -%}
+          <input type="hidden" name="contact[tags]" value="newsletter">
+          {%- if form.posted_successfully? -%}
+            <p style="color:#fff;">{{ 'general.newsletter.success' | t }}</p>
+          {%- else -%}
+            <input class="newsletter__input" type="email" name="contact[email]" placeholder="{{ 'general.newsletter.placeholder' | t }}" required aria-label="{{ 'general.newsletter.label' | t }}">
+            <button type="submit" class="btn btn--accent">{{ 'general.newsletter.button' | t }}<span class="btn__dot">{% render 'icon', icon: 'arrow-right' %}</span></button>
+          {%- endif -%}
+        {%- endform -%}
+      </div>
+      <div class="newsletter__media">
+        {%- if section.settings.image != blank -%}
+          <img src="{{ section.settings.image | image_url: width: 900 }}" alt="" width="600" height="450" loading="lazy">
+        {%- else -%}
+          <img src="{{ 'newsletter-image.png' | asset_url }}" alt="" width="600" height="450" loading="lazy">
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Newsletter",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Sur-titre", "default": "Restons en contact" },
+    { "type": "text", "id": "title", "label": "Titre", "default": "Inscrivez-vous à notre newsletter" },
+    { "type": "textarea", "id": "lead", "label": "Texte", "default": "Recevez nos nouveautés, conseils déco et offres exclusives, directement dans votre boîte mail." },
+    { "type": "image_picker", "id": "image", "label": "Image" }
+  ],
+  "presets": [{ "name": "Newsletter" }]
+}
+{% endschema %}

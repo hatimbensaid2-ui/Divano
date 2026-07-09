@@ -1,0 +1,85 @@
+{%- liquid
+  assign coll = section.settings.collection
+  assign has_products = false
+  if coll != blank and coll.products.size > 0
+    assign has_products = true
+  endif
+  assign fallbacks = 'product-chair-mustard.png,hero-secondary.png,product-sofa-boucle.png,product-side-table-gold.png,product-tables-black.png,product-dining-set.png,product-chair-mustard-2.png' | split: ','
+-%}
+<section class="section eras" data-eras>
+  <div class="page-width">
+    <div class="eras__head" data-reveal>
+      <h2 class="eras__title">
+        <span class="ln">{{ section.settings.title_line1 }}</span>
+        <span class="ln"><span class="eras__serif">{{ section.settings.title_serif }}</span> {{ section.settings.title_bold }}</span>
+      </h2>
+      <div class="eras__right">
+        {%- if section.settings.top_button_label != blank -%}
+          <a href="{{ section.settings.top_button_link | default: coll.url | default: routes.all_products_collection_url }}" class="btn btn--outline btn--small">{{ section.settings.top_button_label }}</a>
+        {%- endif -%}
+        {%- if section.settings.description != blank -%}
+          <p class="eras__desc">{{ section.settings.description }}</p>
+        {%- endif -%}
+      </div>
+    </div>
+
+    <div class="eras__arrows" data-reveal>
+      <button class="scroller__btn" type="button" data-eras-prev aria-label="Précédent">{% render 'icon', icon: 'arrow-left' %}</button>
+      <button class="scroller__btn" type="button" data-eras-next aria-label="Suivant">{% render 'icon', icon: 'arrow-right' %}</button>
+    </div>
+  </div>
+
+  <div class="eras__viewport">
+    <div class="eras__track" data-eras-track>
+      {%- if has_products -%}
+        {%- for product in coll.products limit: section.settings.products_to_show -%}
+          <a class="eras__card" href="{{ product.url }}" aria-label="{{ product.title | escape }}">
+            {%- if product.featured_media -%}
+              <img src="{{ product.featured_media | image_url: width: 500 }}" alt="{{ product.featured_media.alt | escape }}" width="300" height="300" loading="lazy">
+            {%- else -%}
+              {{ 'product-1' | placeholder_svg_tag: 'placeholder' }}
+            {%- endif -%}
+          </a>
+        {%- endfor -%}
+      {%- else -%}
+        {%- for img in fallbacks -%}
+          <a class="eras__card" href="{{ routes.all_products_collection_url }}" aria-label="Produit">
+            <img src="{{ img | asset_url }}" alt="Produit Divano" width="300" height="300" loading="lazy">
+          </a>
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+  </div>
+
+  <div class="page-width">
+    {%- if section.settings.bottom_button_label != blank -%}
+      <div class="eras__cta" data-reveal>
+        <a href="{{ section.settings.bottom_button_link | default: coll.url | default: routes.all_products_collection_url }}" class="btn btn--green">
+          {{ section.settings.bottom_button_label }}<span class="btn__dot">{% render 'icon', icon: 'arrow-up-right' %}</span>
+        </a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Carrousel Époques",
+  "settings": [
+    { "type": "collection", "id": "collection", "label": "Collection", "info": "Affiche les produits de la collection. Sinon, des produits de démonstration sont utilisés." },
+    { "type": "range", "id": "products_to_show", "label": "Produits affichés", "min": 5, "max": 15, "step": 1, "default": 9 },
+    { "type": "header", "content": "Titre" },
+    { "type": "text", "id": "title_line1", "label": "Ligne 1 (gras)", "default": "Pièces d'Exception." },
+    { "type": "text", "id": "title_serif", "label": "Ligne 2 — mot en serif italic", "default": "Espaces" },
+    { "type": "text", "id": "title_bold", "label": "Ligne 2 — mot en gras", "default": "Modernes." },
+    { "type": "header", "content": "Texte à droite" },
+    { "type": "textarea", "id": "description", "label": "Description", "default": "Découvrez nos dernières créations. Chaque collection est un ensemble cohérent de silhouettes architecturales, pensées pour durer." },
+    { "type": "text", "id": "top_button_label", "label": "Bouton (haut droite)", "default": "Nos collections" },
+    { "type": "url", "id": "top_button_link", "label": "Lien bouton (haut)" },
+    { "type": "header", "content": "Bouton du bas" },
+    { "type": "text", "id": "bottom_button_label", "label": "Libellé", "default": "Explorer nos pièces" },
+    { "type": "url", "id": "bottom_button_link", "label": "Lien" }
+  ],
+  "presets": [{ "name": "Carrousel Époques" }]
+}
+{% endschema %}

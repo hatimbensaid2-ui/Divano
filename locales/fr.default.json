@@ -1,0 +1,74 @@
+{
+  "general": {
+    "accessibility": {
+      "skip_to_content": "Aller au contenu",
+      "previous": "Précédent",
+      "next": "Suivant",
+      "menu": "Menu",
+      "close": "Fermer",
+      "cart": "Panier"
+    },
+    "meta": {
+      "tags": "Tags : {{ tags }}",
+      "page": "Page {{ page }}"
+    },
+    "search": {
+      "search": "Rechercher",
+      "placeholder": "Rechercher un produit…"
+    },
+    "newsletter": {
+      "label": "Adresse e-mail",
+      "placeholder": "Votre adresse e-mail",
+      "button": "S'inscrire",
+      "success": "Merci de votre inscription !"
+    },
+    "pagination": {
+      "label": "Pagination",
+      "previous": "Précédent",
+      "next": "Suivant"
+    }
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "Ajouter au panier",
+      "buy_now": "Acheter maintenant",
+      "sold_out": "Épuisé",
+      "unavailable": "Indisponible",
+      "on_sale": "Promo",
+      "from_price": "À partir de {{ price }}",
+      "quantity": "Quantité",
+      "sku": "Référence",
+      "vendor": "Marque",
+      "description": "Description",
+      "free_shipping": "Livraison rapide partout au Maroc",
+      "secure_payment": "Paiement à la livraison disponible",
+      "delivery": "Livraison partout au Maroc"
+    },
+    "facets": {
+      "sort_by": "Trier par",
+      "from_low_to_high": "Prix croissant",
+      "from_high_to_low": "Prix décroissant",
+      "newest": "Nouveautés",
+      "best_selling": "Meilleures ventes",
+      "results": "{{ count }} produits"
+    }
+  },
+  "cart": {
+    "title": "Votre panier",
+    "empty": "Votre panier est vide",
+    "continue": "Continuer mes achats",
+    "product": "Produit",
+    "price": "Prix",
+    "quantity": "Quantité",
+    "total": "Total",
+    "subtotal": "Sous-total",
+    "shipping_note": "Frais de livraison calculés à l'étape suivante.",
+    "checkout": "Passer la commande",
+    "remove": "Retirer"
+  },
+  "sections": {
+    "header": {
+      "announcement": "Livraison partout au Maroc · Paiement à la livraison"
+    }
+  }
+}

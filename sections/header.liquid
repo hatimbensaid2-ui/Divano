@@ -1,0 +1,49 @@
+<header class="header" data-header>
+  <div class="page-width header__inner">
+    <button class="header__burger" data-burger aria-label="{{ 'general.accessibility.menu' | t }}" aria-expanded="false">
+      {% render 'icon', icon: 'menu' %}
+    </button>
+
+    <a href="{{ routes.root_url }}" class="header__logo">
+      {%- if section.settings.logo != blank -%}
+        <img src="{{ section.settings.logo | image_url: width: 320 }}" alt="{{ shop.name | escape }}" width="160" height="40">
+      {%- elsif settings.logo_white != blank -%}
+        <img src="{{ settings.logo_white | image_url: width: 320 }}" alt="{{ shop.name | escape }}" width="160" height="40">
+      {%- else -%}
+        <img src="{{ 'divano-logo-white.png' | asset_url }}" alt="{{ shop.name | escape }}" width="160" height="40">
+      {%- endif -%}
+    </a>
+
+    <nav class="header__nav" data-nav aria-label="Principal">
+      {%- if section.settings.menu != blank and section.settings.menu.links.size > 0 -%}
+        {%- for link in section.settings.menu.links -%}
+          <a href="{{ link.url }}">{{ link.title }}</a>
+        {%- endfor -%}
+      {%- else -%}
+        <a href="{{ routes.all_products_collection_url }}">Canapés</a>
+        <a href="{{ routes.all_products_collection_url }}">Fauteuils</a>
+        <a href="{{ routes.all_products_collection_url }}">Tables</a>
+        <a href="{{ routes.all_products_collection_url }}">Salle à manger</a>
+        <a href="{{ routes.all_products_collection_url }}">Déco</a>
+      {%- endif -%}
+    </nav>
+
+    <div class="header__actions">
+      <a href="{{ routes.search_url }}" class="header__icon" aria-label="{{ 'general.search.search' | t }}">{% render 'icon', icon: 'search' %}</a>
+      <a href="{{ routes.cart_url }}" class="header__icon" aria-label="{{ 'general.accessibility.cart' | t }}">
+        {% render 'icon', icon: 'cart' %}
+        <span class="cart-count" data-cart-count {% if cart.item_count == 0 %}hidden{% endif %}>{{ cart.item_count }}</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "En-tête",
+  "settings": [
+    { "type": "image_picker", "id": "logo", "label": "Logo (sinon logo blanc des réglages)" },
+    { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu" }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,78 @@
+<section class="hero">
+  <div class="page-width">
+    <div class="hero__inner">
+      <div class="hero__center" data-reveal>
+        {%- if section.settings.eyebrow != blank -%}<span class="eyebrow" style="color:var(--color-accent);justify-content:center;">{{ section.settings.eyebrow }}</span>{%- endif -%}
+        <h1 class="hero__title">{{ section.settings.title }}</h1>
+        {%- if section.settings.lead != blank -%}<p class="hero__lead">{{ section.settings.lead }}</p>{%- endif -%}
+        {%- if section.settings.button_label != blank -%}
+          <div class="hero__cta">
+            <a href="{{ section.settings.button_link | default: routes.all_products_collection_url }}" class="btn">
+              {{ section.settings.button_label }}<span class="btn__dot">{% render 'icon', icon: 'arrow-up-right' %}</span>
+            </a>
+          </div>
+        {%- endif -%}
+      </div>
+
+      <div class="hero__floats">
+        <figure class="hero__float hero__float--left">
+          {%- if section.settings.image_left != blank -%}
+            <img src="{{ section.settings.image_left | image_url: width: 600 }}" alt="{{ section.settings.chip_left_title | escape }}" width="300" height="300">
+          {%- else -%}
+            <img src="{{ section.settings.image_left_fallback | default: 'hero-main.png' | asset_url }}" alt="{{ section.settings.chip_left_title | escape }}" width="300" height="300">
+          {%- endif -%}
+        </figure>
+        <figure class="hero__float hero__float--right">
+          {%- if section.settings.image_right != blank -%}
+            <img src="{{ section.settings.image_right | image_url: width: 600 }}" alt="{{ section.settings.chip_right_title | escape }}" width="300" height="300">
+          {%- else -%}
+            <img src="{{ section.settings.image_right_fallback | default: 'hero-secondary.png' | asset_url }}" alt="{{ section.settings.chip_right_title | escape }}" width="300" height="300">
+          {%- endif -%}
+        </figure>
+      </div>
+
+      {%- if section.settings.chip_left_title != blank -%}
+        <div class="hero__chip hero__chip--left">
+          <strong>{{ section.settings.chip_left_title }}</strong>
+          <span>{{ section.settings.chip_left_text }}</span>
+          {%- if section.settings.chip_left_link != blank -%}<a class="hero__pill-link" href="{{ section.settings.chip_left_link }}">Découvrir</a>{%- endif -%}
+        </div>
+        <span class="hero__dot hero__dot--left"></span>
+      {%- endif -%}
+      {%- if section.settings.chip_right_title != blank -%}
+        <div class="hero__chip hero__chip--right">
+          <strong>{{ section.settings.chip_right_title }}</strong>
+          <span>{{ section.settings.chip_right_text }}</span>
+          {%- if section.settings.chip_right_link != blank -%}<a class="hero__pill-link" href="{{ section.settings.chip_right_link }}">Découvrir</a>{%- endif -%}
+        </div>
+        <span class="hero__dot hero__dot--right"></span>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Sur-titre" },
+    { "type": "inline_richtext", "id": "title", "label": "Titre", "default": "Créer de beaux espaces pour la <em>vie moderne</em>" },
+    { "type": "textarea", "id": "lead", "label": "Texte", "default": "Une collection pensée pour apporter harmonie, confort et élégance à chaque pièce de votre maison. Chaque création sublime votre quotidien." },
+    { "type": "text", "id": "button_label", "label": "Bouton", "default": "Acheter maintenant" },
+    { "type": "url", "id": "button_link", "label": "Lien du bouton" },
+    { "type": "header", "content": "Produit flottant gauche" },
+    { "type": "image_picker", "id": "image_left", "label": "Image" },
+    { "type": "text", "id": "image_left_fallback", "label": "Image par défaut (asset)", "default": "hero-main.png" },
+    { "type": "text", "id": "chip_left_title", "label": "Titre étiquette", "default": "Canapé Bouclé" },
+    { "type": "textarea", "id": "chip_left_text", "label": "Texte étiquette", "default": "Découvrez les tendances confort du moment." },
+    { "type": "url", "id": "chip_left_link", "label": "Lien étiquette" },
+    { "type": "header", "content": "Produit flottant droite" },
+    { "type": "image_picker", "id": "image_right", "label": "Image" },
+    { "type": "text", "id": "image_right_fallback", "label": "Image par défaut (asset)", "default": "hero-secondary.png" },
+    { "type": "text", "id": "chip_right_title", "label": "Titre étiquette", "default": "Fauteuil Velours" },
+    { "type": "textarea", "id": "chip_right_text", "label": "Texte étiquette", "default": "Détendez-vous dans un confort intemporel." },
+    { "type": "url", "id": "chip_right_link", "label": "Lien étiquette" }
+  ],
+  "presets": [{ "name": "Hero" }]
+}
+{% endschema %}

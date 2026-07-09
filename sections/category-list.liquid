@@ -1,0 +1,68 @@
+<section class="section category-list">
+  <div class="page-width">
+    <div class="collection-head" data-reveal>
+      <div>
+        {%- if section.settings.eyebrow != blank -%}<span class="eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+        <h2 class="section-title">{{ section.settings.title }}</h2>
+      </div>
+      <div class="scroller__nav">
+        <button class="scroller__btn" data-prev aria-label="Précédent">{% render 'icon', icon: 'arrow-left' %}</button>
+        <button class="scroller__btn" data-next aria-label="Suivant">{% render 'icon', icon: 'arrow-right' %}</button>
+      </div>
+    </div>
+
+    <div class="scroller" data-scroller>
+      <div class="scroller__track" data-track>
+        {%- for block in section.blocks -%}
+          {%- assign coll = block.settings.collection -%}
+          <a class="category-card" href="{{ coll.url | default: block.settings.link | default: '#' }}" {{ block.shopify_attributes }} data-reveal>
+            <div class="category-card__img">
+              {%- if block.settings.image != blank -%}
+                <img src="{{ block.settings.image | image_url: width: 600 }}" alt="{{ block.settings.title | escape }}" width="300" height="300" loading="lazy">
+              {%- elsif coll.featured_image != blank -%}
+                <img src="{{ coll.featured_image | image_url: width: 600 }}" alt="{{ coll.title | escape }}" width="300" height="300" loading="lazy">
+              {%- elsif block.settings.fallback != blank -%}
+                <img src="{{ block.settings.fallback | asset_url }}" alt="{{ block.settings.title | escape }}" width="300" height="300" loading="lazy">
+              {%- endif -%}
+            </div>
+            <span class="category-card__name">{{ block.settings.title | default: coll.title }}</span>
+            {%- if coll != blank -%}<span class="category-card__count">{{ coll.products_count }} produits</span>{%- endif -%}
+          </a>
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Catégories",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Sur-titre", "default": "Explorer" },
+    { "type": "text", "id": "title", "label": "Titre", "default": "Acheter par catégorie" }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Catégorie",
+      "settings": [
+        { "type": "collection", "id": "collection", "label": "Collection" },
+        { "type": "text", "id": "title", "label": "Titre (si pas de collection)" },
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "url", "id": "link", "label": "Lien (si pas de collection)" },
+        { "type": "text", "id": "fallback", "label": "Image par défaut (fichier asset)", "info": "ex : category-sofas.png" }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [{
+    "name": "Catégories",
+    "blocks": [
+      { "type": "category", "settings": { "title": "Canapés", "fallback": "category-sofas.png" } },
+      { "type": "category", "settings": { "title": "Fauteuils", "fallback": "category-chairs.png" } },
+      { "type": "category", "settings": { "title": "Tables", "fallback": "category-tables.png" } },
+      { "type": "category", "settings": { "title": "Luminaires", "fallback": "category-lighting.png" } }
+    ]
+  }]
+}
+{% endschema %}

@@ -1,0 +1,60 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Divano",
+    "theme_version": "1.0.0",
+    "theme_author": "Divano",
+    "theme_documentation_url": "https://help.shopify.com",
+    "theme_support_url": "https://help.shopify.com"
+  },
+  {
+    "name": "Couleurs",
+    "settings": [
+      { "type": "header", "content": "Palette de la marque" },
+      { "type": "color", "id": "color_green", "label": "Vert principal", "default": "#16352B" },
+      { "type": "color", "id": "color_green_deep", "label": "Vert foncé (pied de page)", "default": "#0F2820" },
+      { "type": "color", "id": "color_cream", "label": "Crème (fond)", "default": "#F4EFE7" },
+      { "type": "color", "id": "color_card", "label": "Crème clair (cartes)", "default": "#FBF8F3" },
+      { "type": "color", "id": "color_text", "label": "Texte", "default": "#16140F" },
+      { "type": "color", "id": "color_muted", "label": "Texte secondaire", "default": "#5C5C54" },
+      { "type": "color", "id": "color_accent", "label": "Accent (caramel)", "default": "#B5793A" }
+    ]
+  },
+  {
+    "name": "Typographie",
+    "settings": [
+      { "type": "font_picker", "id": "font_heading", "label": "Police des titres", "default": "playfair_display_n4" },
+      { "type": "font_picker", "id": "font_body", "label": "Police du texte", "default": "assistant_n4" }
+    ]
+  },
+  {
+    "name": "Mise en page",
+    "settings": [
+      { "type": "range", "id": "page_width", "label": "Largeur de page", "min": 1100, "max": 1500, "step": 20, "unit": "px", "default": 1320 }
+    ]
+  },
+  {
+    "name": "Marque",
+    "settings": [
+      { "type": "image_picker", "id": "logo_white", "label": "Logo blanc (en-tête/pied)" },
+      { "type": "image_picker", "id": "logo_black", "label": "Logo noir (pages claires)" },
+      { "type": "image_picker", "id": "favicon", "label": "Favicon" }
+    ]
+  },
+  {
+    "name": "WhatsApp",
+    "settings": [
+      { "type": "text", "id": "whatsapp_number", "label": "Numéro WhatsApp", "info": "Format international, ex : +212 773 217 741. Laisser vide pour masquer le bouton.", "default": "+212 773 217 741" },
+      { "type": "text", "id": "whatsapp_message", "label": "Message pré-rempli", "default": "Bonjour Divano, j'ai une question à propos de vos produits." },
+      { "type": "text", "id": "whatsapp_label", "label": "Libellé à côté de l'icône (optionnel)" }
+    ]
+  },
+  {
+    "name": "Réseaux sociaux",
+    "settings": [
+      { "type": "text", "id": "social_instagram", "label": "Instagram", "default": "https://instagram.com" },
+      { "type": "text", "id": "social_facebook", "label": "Facebook", "default": "https://facebook.com" },
+      { "type": "text", "id": "social_tiktok", "label": "TikTok", "default": "https://tiktok.com" }
+    ]
+  }
+]

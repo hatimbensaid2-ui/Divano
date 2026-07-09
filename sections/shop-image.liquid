@@ -1,0 +1,131 @@
+<section class="section shop-image" data-shopimage>
+  <div class="page-width">
+    <div class="shop-image__head" data-reveal>
+      {%- if section.settings.eyebrow != blank -%}<span class="eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+      <h2 class="section-title">{{ section.settings.title }}</h2>
+      {%- if section.settings.description != blank -%}<p class="shop-image__desc">{{ section.settings.description }}</p>{%- endif -%}
+    </div>
+
+    <div class="shop-image__viewport" data-reveal>
+      {%- assign slide_total = section.blocks.size -%}
+      {%- for block in section.blocks -%}
+        {%- liquid
+          assign first = 0
+          if block.settings.hp1_product != blank or block.settings.hp1_title != blank
+            assign first = 1
+          elsif block.settings.hp2_product != blank or block.settings.hp2_title != blank
+            assign first = 2
+          elsif block.settings.hp3_product != blank or block.settings.hp3_title != blank
+            assign first = 3
+          elsif block.settings.hp4_product != blank or block.settings.hp4_title != blank
+            assign first = 4
+          endif
+        -%}
+        <div class="shop-image__slide{% if forloop.first %} is-active{% endif %}" data-slide {{ block.shopify_attributes }}>
+          <div class="shop-image__grid">
+            <div class="shop-image__stage{% if block.settings.image == blank %} shop-image__stage--fallback{% endif %}">
+              {%- if block.settings.image != blank -%}
+                <img src="{{ block.settings.image | image_url: width: 1400 }}" alt="{{ block.settings.image.alt | escape }}" width="900" height="765" loading="lazy">
+              {%- endif -%}
+              {% render 'shop-dot', index: 1, first: first, product: block.settings.hp1_product, title: block.settings.hp1_title, x: block.settings.hp1_x, y: block.settings.hp1_y %}
+              {% render 'shop-dot', index: 2, first: first, product: block.settings.hp2_product, title: block.settings.hp2_title, x: block.settings.hp2_x, y: block.settings.hp2_y %}
+              {% render 'shop-dot', index: 3, first: first, product: block.settings.hp3_product, title: block.settings.hp3_title, x: block.settings.hp3_x, y: block.settings.hp3_y %}
+              {% render 'shop-dot', index: 4, first: first, product: block.settings.hp4_product, title: block.settings.hp4_title, x: block.settings.hp4_x, y: block.settings.hp4_y %}
+            </div>
+
+            <div class="shop-image__panel">
+              {% render 'shop-card', index: 1, first: first, product: block.settings.hp1_product, title: block.settings.hp1_title, price: block.settings.hp1_price, fallback: block.settings.hp1_image_fallback, link: block.settings.hp1_link, vendor: section.settings.default_vendor %}
+              {% render 'shop-card', index: 2, first: first, product: block.settings.hp2_product, title: block.settings.hp2_title, price: block.settings.hp2_price, fallback: block.settings.hp2_image_fallback, link: block.settings.hp2_link, vendor: section.settings.default_vendor %}
+              {% render 'shop-card', index: 3, first: first, product: block.settings.hp3_product, title: block.settings.hp3_title, price: block.settings.hp3_price, fallback: block.settings.hp3_image_fallback, link: block.settings.hp3_link, vendor: section.settings.default_vendor %}
+              {% render 'shop-card', index: 4, first: first, product: block.settings.hp4_product, title: block.settings.hp4_title, price: block.settings.hp4_price, fallback: block.settings.hp4_image_fallback, link: block.settings.hp4_link, vendor: section.settings.default_vendor %}
+
+              <div class="shop-image__pager">
+                {%- if slide_total > 1 -%}
+                  <span class="shop-image__count">{{ forloop.index | prepend: '0' | slice: -2, 2 }} / {{ slide_total | prepend: '0' | slice: -2, 2 }}</span>
+                {%- else -%}
+                  <span></span>
+                {%- endif -%}
+                <div class="shop-image__arrows">
+                  <button class="scroller__btn" type="button" {% if slide_total > 1 %}data-slide-prev{% else %}data-hs-prev{% endif %} aria-label="Précédent">{% render 'icon', icon: 'arrow-left' %}</button>
+                  <button class="scroller__btn" type="button" {% if slide_total > 1 %}data-slide-next{% else %}data-hs-next{% endif %} aria-label="Suivant">{% render 'icon', icon: 'arrow-right' %}</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Image shoppable",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Sur-titre" },
+    { "type": "text", "id": "title", "label": "Titre", "default": "Collection Divano" },
+    { "type": "richtext", "id": "description", "label": "Description", "default": "<p>Idéal pour les petits et grands espaces, profitez d'un confort absolu tout en ajoutant une touche d'élégance à votre intérieur grâce à la <em>collection Divano</em> modulable.</p>" },
+    { "type": "text", "id": "default_vendor", "label": "Marque par défaut", "default": "Divano" }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Image + produits",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image d'ambiance" },
+        { "type": "paragraph", "content": "Épinglez jusqu'à 4 produits sur cette image. Laissez un produit vide pour ne pas l'afficher. Renseignez un « Produit » (auto) ou les champs manuels." },
+
+        { "type": "header", "content": "Produit 1" },
+        { "type": "product", "id": "hp1_product", "label": "Produit" },
+        { "type": "range", "id": "hp1_x", "label": "Position horizontale", "min": 0, "max": 100, "step": 1, "unit": "%", "default": 40 },
+        { "type": "range", "id": "hp1_y", "label": "Position verticale", "min": 0, "max": 100, "step": 1, "unit": "%", "default": 55 },
+        { "type": "text", "id": "hp1_title", "label": "Nom (manuel)" },
+        { "type": "text", "id": "hp1_price", "label": "Prix (manuel)" },
+        { "type": "text", "id": "hp1_image_fallback", "label": "Image manuelle (asset)" },
+        { "type": "url", "id": "hp1_link", "label": "Lien (manuel)" },
+
+        { "type": "header", "content": "Produit 2 (optionnel)" },
+        { "type": "product", "id": "hp2_product", "label": "Produit" },
+        { "type": "range", "id": "hp2_x", "label": "Position horizontale", "min": 0, "max": 100, "step": 1, "unit": "%", "default": 60 },
+        { "type": "range", "id": "hp2_y", "label": "Position verticale", "min": 0, "max": 100, "step": 1, "unit": "%", "default": 65 },
+        { "type": "text", "id": "hp2_title", "label": "Nom (manuel)" },
+        { "type": "text", "id": "hp2_price", "label": "Prix (manuel)" },
+        { "type": "text", "id": "hp2_image_fallback", "label": "Image manuelle (asset)" },
+        { "type": "url", "id": "hp2_link", "label": "Lien (manuel)" },
+
+        { "type": "header", "content": "Produit 3 (optionnel)" },
+        { "type": "product", "id": "hp3_product", "label": "Produit" },
+        { "type": "range", "id": "hp3_x", "label": "Position horizontale", "min": 0, "max": 100, "step": 1, "unit": "%", "default": 30 },
+        { "type": "range", "id": "hp3_y", "label": "Position verticale", "min": 0, "max": 100, "step": 1, "unit": "%", "default": 45 },
+        { "type": "text", "id": "hp3_title", "label": "Nom (manuel)" },
+        { "type": "text", "id": "hp3_price", "label": "Prix (manuel)" },
+        { "type": "text", "id": "hp3_image_fallback", "label": "Image manuelle (asset)" },
+        { "type": "url", "id": "hp3_link", "label": "Lien (manuel)" },
+
+        { "type": "header", "content": "Produit 4 (optionnel)" },
+        { "type": "product", "id": "hp4_product", "label": "Produit" },
+        { "type": "range", "id": "hp4_x", "label": "Position horizontale", "min": 0, "max": 100, "step": 1, "unit": "%", "default": 72 },
+        { "type": "range", "id": "hp4_y", "label": "Position verticale", "min": 0, "max": 100, "step": 1, "unit": "%", "default": 42 },
+        { "type": "text", "id": "hp4_title", "label": "Nom (manuel)" },
+        { "type": "text", "id": "hp4_price", "label": "Prix (manuel)" },
+        { "type": "text", "id": "hp4_image_fallback", "label": "Image manuelle (asset)" },
+        { "type": "url", "id": "hp4_link", "label": "Lien (manuel)" }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [{
+    "name": "Image shoppable",
+    "blocks": [
+      { "type": "slide", "settings": {
+        "hp1_title": "Divano - Pouf", "hp1_price": "1 850,00 dh", "hp1_image_fallback": "product-sofa-boucle.png", "hp1_x": 40, "hp1_y": 58
+      } },
+      { "type": "slide", "settings": {
+        "hp1_title": "Tables Gigognes", "hp1_price": "2 700,00 dh", "hp1_image_fallback": "product-tables-black.png", "hp1_x": 32, "hp1_y": 52,
+        "hp2_title": "Ensemble Repas", "hp2_price": "12 500,00 dh", "hp2_image_fallback": "product-dining-set.png", "hp2_x": 58, "hp2_y": 64,
+        "hp3_title": "Table d'Appoint Dorée", "hp3_price": "1 450,00 dh", "hp3_image_fallback": "product-side-table-gold.png", "hp3_x": 72, "hp3_y": 44
+      } }
+    ]
+  }]
+}
+{% endschema %}

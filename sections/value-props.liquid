@@ -1,0 +1,74 @@
+<section class="section values">
+  <div class="page-width">
+    <div class="collection-head collection-head--center" data-reveal>
+      {%- if section.settings.eyebrow != blank -%}<span class="eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+      <h2 class="section-title">{{ section.settings.title }}</h2>
+      {%- if section.settings.lead != blank -%}<p class="section-lead" style="text-align:center;">{{ section.settings.lead }}</p>{%- endif -%}
+    </div>
+
+    <div class="values__grid">
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+        {%- when 'value' -%}
+          <div class="value-card{% if block.settings.highlight %} value-card--feature{% endif %}" {{ block.shopify_attributes }} data-reveal>
+            <div class="value-card__icon">{% render 'icon', icon: block.settings.icon %}</div>
+            <h3>{{ block.settings.title }}</h3>
+            <p>{{ block.settings.text }}</p>
+          </div>
+        {%- when 'image' -%}
+          <div class="value-card value-card--image" {{ block.shopify_attributes }} data-reveal>
+            {%- if block.settings.image != blank -%}
+              <img src="{{ block.settings.image | image_url: width: 1000 }}" alt="{{ block.settings.image.alt | escape }}" width="700" height="400" loading="lazy">
+            {%- else -%}
+              <div style="width:100%;height:100%;min-height:220px;display:grid;place-items:center;background:linear-gradient(135deg,var(--color-green),var(--color-green-deep));color:rgba(255,255,255,.5);">
+                {% render 'icon', icon: 'sofa' %}
+              </div>
+            {%- endif -%}
+          </div>
+        {%- endcase -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Atouts",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Sur-titre", "default": "Pourquoi Divano" },
+    { "type": "text", "id": "title", "label": "Titre", "default": "Conçu pour le confort. Pensé pour durer." },
+    { "type": "textarea", "id": "lead", "label": "Texte", "default": "Nous allions une esthétique intemporelle à une durabilité réelle, pour que chaque pièce se sente chez elle dans votre espace." }
+  ],
+  "blocks": [
+    {
+      "type": "value",
+      "name": "Atout",
+      "settings": [
+        { "type": "select", "id": "icon", "label": "Icône", "default": "gem",
+          "options": [
+            { "value": "gem", "label": "Diamant" },
+            { "value": "leaf", "label": "Feuille" },
+            { "value": "shield", "label": "Bouclier" },
+            { "value": "truck", "label": "Livraison" },
+            { "value": "sofa", "label": "Canapé" }
+          ] },
+        { "type": "checkbox", "id": "highlight", "label": "Mettre en avant (fond vert)", "default": false },
+        { "type": "text", "id": "title", "label": "Titre", "default": "Design intemporel" },
+        { "type": "textarea", "id": "text", "label": "Texte", "default": "Des lignes épurées et modernes, pensées pour rester belles au fil des années." }
+      ]
+    },
+    { "type": "image", "name": "Image", "settings": [ { "type": "image_picker", "id": "image", "label": "Image" } ] }
+  ],
+  "max_blocks": 6,
+  "presets": [{
+    "name": "Atouts",
+    "blocks": [
+      { "type": "value", "settings": { "icon": "gem", "title": "Design moderne et intemporel", "text": "Des silhouettes épurées qui traversent les tendances sans se démoder." } },
+      { "type": "value", "settings": { "icon": "leaf", "title": "Fabrication soignée", "text": "Bois nobles et tissus sélectionnés, conçus pour durer dans le temps." } },
+      { "type": "value", "settings": { "icon": "truck", "title": "Achat sans souci", "text": "Livraison partout au Maroc, retours faciles et paiement à la livraison." } },
+      { "type": "image", "settings": {} },
+      { "type": "value", "settings": { "icon": "shield", "title": "Matériaux premium", "highlight": true, "text": "Fabriqués avec soin par des artisans. Chaque détail pensé pour la qualité." } }
+    ]
+  }]
+}
+{% endschema %}

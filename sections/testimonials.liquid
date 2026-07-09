@@ -1,0 +1,92 @@
+<section class="section testimonials">
+  <div class="page-width">
+    <div class="collection-head collection-head--center" data-reveal>
+      {%- if section.settings.eyebrow != blank -%}<span class="eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+      <h2 class="section-title">{{ section.settings.title }}</h2>
+      {%- if section.settings.lead != blank -%}<p class="section-lead" style="text-align:center;">{{ section.settings.lead }}</p>{%- endif -%}
+    </div>
+
+    <div class="testi-grid">
+      <div class="testi-left" data-reveal>
+        <div class="testi-feature">
+          {%- if section.settings.image != blank -%}
+            <img src="{{ section.settings.image | image_url: width: 900 }}" alt="" width="600" height="500" loading="lazy">
+          {%- endif -%}
+          {%- if section.settings.feat_title != blank -%}
+            <div class="testi-prodcard">
+              {%- if section.settings.feat_image != blank -%}
+                <img src="{{ section.settings.feat_image | image_url: width: 200 }}" alt="{{ section.settings.feat_title | escape }}" width="64" height="64">
+              {%- elsif section.settings.feat_image_fallback != blank -%}
+                <img src="{{ section.settings.feat_image_fallback | asset_url }}" alt="{{ section.settings.feat_title | escape }}" width="64" height="64">
+              {%- endif -%}
+              <div>
+                <h4>{{ section.settings.feat_title }} <span>{{ section.settings.feat_price }}</span></h4>
+                <p>{{ section.settings.feat_text }}</p>
+              </div>
+            </div>
+          {%- endif -%}
+        </div>
+        <div class="testi-arrows">
+          <button class="scroller__btn" type="button" aria-label="Précédent">{% render 'icon', icon: 'arrow-left' %}</button>
+          <button class="scroller__btn" type="button" aria-label="Suivant">{% render 'icon', icon: 'arrow-right' %}</button>
+        </div>
+      </div>
+
+      <div class="testi-cards">
+        {%- for block in section.blocks -%}
+          <div class="testi-card" {{ block.shopify_attributes }} data-reveal>
+            <div class="testi-card__quote">”</div>
+            <p class="testi-card__text">{{ block.settings.text }}</p>
+            <div class="testi-card__author">
+              {%- if block.settings.avatar != blank -%}
+                <img src="{{ block.settings.avatar | image_url: width: 84 }}" alt="{{ block.settings.name | escape }}" width="42" height="42">
+              {%- endif -%}
+              <div>
+                <div class="testi-card__name">{{ block.settings.name }}</div>
+                <div class="testi-card__role">{{ block.settings.role }}</div>
+              </div>
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Témoignages",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Sur-titre", "default": "Avis clients" },
+    { "type": "text", "id": "title", "label": "Titre", "default": "Ce que disent nos clients" },
+    { "type": "textarea", "id": "lead", "label": "Texte", "default": "Nos clients sont au cœur de tout ce que nous faisons. Découvrez comment Divano a transformé leur intérieur." },
+    { "type": "header", "content": "Visuel + produit mis en avant" },
+    { "type": "image_picker", "id": "image", "label": "Image principale" },
+    { "type": "image_picker", "id": "feat_image", "label": "Image produit (carte)" },
+    { "type": "text", "id": "feat_image_fallback", "label": "Image produit par défaut (asset)", "default": "product-sofa-boucle.png" },
+    { "type": "text", "id": "feat_title", "label": "Nom produit", "default": "Canapé Bouclé" },
+    { "type": "text", "id": "feat_price", "label": "Prix", "default": "8 900 MAD" },
+    { "type": "textarea", "id": "feat_text", "label": "Description", "default": "Le confort réinventé : un équilibre parfait entre élégance et détente." }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Témoignage",
+      "settings": [
+        { "type": "textarea", "id": "text", "label": "Avis", "default": "Un service exceptionnel du début à la fin. La qualité du canapé dépasse mes attentes, il a transformé mon salon." },
+        { "type": "text", "id": "name", "label": "Nom", "default": "Salma B." },
+        { "type": "text", "id": "role", "label": "Ville", "default": "Casablanca" },
+        { "type": "image_picker", "id": "avatar", "label": "Photo" }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [{
+    "name": "Témoignages",
+    "blocks": [
+      { "type": "testimonial", "settings": { "name": "Salma B.", "role": "Casablanca", "text": "La qualité dépasse toutes mes attentes. Mon salon est métamorphosé et la livraison a été impeccable." } },
+      { "type": "testimonial", "settings": { "name": "Younes A.", "role": "Rabat", "text": "Un design magnifique et un confort incroyable. L'équipe Divano a été à l'écoute du début à la fin." } }
+    ]
+  }]
+}
+{% endschema %}

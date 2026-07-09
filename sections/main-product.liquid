@@ -1,0 +1,120 @@
+<section class="product">
+  <div class="page-width">
+    <div class="product__grid" data-gallery>
+      <div class="product__gallery">
+        <div class="product__main-img" data-gallery-stage>
+          {%- if product.featured_media -%}
+            <img data-main-img src="{{ product.featured_media | image_url: width: 1000 }}" alt="{{ product.featured_media.alt | escape }}" width="700" height="700">
+          {%- else -%}
+            {{ 'product-1' | placeholder_svg_tag: 'placeholder' }}
+          {%- endif -%}
+          {%- if product.media.size > 1 -%}
+            <button class="product__nav product__nav--prev" type="button" data-gallery-prev aria-label="Image précédente">{% render 'icon', icon: 'chevron-left' %}</button>
+            <button class="product__nav product__nav--next" type="button" data-gallery-next aria-label="Image suivante">{% render 'icon', icon: 'chevron-right' %}</button>
+          {%- endif -%}
+          <button class="product__zoom" type="button" data-gallery-zoom aria-label="Agrandir l'image">{% render 'icon', icon: 'zoom' %}</button>
+        </div>
+        {%- if product.media.size > 1 -%}
+          <div class="product__thumbs">
+            {%- for media in product.media limit: 10 -%}
+              <button class="product__thumb{% if forloop.first %} is-active{% endif %}" data-thumb data-index="{{ forloop.index0 }}" data-full="{{ media | image_url: width: 1000 }}" aria-label="Vue {{ forloop.index }}">
+                <img src="{{ media | image_url: width: 160 }}" alt="{{ media.alt | escape }}" width="78" height="78" loading="lazy">
+              </button>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      <div class="product__info" data-reveal>
+        {%- if product.vendor != blank -%}<span class="eyebrow">{{ product.vendor }}</span>{%- endif -%}
+        <h1 class="product__title">{{ product.title }}</h1>
+
+        <div class="product__price">
+          {%- if product.compare_at_price > product.price -%}
+            <del>{{ product.compare_at_price | money }}</del>
+          {%- endif -%}
+          <span data-price-display>{{ product.price | money }}</span>
+        </div>
+
+        {%- form 'product', product, class: 'product__form' -%}
+          {%- unless product.has_only_default_variant -%}
+            {%- for option in product.options_with_values -%}
+              <div class="option">
+                <span class="option__label">{{ option.name }}</span>
+                <div class="option__values">
+                  {%- for value in option.values -%}
+                    <button type="button" class="swatch{% if option.selected_value == value %} is-selected{% endif %}"
+                            data-swatch data-option-position="{{ option.position }}" data-value="{{ value | escape }}">{{ value }}</button>
+                  {%- endfor -%}
+                </div>
+              </div>
+            {%- endfor -%}
+          {%- endunless -%}
+
+          <select name="id" class="visually-hidden" data-variant-select>
+            {%- for variant in product.variants -%}
+              <option value="{{ variant.id }}"
+                      data-options="{{ variant.options | join: ' / ' | escape }}"
+                      data-price="{{ variant.price | money }}"
+                      data-available="{{ variant.available }}"
+                      {% if variant == product.selected_or_first_available_variant %}selected{% endif %}
+                      {% unless variant.available %}disabled{% endunless %}>{{ variant.title }}</option>
+            {%- endfor -%}
+          </select>
+
+          <div class="qty" data-qty>
+            <button type="button" data-step="down" aria-label="Moins">−</button>
+            <input type="number" name="quantity" value="1" min="1" aria-label="{{ 'products.product.quantity' | t }}">
+            <button type="button" data-step="up" aria-label="Plus">+</button>
+          </div>
+          <div class="product__buttons">
+            <button type="submit" name="add" class="btn btn--green" {% unless product.available %}disabled{% endunless %}>
+              {%- if product.available -%}{{ 'products.product.add_to_cart' | t }}{%- else -%}{{ 'products.product.sold_out' | t }}{%- endif -%}
+            </button>
+            {%- if product.available -%}
+              <button type="submit" name="checkout" class="btn btn--accent">{{ 'products.product.buy_now' | t }}</button>
+            {%- endif -%}
+          </div>
+        {%- endform -%}
+
+        <div class="product__meta">
+          {%- if product.selected_or_first_available_variant.sku != blank -%}
+            <span><strong>{{ 'products.product.sku' | t }} :</strong> {{ product.selected_or_first_available_variant.sku }}</span>
+          {%- endif -%}
+          <span>{{ 'products.product.free_shipping' | t }}</span>
+          <span>{{ 'products.product.secure_payment' | t }}</span>
+        </div>
+      </div>
+
+      <div class="lightbox" data-lightbox hidden>
+        <button class="lightbox__close" type="button" data-lightbox-close aria-label="Fermer">{% render 'icon', icon: 'close' %}</button>
+        <img class="lightbox__img" data-lightbox-img src="" alt="{{ product.title | escape }}">
+        {%- if product.media.size > 1 -%}
+          <div class="lightbox__pager">
+            <button class="lightbox__chev" type="button" data-gallery-prev aria-label="Image précédente">{% render 'icon', icon: 'chevron-left' %}</button>
+            <span class="lightbox__count" data-lb-count>1 / {{ product.media.size }}</span>
+            <button class="lightbox__chev" type="button" data-gallery-next aria-label="Image suivante">{% render 'icon', icon: 'chevron-right' %}</button>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+
+    {%- if product.description != blank -%}
+      <div class="product__description" data-reveal>
+        <div class="product__description-head">
+          <span>{{ 'products.product.description' | t }}</span>
+        </div>
+        <div class="rte product__desc">{{ product.description }}</div>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Page produit",
+  "settings": [],
+  "blocks": [],
+  "presets": [{ "name": "Page produit" }]
+}
+{% endschema %}
