@@ -39,6 +39,47 @@
       ],
       "settings": {}
     },
+    "featured_collection_9gDTUD": {
+      "type": "featured-collection",
+      "blocks": {
+        "tab_wGcjUp": {
+          "type": "tab",
+          "settings": {
+            "collection": "",
+            "label": ""
+          }
+        },
+        "tab_WqwbnE": {
+          "type": "tab",
+          "settings": {
+            "collection": "",
+            "label": ""
+          }
+        },
+        "tab_34Hm8N": {
+          "type": "tab",
+          "settings": {
+            "collection": "",
+            "label": ""
+          }
+        }
+      },
+      "block_order": [
+        "tab_wGcjUp",
+        "tab_WqwbnE",
+        "tab_34Hm8N"
+      ],
+      "name": "Collection en vedette",
+      "settings": {
+        "eyebrow": "Notre sélection",
+        "title": "Produits populaires",
+        "lead": "Découvrez nos pièces les plus appréciées, alliant confort, durabilité et élégance.",
+        "collection": "canapes",
+        "products_to_show": 8,
+        "products_per_row": 4,
+        "button_label": "Voir tout"
+      }
+    },
     "values": {
       "type": "value-props",
       "blocks": {
@@ -172,55 +213,14 @@
         "stat_label": "Clients satisfaits",
         "text": "Notre mission : rendre le mobilier premium accessible, magnifiquement conçu et facile à intégrer dans chaque foyer marocain."
       }
-    },
-    "featured_collection_9gDTUD": {
-      "type": "featured-collection",
-      "blocks": {
-        "tab_wGcjUp": {
-          "type": "tab",
-          "settings": {
-            "collection": "",
-            "label": ""
-          }
-        },
-        "tab_WqwbnE": {
-          "type": "tab",
-          "settings": {
-            "collection": "",
-            "label": ""
-          }
-        },
-        "tab_34Hm8N": {
-          "type": "tab",
-          "settings": {
-            "collection": "",
-            "label": ""
-          }
-        }
-      },
-      "block_order": [
-        "tab_wGcjUp",
-        "tab_WqwbnE",
-        "tab_34Hm8N"
-      ],
-      "name": "Collection en vedette",
-      "settings": {
-        "eyebrow": "Notre sélection",
-        "title": "Produits populaires",
-        "lead": "Découvrez nos pièces les plus appréciées, alliant confort, durabilité et élégance.",
-        "collection": "canapes",
-        "products_to_show": 8,
-        "products_per_row": 4,
-        "button_label": "Voir tout"
-      }
     }
   },
   "order": [
     "hero_banner",
+    "featured_collection_9gDTUD",
     "values",
     "eras",
     "shopimage",
-    "intro",
-    "featured_collection_9gDTUD"
+    "intro"
   ]
 }
