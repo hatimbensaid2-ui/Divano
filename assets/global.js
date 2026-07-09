@@ -261,16 +261,21 @@
     const grid = featured ? featured.querySelector('[data-filter-grid]') : null;
     if (!grid) return;
     const cards = grid.querySelectorAll('[data-cat]');
+    const applyFilter = function (key) {
+      cards.forEach(function (card) {
+        card.style.display = (key === 'all' || card.dataset.cat === key) ? '' : 'none';
+      });
+    };
     tabsEl.querySelectorAll('[data-filter]').forEach(function (tab) {
       tab.addEventListener('click', function () {
         tabsEl.querySelectorAll('[data-filter]').forEach(function (t) { t.setAttribute('aria-selected', 'false'); });
         tab.setAttribute('aria-selected', 'true');
-        const key = tab.dataset.filter;
-        cards.forEach(function (card) {
-          card.style.display = (key === 'all' || card.dataset.cat === key) ? '' : 'none';
-        });
+        applyFilter(tab.dataset.filter);
       });
     });
+    // Applique le filtre de l'onglet actif au chargement
+    const active = tabsEl.querySelector('[data-filter][aria-selected="true"]') || tabsEl.querySelector('[data-filter]');
+    if (active) applyFilter(active.dataset.filter);
   });
 
   // Recommandations produit (chargées via l'API Section Rendering)
