@@ -110,10 +110,12 @@
     });
   }
   document.addEventListener('submit', function (e) {
-    const form = e.target.closest ? e.target.closest('.card__add-form') : null;
+    const form = e.target.closest ? e.target.closest('.card__add-form, .product__form') : null;
     if (!form) return;
+    // « Acheter maintenant » (checkout) doit continuer vers le paiement normalement
+    if (e.submitter && e.submitter.name === 'checkout') return;
     e.preventDefault();
-    const btn = form.querySelector('button[type="submit"]');
+    const btn = e.submitter || form.querySelector('button[name="add"]') || form.querySelector('button[type="submit"]');
     const label = btn ? btn.innerHTML : '';
     if (btn) { btn.disabled = true; btn.innerHTML = '…'; }
     fetch('/cart/add.js', { method: 'POST', headers: { 'X-Requested-With': 'XMLHttpRequest' }, body: new FormData(form) })
