@@ -1,6 +1,6 @@
 {%- liquid
   assign cols = section.settings.products_per_row
-  assign collection_blocks = section.blocks | where: 'type', 'collection'
+  assign collection_blocks = section.blocks | where: 'type', 'tab'
 
   assign use_single = false
   if section.settings.collection != blank and section.settings.collection.products.size > 0
@@ -35,14 +35,9 @@
 
       {%- if use_tabs -%}
         <div class="tabs" data-filter-tabs style="margin-top:1.5rem;">
-          {%- if section.settings.show_all_tab -%}
-            <button class="tab" data-filter="all" aria-selected="true">{{ section.settings.all_tab_label | default: 'Tout' }}</button>
-          {%- endif -%}
           {%- for block in collection_blocks -%}
             {%- assign bc = block.settings.collection -%}
-            {%- assign is_first = false -%}
-            {%- unless section.settings.show_all_tab -%}{%- if forloop.first %}{% assign is_first = true %}{% endif -%}{%- endunless -%}
-            <button class="tab" data-filter="{{ bc.handle }}" aria-selected="{% if is_first %}true{% else %}false{% endif %}" {{ block.shopify_attributes }}>
+            <button class="tab" data-filter="{{ bc.handle }}" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}" {{ block.shopify_attributes }}>
               {{ block.settings.label | default: bc.title | default: 'Collection' }}
             </button>
           {%- endfor -%}
@@ -124,17 +119,15 @@
     { "type": "header", "content": "Affichage" },
     { "type": "range", "id": "products_to_show", "label": "Produits par collection", "min": 2, "max": 16, "step": 1, "default": 8 },
     { "type": "range", "id": "products_per_row", "label": "Produits par ligne", "min": 2, "max": 5, "step": 1, "default": 4 },
-    { "type": "header", "content": "Onglets par collection", "info": "Ajoutez des blocs « Collection » ci-dessous : chaque onglet affiche les vrais produits de la collection choisie." },
-    { "type": "checkbox", "id": "show_all_tab", "label": "Afficher l'onglet « Tout »", "default": true },
-    { "type": "text", "id": "all_tab_label", "label": "Libellé de l'onglet « Tout »", "default": "Tout" },
-    { "type": "header", "content": "Mode simple (optionnel)", "info": "Si aucun bloc « Collection » n'est ajouté, cette collection unique est affichée sans onglets." },
+    { "type": "header", "content": "Onglets par collection", "info": "Ajoutez des blocs « Collection (onglet) » ci-dessous : chaque onglet affiche uniquement les produits de la collection choisie." },
+    { "type": "header", "content": "Mode simple (optionnel)", "info": "Si aucun bloc « Collection (onglet) » n'est ajouté, cette collection unique est affichée sans onglets." },
     { "type": "collection", "id": "collection", "label": "Collection unique" },
     { "type": "text", "id": "button_label", "label": "Bouton", "default": "Voir tout" },
     { "type": "url", "id": "button_link", "label": "Lien du bouton" }
   ],
   "blocks": [
     {
-      "type": "collection",
+      "type": "tab",
       "name": "Collection (onglet)",
       "settings": [
         { "type": "collection", "id": "collection", "label": "Collection" },
